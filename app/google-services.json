@@ -1,0 +1,143 @@
+{
+  "project_info": {
+    "project_number": "780396168513",
+    "firebase_url": "https://medicure-9c14e.firebaseio.com",
+    "project_id": "medicure-9c14e",
+    "storage_bucket": "medicure-9c14e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:780396168513:android:acd5b01f5e39005c",
+        "android_client_info": {
+          "package_name": "co.realinventor.medicure"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "780396168513-ij2j0ifsoiqs61hndlcfdqu1isgtc4a4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "co.realinventor.medicure",
+            "certificate_hash": "ee69fb920bf87d4e0ee724af65130c07b6fe8182"
+          }
+        },
+        {
+          "client_id": "780396168513-sio1sthjkbihlnvi97sso08lrqeisjc3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARmzRH_dgSLyoICax8bWa142XDrk8dcQE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "780396168513-sio1sthjkbihlnvi97sso08lrqeisjc3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:780396168513:android:4185afa1ec1f6b95",
+        "android_client_info": {
+          "package_name": "co.realinventor.medicures"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "780396168513-b858g45vdu8a6blm23qsv6h1r6qf2g4e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "co.realinventor.medicures",
+            "certificate_hash": "ee69fb920bf87d4e0ee724af65130c07b6fe8182"
+          }
+        },
+        {
+          "client_id": "780396168513-sio1sthjkbihlnvi97sso08lrqeisjc3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARmzRH_dgSLyoICax8bWa142XDrk8dcQE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "780396168513-sio1sthjkbihlnvi97sso08lrqeisjc3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:780396168513:android:b6dea8c7f079a9e4",
+        "android_client_info": {
+          "package_name": "com.example.medicure"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "780396168513-rqg2gkn5sk69faemkvpp924vnt6nagnm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.medicure",
+            "certificate_hash": "7352116d63fc2ef45c5dbc4b0657cef96501342a"
+          }
+        },
+        {
+          "client_id": "780396168513-sio1sthjkbihlnvi97sso08lrqeisjc3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARmzRH_dgSLyoICax8bWa142XDrk8dcQE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "780396168513-sio1sthjkbihlnvi97sso08lrqeisjc3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
