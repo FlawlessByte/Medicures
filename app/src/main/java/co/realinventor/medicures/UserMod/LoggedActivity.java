@@ -2,10 +2,7 @@ package co.realinventor.medicures.UserMod;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -14,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -93,9 +91,10 @@ public class LoggedActivity extends AppCompatActivity
         } else if (id == R.id.nav_feedback) {
 
         } else if (id == R.id.nav_reminder) {
-            startActivity(new Intent(LoggedActivity.this, ReminderActivity.class));
+            startActivity(new Intent(LoggedActivity.this, MedicineReminderActivity.class));
 
         } else if (id == R.id.nav_doc_visit) {
+            startActivity(new Intent(LoggedActivity.this, DocVisitAlarmedActivity.class));
 
         } else if (id == R.id.nav_notification) {
 
@@ -109,4 +108,15 @@ public class LoggedActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
+    public void loggedReminderButtonPressed(View view){
+        startActivity(new Intent(LoggedActivity.this, MedicineReminderActivity.class));
+    }
+
+    public void loggedDocVisitButtonPressed(View view){
+        startActivity(new Intent(LoggedActivity.this, DocVisitAlarmedActivity.class));
+    }
+
+
 }

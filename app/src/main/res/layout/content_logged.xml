@@ -73,6 +73,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/button3"
+                    android:onClick="loggedReminderButtonPressed"
                     android:background="@drawable/right_button_btn_line"
                     android:text="Reminder"
                     android:textSize="18sp"
@@ -94,6 +95,7 @@
                     android:id="@+id/button4"
                     android:background="@drawable/right_button_btn_line"
                     android:text="Doctor Visit"
+                    android:onClick="loggedDocVisitButtonPressed"
                     android:textSize="18sp"
                     android:gravity="center|bottom"
                     android:paddingBottom="10dp"/>
