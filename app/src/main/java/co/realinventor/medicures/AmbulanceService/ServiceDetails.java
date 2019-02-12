@@ -1,7 +1,7 @@
 package co.realinventor.medicures.AmbulanceService;
 
 public class ServiceDetails {
-    public String driverName, driverLocality, driverAge, verified;
+    public String driverName, driverLocality, driverAge, verified, phone, availability;
 
     public ServiceDetails(){}
 
