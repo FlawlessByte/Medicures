@@ -14,6 +14,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import co.realinventor.medicures.Common.FeedbackActivity;
 import co.realinventor.medicures.R;
 
 public class ServiceLoggedActivity extends AppCompatActivity {
@@ -60,7 +61,7 @@ public class ServiceLoggedActivity extends AppCompatActivity {
     }
 
     public void feedbackButtonClicked(View view){
-        startActivity(new Intent(this, ServiceFeedbackActivity.class));
+        startActivity(new Intent(this, FeedbackActivity.class).putExtra("uid", FirebaseAuth.getInstance().getCurrentUser().getUid()));
     }
 
     public void notificationButtonClicked(View view){

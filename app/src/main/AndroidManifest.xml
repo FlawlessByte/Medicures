@@ -17,9 +17,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AmbulanceService.ServiceAvailabilityActivity"></activity>
+        <activity android:name=".MedStore.MedRequestsActivity"></activity>
+        <activity android:name=".MedStore.MedAccountActivity" />
+        <activity android:name=".Common.FeedbackActivity" />
+        <activity android:name=".AmbulanceService.ServiceAvailabilityActivity" />
         <activity android:name=".AmbulanceService.ServiceNotificationActivity" />
-        <activity android:name=".AmbulanceService.ServiceFeedbackActivity" />
         <activity android:name=".AmbulanceService.ServiceAccountActivity" />
         <activity android:name=".UserMod.MyAccountActivity" />
         <activity android:name=".UserMod.DocVisitAlarmedActivity" />

@@ -20,6 +20,8 @@ import co.realinventor.medicures.R;
 public class LoggedActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    FirebaseAuth auth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +30,7 @@ public class LoggedActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
 
-        FirebaseAuth auth = FirebaseAuth.getInstance();
+        auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() != null) {
             // User is logged in
             Log.d("Logged activity", "User logged in");
@@ -100,8 +102,8 @@ public class LoggedActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_sent) {
 
-        }else if (id == R.id.nav_logout) {
-
+        } else if (id == R.id.nav_logout) {
+            auth.signOut();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
