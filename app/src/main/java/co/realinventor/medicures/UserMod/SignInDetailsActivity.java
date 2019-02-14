@@ -19,20 +19,24 @@ import co.realinventor.medicures.R;
 public class SignInDetailsActivity extends AppCompatActivity {
     int flag = 0;
 
-    EditText inputFirstName = findViewById(R.id.inputFirstName);
-    EditText inputLastName = findViewById(R.id.inputLastName);
-    EditText inputAge = findViewById(R.id.inputAge);
-    EditText inputLocality = findViewById(R.id.inputLocality);
-    EditText inputPhone = findViewById(R.id.inputPhone);
-    Button registerButton = findViewById(R.id.registerButton);
-    RadioButton radioMale = findViewById(R.id.radioMale);
-    RadioButton radioFemale = findViewById(R.id.radioFemale);
-    RadioButton radioOthers = findViewById(R.id.radioOthers);
+    EditText inputFirstName, inputLastName, inputAge, inputLocality, inputPhone;
+    Button registerButton;
+    RadioButton radioMale, radioFemale, radioOthers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in_details);
+
+        inputFirstName = findViewById(R.id.inputFirstName);
+        inputLastName = findViewById(R.id.inputLastName);
+        inputAge = findViewById(R.id.inputAge);
+        inputLocality = findViewById(R.id.inputLocality);
+        inputPhone = findViewById(R.id.inputPhone);
+        registerButton = findViewById(R.id.registerButton);
+        radioMale = findViewById(R.id.radioMale);
+        radioFemale = findViewById(R.id.radioFemale);
+        radioOthers = findViewById(R.id.radioOthers);
 
         Log.d("Activity", "SignInDetailsActivity");
     }
@@ -68,11 +72,11 @@ public class SignInDetailsActivity extends AppCompatActivity {
         String locality = inputLocality.getText().toString();
         String phone = inputPhone.getText().toString();
         String gender = "";
-        if(radioMale.isSelected())
+        if(radioMale.isChecked())
             gender = "Male";
-        if(radioFemale.isSelected())
+        if(radioFemale.isChecked())
             gender = "Female";
-        if(radioOthers.isSelected())
+        if(radioOthers.isChecked())
             gender = "Other";
 
         DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
@@ -89,18 +93,24 @@ public class SignInDetailsActivity extends AppCompatActivity {
 
     public boolean isInputsOk(){
         flag = 0;
-        if(inputFirstName.getText().equals(""))
+        if(inputFirstName.getText().toString().equals("")){
             flag = 1;
-        if(inputLastName.getText().equals(""))
+        }
+        if(inputLastName.getText().toString().equals("")){
             flag = 1;
-        if(inputAge.getText().equals(""))
+        }
+        if(inputAge.getText().toString().equals("")){
             flag = 1;
-        if(inputLocality.getText().equals(""))
+        }
+        if(inputLocality.getText().toString().equals("")){
             flag = 1;
-        if(inputPhone.getText().equals(""))
+        }
+        if(inputPhone.getText().toString().equals("")){
             flag = 1;
-        if(!(radioMale.isSelected() == true || radioFemale.isSelected() == true || radioOthers.isSelected() == true))
+        }
+        if(!(radioMale.isChecked() || radioFemale.isChecked() || radioOthers.isChecked())){
             flag = 1;
+        }
 
         if(flag == 0)
             return true;

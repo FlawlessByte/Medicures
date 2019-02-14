@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -29,6 +30,8 @@ public class MedicineAlarmedActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medicine_alarmed);
+
+        Log.d("Activity", "MedicineAlarmedActivity");
 
         //get current time and compare with that of in sqlite database
         //and retrieve details
@@ -86,6 +89,7 @@ public class MedicineAlarmedActivity extends AppCompatActivity {
                 mMediaPlayer.start();
             }
         } catch(Exception e) {
+            Log.d("MediaPlayer", e.getLocalizedMessage());
         }
 
 

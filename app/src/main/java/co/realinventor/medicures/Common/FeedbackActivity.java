@@ -2,6 +2,7 @@ package co.realinventor.medicures.Common;
 
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -32,6 +33,7 @@ public class FeedbackActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feedback);
+        Log.d("Activity", "FeedbackActiivity");
 
         uid = getIntent().getStringExtra("uid");
 
@@ -53,6 +55,7 @@ public class FeedbackActivity extends AppCompatActivity {
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                     // TODO: handle the post
 
+                    Log.d("FirebaseDatabase", "Got feedbacks");
                     Feedback feedback = postSnapshot.getValue(Feedback.class);
                     if (feedback.getTo().equals(uid)){
                         feedbackList.add(feedback);
@@ -65,6 +68,7 @@ public class FeedbackActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.d("Menu Account Button", databaseError.getMessage());
                 Toast.makeText(getApplicationContext(), "Sorry, some error occured!", Toast.LENGTH_SHORT).show();
             }
         });

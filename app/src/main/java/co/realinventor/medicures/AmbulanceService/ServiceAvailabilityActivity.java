@@ -1,6 +1,7 @@
 package co.realinventor.medicures.AmbulanceService;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -23,7 +24,11 @@ public class ServiceAvailabilityActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_service_availability);
 
+        Log.d("Activity", "ServiceAvailabilityActivity");
+
         String currentState = getIntent().getStringExtra("availability");
+
+        Log.d("CurrentSTate", currentState);
 
         switchAvail = findViewById(R.id.switchAvail);
         textView = findViewById(R.id.textViewStatus);

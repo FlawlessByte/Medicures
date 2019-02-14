@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,6 +43,8 @@ public class MedicineReminderActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reminder_medicine);
+
+        Log.d("Activity", "MedicineReminderActivity");
 
         inputMedicineName = findViewById(R.id.inputMedicineName);
         ringtoneText = findViewById(R.id.ringtoneText);
@@ -80,6 +83,7 @@ public class MedicineReminderActivity extends AppCompatActivity {
     }
 
     public void nextButtonClicked(View view){
+        Log.d("MextButton", "Pressed");
         medicineName = inputMedicineName.getText().toString();
         time = new TimeEntity(timePicker.getCurrentHour(), timePicker.getCurrentMinute(), 0);
 

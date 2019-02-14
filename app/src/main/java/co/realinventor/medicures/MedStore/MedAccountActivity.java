@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -32,6 +33,7 @@ public class MedAccountActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_med_account);
+        Log.d("Activity", "MedAccountActivity");
 
         medNameEditText = findViewById(R.id.medNameEditText);
         medOwnerEditText = findViewById(R.id.medOwnerEditText);
@@ -46,6 +48,7 @@ public class MedAccountActivity extends AppCompatActivity {
         ref.child("MedStores").child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d("FirebaseDatabase", "Medstore details retrieved");
                 medStoreDetails = dataSnapshot.getValue(MedStoreDetails.class);
                 fillTheFields();
             }
@@ -66,26 +69,32 @@ public class MedAccountActivity extends AppCompatActivity {
     }
 
     public void medNameEditButtonPressed(View view){
+        Log.d("MedNameButton", "Pressed");
         showDialogs("Type new name", (TextView) view, InputType.TYPE_CLASS_TEXT);
     }
 
     public void medOwnerEditButtonPressed(View view){
+        Log.d("OwnerButton", "Pressed");
         showDialogs("Type new owner name", (TextView) view, InputType.TYPE_CLASS_TEXT);
     }
 
     public void medLocalityEditButtonPressed(View view){
+        Log.d("LocalityButton", "Pressed");
         showDialogs("Type new locality", (TextView) view, InputType.TYPE_CLASS_TEXT);
     }
 
     public void medContactEditButtonPressed(View view){
+        Log.d("ContactButton", "Pressed");
         showDialogs("Type new contact no.", (TextView) view, InputType.TYPE_CLASS_PHONE);
     }
 
     public void medMailEditButtonPressed(View view){
+        Log.d("MailButton", "Pressed");
         showDialogs("Type new mail ID", (TextView) view, InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
     }
 
     public void saveMedEditsButtonClicked(View view){
+        Log.d("SaveButton", "Pressed");
         MedStoreDetails newMedStoreDetails = new MedStoreDetails(medNameEditText.getText().toString(), medLocalityEditText.getText().toString(),
                 medOwnerEditText.getText().toString(),
                 medStoreDetails.pharmacist,

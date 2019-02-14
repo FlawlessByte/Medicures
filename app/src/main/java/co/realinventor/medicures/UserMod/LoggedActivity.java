@@ -28,6 +28,8 @@ public class LoggedActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        Log.d("Activity", "LoggedActivity");
+
 
 
         auth = FirebaseAuth.getInstance();
@@ -52,6 +54,7 @@ public class LoggedActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
+        Log.d("Action", "Back button pressed");
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -89,20 +92,27 @@ public class LoggedActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_account) {
-            // Handle the camera action
+            Log.d("Menu Account Button", "Pressed");
+            startActivity(new Intent(this, MyAccountActivity.class));
         } else if (id == R.id.nav_feedback) {
+            Log.d("Menu FeedbackButton", "Pressed");
 
         } else if (id == R.id.nav_reminder) {
+            Log.d("MenuReminderButton", "Pressed");
             startActivity(new Intent(LoggedActivity.this, MedicineReminderActivity.class));
 
         } else if (id == R.id.nav_doc_visit) {
+            Log.d("MenuDocVisitButton", "Pressed");
             startActivity(new Intent(LoggedActivity.this, DocVisitAlarmedActivity.class));
 
         } else if (id == R.id.nav_notification) {
+            Log.d("MenuNotificationButton", "Pressed");
 
         } else if (id == R.id.nav_sent) {
+            Log.d("MenuNavButton", "Pressed");
 
         } else if (id == R.id.nav_logout) {
+            Log.d("MenuSignOutButton", "Pressed");
             auth.signOut();
         }
 
@@ -113,10 +123,12 @@ public class LoggedActivity extends AppCompatActivity
 
 
     public void loggedReminderButtonPressed(View view){
+        Log.d("ReminderButton", "Pressed");
         startActivity(new Intent(LoggedActivity.this, MedicineReminderActivity.class));
     }
 
     public void loggedDocVisitButtonPressed(View view){
+        Log.d("DocVisitButton", "Pressed");
         startActivity(new Intent(LoggedActivity.this, DocVisitAlarmedActivity.class));
     }
 

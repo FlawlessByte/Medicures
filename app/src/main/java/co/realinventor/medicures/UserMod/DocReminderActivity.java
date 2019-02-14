@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -46,6 +47,9 @@ public class DocReminderActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doc_reminder);
+
+        Log.d("Activity", "DocReminderActivity");
+
         dateText = findViewById(R.id.dateText);
         ringtoneText = findViewById(R.id.ringtoneText);
         inputDoctorName = findViewById(R.id.inputDoctorName);
@@ -54,6 +58,9 @@ public class DocReminderActivity extends AppCompatActivity {
     }
 
     public void dateSelectButtonClicked(View view){
+
+        Log.d("DateSelectButton", "Pressed");
+
         final int mYear = 2019, mMonth = 01, mDay = 01;
         datePickerDialog = new DatePickerDialog(this,
                 new DatePickerDialog.OnDateSetListener() {
@@ -74,6 +81,7 @@ public class DocReminderActivity extends AppCompatActivity {
     }
 
     public void ringtoneSelectButtonPressed(View view){
+        Log.d("RingtoneSelectButton", "Pressed");
         RingtonePickerDialog.Builder ringtonePickerBuilder = new RingtonePickerDialog
                 .Builder(DocReminderActivity.this, getSupportFragmentManager())
                 .setTitle("Select ringtone")
@@ -100,6 +108,7 @@ public class DocReminderActivity extends AppCompatActivity {
     }
 
     public void nextButtonClicked(View view){
+        Log.d("NextButton", "Pressed");
         doctorName = inputDoctorName.getText().toString();
         time = new TimeEntity(timePicker.getCurrentHour(), timePicker.getCurrentMinute(), 0);
         date = new DateEntity(nYear, nMonth, nDay);
@@ -130,6 +139,7 @@ public class DocReminderActivity extends AppCompatActivity {
     }
 
     private void createReminder(){
+        Log.d("Reminder", "Creating reminder");
         initDatabase();
         addAlarmToDatabase(doctorName, date.getDate().toString(), ""+time.getHour(), ""+time.getMinute(), selectedRingtoneUri.toString());
 
@@ -158,6 +168,7 @@ public class DocReminderActivity extends AppCompatActivity {
     }
 
     static void addAlarmToDatabase(String doctor, String date, String hour, String minute, String tone) {
+        Log.d("Alarm", "Added to database");
         db.execSQL("INSERT INTO "
                 + DoctorReminderHelper.TABLE_NAME
                 + " ("
@@ -184,6 +195,7 @@ public class DocReminderActivity extends AppCompatActivity {
     }
 
     private void initDatabase() {
+        Log.d("SQLite", "Database initialised");
         doctorReminderHelper = new DoctorReminderHelper(getApplicationContext());
         db = doctorReminderHelper.getWritableDatabase();
     }

@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -44,6 +45,8 @@ public class ServiceDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_service_details);
 
+        Log.d("Activity", "ServiceDetailsActivity");
+
 
         inputDriverName = findViewById(R.id.inputDriverName);
         inputDriverLocality = findViewById(R.id.inputDriverLocality);
@@ -62,6 +65,7 @@ public class ServiceDetailsActivity extends AppCompatActivity {
         buttonVehicleLicence.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("VehicleLicence Button", "Pressed");
                 currentFile = "vehicle_licence";
                 FilePickerBuilder filePickerBuilder = new FilePickerBuilder();
                 filePickerBuilder.setMaxCount(1).setActivityTitle("Select Vehicle Licence").setActivityTheme(R.style.LibAppTheme).pickFile(getParent());
@@ -70,6 +74,7 @@ public class ServiceDetailsActivity extends AppCompatActivity {
         buttonAadhar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("AdharButton", "Pressed");
                 currentFile = "aadhar";
                 FilePickerBuilder filePickerBuilder = new FilePickerBuilder();
                 filePickerBuilder.setMaxCount(1).setActivityTitle("Select Aadhar Card").setActivityTheme(R.style.LibAppTheme).pickFile(getParent());
@@ -78,6 +83,7 @@ public class ServiceDetailsActivity extends AppCompatActivity {
         buttonRC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("RCButton", "Pressed");
                 currentFile = "rc_book";
                 FilePickerBuilder filePickerBuilder = new FilePickerBuilder();
                 filePickerBuilder.setMaxCount(1).setActivityTitle("Select RC doc").setActivityTheme(R.style.LibAppTheme).pickFile(getParent());
@@ -86,6 +92,7 @@ public class ServiceDetailsActivity extends AppCompatActivity {
         buttonDriverLicence.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("DriverLicenceButton", "Pressed");
                 currentFile = "driver_licence";
                 FilePickerBuilder filePickerBuilder = new FilePickerBuilder();
                 filePickerBuilder.setMaxCount(1).setActivityTitle("Select Driver Licence").setActivityTheme(R.style.LibAppTheme).pickFile(getParent());
@@ -98,11 +105,14 @@ public class ServiceDetailsActivity extends AppCompatActivity {
     }
 
     public void serviceRegisterButtonClicked(View view){
+        Log.d("ServiceRegisteButton", "Pressed");
 
         if(!inputsOk()){
+            Log.d("CheckInputs", "Not ok");
             Toast.makeText(getApplicationContext(), "Fill all the fields and try again!", Toast.LENGTH_SHORT).show();
         }
         else{
+            Log.d("CheckInputs", "ok");
             FirebaseAuth auth = FirebaseAuth.getInstance();
             if(auth.getCurrentUser() != null){
                 saveUserData(auth.getCurrentUser().getUid());
@@ -177,6 +187,9 @@ public class ServiceDetailsActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+        Log.d("ActivityResult", ""+resultCode);
+
         if(requestCode == FilePickerConst.REQUEST_CODE_DOC){
             if(resultCode== Activity.RESULT_OK && data!=null)
             {

@@ -2,6 +2,7 @@ package co.realinventor.medicures.AmbulanceService;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -28,6 +29,8 @@ public class ServiceLoggedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_service_logged);
 
+        Log.d("Activity", "ServiceLoggedActivity");
+
         buttonWelcome = findViewById(R.id.buttonWelcome);
         availabilityImage = findViewById(R.id.availabilityImage);
 
@@ -39,6 +42,7 @@ public class ServiceLoggedActivity extends AppCompatActivity {
         ref.child("Ambulances").child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d("FirebaseDatabase", "Got ambulance data");
                 serviceDetails = dataSnapshot.getValue(ServiceDetails.class);
                 buttonWelcome.setText("Welcome, "+ serviceDetails.driverName);
                 if(serviceDetails.availability.equals("no"))
@@ -56,18 +60,22 @@ public class ServiceLoggedActivity extends AppCompatActivity {
     }
 
     public void accountButtonClicked(View view){
+        Log.d("AccountButton", "Pressed");
         startActivity(new Intent(this, ServiceAccountActivity.class));
     }
 
     public void feedbackButtonClicked(View view){
+        Log.d("FeedbackButton", "Pressed");
         startActivity(new Intent(this, FeedbackActivity.class).putExtra("uid", FirebaseAuth.getInstance().getCurrentUser().getUid()));
     }
 
     public void notificationButtonClicked(View view){
+        Log.d("NotifivationButton", "Pressed");
         startActivity(new Intent(this, ServiceNotificationActivity.class));
     }
 
     public void availabilityButtonClicked(View view){
+        Log.d("AvailabilityButton", "Pressed");
         startActivity(new Intent(this, ServiceAvailabilityActivity.class).putExtra("availability",serviceDetails.availability));
     }
 }

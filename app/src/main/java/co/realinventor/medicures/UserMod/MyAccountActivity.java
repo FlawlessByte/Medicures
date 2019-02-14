@@ -3,6 +3,7 @@ package co.realinventor.medicures.UserMod;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -35,6 +36,8 @@ public class MyAccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_account);
 
+        Log.d("Activity", "MyAccountActivity");
+
         nameEditTextView = findViewById(R.id.nameEditTextView);
         ageEditTextView = findViewById(R.id.ageEditTextView);
         localityEditTextView = findViewById(R.id.localityEditTextView);
@@ -53,12 +56,14 @@ public class MyAccountActivity extends AppCompatActivity {
         ref.child("User").child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d("FirebaseDatabase", "Got user data");
                 userDetails = dataSnapshot.getValue(UserDetails.class);
                 fillTheFields();
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
+                Log.d("FirebaseDatabase", "Error retrieving data");
                 System.out.println("The read failed: " + databaseError.getCode());
             }
         });
@@ -73,30 +78,37 @@ public class MyAccountActivity extends AppCompatActivity {
     }
 
     public void nameEditButtonPressed(View view){
+        Log.d("NameEditButton", "Pressed");
         showDialogs("Type new name", (TextView) view, InputType.TYPE_CLASS_TEXT);
     }
 
     public void ageEditButtonPressed(View view){
+        Log.d("AgeEditButton", "Pressed");
         showDialogs("Type age",(TextView) view, InputType.TYPE_CLASS_NUMBER);
     }
 
     public void localityEditButtonPressed(View view){
+        Log.d("LocalityEditButton", "Pressed");
         showDialogs("Type new locality", (TextView) view, InputType.TYPE_CLASS_TEXT);
     }
 
     public void phoneEditButtonPressed(View view){
+        Log.d("PhoneEditButton", "Pressed");
         showDialogs("Type new phone number", (TextView) view, InputType.TYPE_CLASS_PHONE);
     }
 
     public void mailEditButtonPressed(View view){
+        Log.d("MailEditButton", "Pressed");
         showDialogs("Type new mail ID", (TextView) view, InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
     }
 
     public void medicalEditButtonPressed(View view){
+        Log.d("MedicalEditButton", "Pressed");
         Query medQuery = ref.child("MedStore");
         medQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.d("FirebaseDatabase", "Got medstore data");
                 medicalList.clear();
                 String element = "";
                 for (DataSnapshot medSnapShot : dataSnapshot.getChildren()){
@@ -110,12 +122,13 @@ public class MyAccountActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Log.d("FirebaseDatabase", databaseError.getMessage());
             }
         });
     }
 
     public void ambulanceEditButtonPressed(View view){
+        Log.d("AmbulanceEditButton", "Pressed");
 
         Query ambQuery = ref.child("Ambulances");
         ambQuery.addValueEventListener(new ValueEventListener() {
@@ -124,6 +137,7 @@ public class MyAccountActivity extends AppCompatActivity {
                 ambulanceList.clear();
                 String element = "";
                 for (DataSnapshot ambSnapShot : dataSnapshot.getChildren()){
+                    Log.d("FirebaseDatabase", "Got ambulance details");
                     ServiceDetails serviceDetails = ambSnapShot.getValue(ServiceDetails.class);
                     element = serviceDetails.driverName+ "| " + serviceDetails.driverLocality;
                     ambulanceList.add(element);
@@ -134,13 +148,14 @@ public class MyAccountActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Log.d("FirebaseDatabase", databaseError.getMessage());
             }
         });
     }
 
 
     private void showAmbulanceList(ArrayList<String> list){
+        Log.d("Alert", "Showing ambulance list");
         // setup the alert builder
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Choose some ambulance service");
@@ -172,6 +187,7 @@ public class MyAccountActivity extends AppCompatActivity {
 
 
     private void showMedStoreList(ArrayList<String> list){
+        Log.d("Alert", "Showing med store list");
         // setup the alert builder
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Choose some medical stores");

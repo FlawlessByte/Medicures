@@ -3,6 +3,7 @@ package co.realinventor.medicures.AmbulanceService;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.text.InputType;
@@ -30,6 +31,8 @@ public class ServiceAccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_service_account);
 
+        Log.d("Activity", "ServiceAcccountActiivyt");
+
         nameEditTextView = findViewById(R.id.nameEditText);
         contactEditTextView = findViewById(R.id.contactEditText);
 
@@ -39,6 +42,7 @@ public class ServiceAccountActivity extends AppCompatActivity {
         ref.child("Ambulances").child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d("FirebaseDatabase", "Got ambulance data");
                 serviceDetails = dataSnapshot.getValue(ServiceDetails.class);
                 fillTheFields();
             }
@@ -56,14 +60,17 @@ public class ServiceAccountActivity extends AppCompatActivity {
     }
 
     public void nameEditButtonPressed(View view){
+        Log.d("NameEditButton", "Pressed");
         showDialogs("Type new name",(EditText) view, InputType.TYPE_CLASS_TEXT);
     }
 
     public void contactEditButtonPressed(View view){
+        Log.d("ContactEditButton", "Pressed");
         showDialogs("Type new contact number",(EditText) view, InputType.TYPE_CLASS_PHONE);
     }
 
     public void saveButtonPressed(View view){
+        Log.d("SaveButton", "Pressed");
 //        save data to firebase
         String name = nameEditTextView.getText().toString();
         String phone = contactEditTextView.getText().toString();

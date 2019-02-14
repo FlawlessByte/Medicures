@@ -2,6 +2,7 @@ package co.realinventor.medicures.MedStore;
 
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 import com.google.firebase.database.DataSnapshot;
@@ -35,6 +36,8 @@ public class MedRequestsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_med_requests);
 
+        Log.d("Activity", "MedRequestsActivity");
+
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view_medicine);
 
         mAdapter = new MedicineAdapter(medicineList);
@@ -67,6 +70,7 @@ public class MedRequestsActivity extends AppCompatActivity {
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                     // TODO: handle the post
 
+                    Log.d("MFirebaseDatabase", "Got MedRequests");
                     Medicine medicine = postSnapshot.getValue(Medicine.class);
                     if (medicine.getTo().equals(uid)){
                         medicine.trans_id = postSnapshot.getKey();
@@ -80,6 +84,7 @@ public class MedRequestsActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.d("FirebaseDatabase", databaseError.getMessage());
                 Toast.makeText(getApplicationContext(), "Sorry, some error occured!", Toast.LENGTH_SHORT).show();
             }
         });

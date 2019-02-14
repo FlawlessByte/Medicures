@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -43,6 +44,8 @@ public class MedSignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_med_sign_in);
 
+        Log.d("Activity", "MedSignInActivity");
+
         buttonBluePrint = findViewById(R.id.buttonBluePrint);
         buttonGST = findViewById(R.id.buttonGST);
         buttonSanction = findViewById(R.id.buttonSanction);
@@ -59,6 +62,7 @@ public class MedSignInActivity extends AppCompatActivity {
         buttonBluePrint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("bluePrintButton", "Pressed");
                 currentFile = "blue_print";
                 FilePickerBuilder filePickerBuilder = new FilePickerBuilder();
                 filePickerBuilder.setMaxCount(1).setActivityTitle("Select blue print").setActivityTheme(R.style.LibAppTheme).pickFile(getParent());
@@ -68,6 +72,7 @@ public class MedSignInActivity extends AppCompatActivity {
         buttonGST.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("GSTButton", "Pressed");
                 currentFile = "GST";
                 FilePickerBuilder filePickerBuilder = new FilePickerBuilder();
                 filePickerBuilder.setMaxCount(1).setActivityTitle("Select GST doc").setActivityTheme(R.style.LibAppTheme).pickFile(getParent());
@@ -77,6 +82,7 @@ public class MedSignInActivity extends AppCompatActivity {
         buttonSanction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("SanctionButton", "Pressed");
                 currentFile = "sanction";
                 FilePickerBuilder filePickerBuilder = new FilePickerBuilder();
                 filePickerBuilder.setMaxCount(1).setActivityTitle("Select sanction doc").setActivityTheme(R.style.LibAppTheme).pickFile(getParent());
@@ -86,6 +92,7 @@ public class MedSignInActivity extends AppCompatActivity {
         buttonPharmaceutical.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("PharmaceuticalButton", "Pressed");
                 currentFile = "pharmaceutical";
                 FilePickerBuilder filePickerBuilder = new FilePickerBuilder();
                 filePickerBuilder.setMaxCount(1).setActivityTitle("Select pharmaceutical doc").setActivityTheme(R.style.LibAppTheme).pickFile(getParent());
@@ -98,6 +105,7 @@ public class MedSignInActivity extends AppCompatActivity {
     }
 
     public void medRegisterButtonClicked(View view){
+        Log.d("RegisterButton", "Pressed");
         if(!inputsOk()){
             Toast.makeText(getApplicationContext(), "Fill all the fields and try again!", Toast.LENGTH_SHORT).show();
         }
@@ -209,6 +217,7 @@ public class MedSignInActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        Log.d("ActivityResult", resultCode+"");
         if(requestCode == FilePickerConst.REQUEST_CODE_DOC){
             if(resultCode== Activity.RESULT_OK && data!=null)
             {
