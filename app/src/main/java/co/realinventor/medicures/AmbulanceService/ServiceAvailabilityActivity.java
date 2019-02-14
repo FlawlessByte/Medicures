@@ -1,6 +1,5 @@
 package co.realinventor.medicures.AmbulanceService;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.CompoundButton;
 import android.widget.Switch;
@@ -10,6 +9,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import androidx.appcompat.app.AppCompatActivity;
 import co.realinventor.medicures.R;
 
 public class ServiceAvailabilityActivity extends AppCompatActivity {

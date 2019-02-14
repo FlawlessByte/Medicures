@@ -1,9 +1,12 @@
 package co.realinventor.medicures;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+
+import androidx.appcompat.app.AppCompatActivity;
 import co.realinventor.medicures.Authentication.LoginActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -13,10 +16,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Log.d("Activity", "MainActivity");
+
 
     }
 
     public void modeSelected(View view){
+        Log.d("Button", view.getTag().toString());
+
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         intent.putExtra("mode", view.getTag().toString());
         startActivity(intent);

@@ -2,8 +2,6 @@ package co.realinventor.medicures.Authentication;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +15,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import co.realinventor.medicures.AmbulanceService.ServiceLoggedActivity;
+import co.realinventor.medicures.MedStore.MedLoggedActivity;
 import co.realinventor.medicures.R;
 import co.realinventor.medicures.UserMod.LoggedActivity;
 
@@ -32,21 +34,26 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Log.d("Activity", "LoginActivity");
+
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
 
         if (auth.getCurrentUser() != null) {
             switch (auth.getCurrentUser().getDisplayName()) {
                 case "User": {
+                    Log.d("Logged", "User");
                     startActivity(new Intent(LoginActivity.this, LoggedActivity.class));
                     break;
                 }
                 case "Med_Store": {
-//                    startActivity(new Intent(LoginActivity.this, medLoggedActivity.class));
+                    Log.d("Logged", "Med_Store");
+                    startActivity(new Intent(LoginActivity.this, MedLoggedActivity.class));
                     break;
                 }
                 case "Ambulance": {
-//                    startActivity(new Intent(LoginActivity.this, ambLoggedActivity.class));
+                    Log.d("Logged", "Ambulance");
+                    startActivity(new Intent(LoginActivity.this, ServiceLoggedActivity.class));
                     break;
                 }
                 default:
@@ -85,6 +92,7 @@ public class LoginActivity extends AppCompatActivity {
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("Button", "SignUp button clicked");
                 Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
                 intent.putExtra("mode", intentMode);
                 startActivity(intent);
@@ -94,6 +102,7 @@ public class LoginActivity extends AppCompatActivity {
         btnReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("Button", "reset button clicked");
                 startActivity(new Intent(LoginActivity.this, ResetPasswordActivity.class));
             }
         });
@@ -101,6 +110,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("Button", "Login button clicked");
                 String email = inputEmail.getText().toString();
                 final String password = inputPassword.getText().toString();
 
@@ -127,12 +137,14 @@ public class LoginActivity extends AppCompatActivity {
                                 progressBar.setVisibility(View.GONE);
                                 if (!task.isSuccessful()) {
                                     // there was an error
+                                    Log.d("Sign In", "Some error");
                                     if (password.length() < 6) {
                                         inputPassword.setError(getString(R.string.minimum_password));
                                     } else {
                                         Toast.makeText(LoginActivity.this, getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
                                     }
                                 } else {
+                                    Log.d("Sign in", "Successful");
                                     Intent intent = new Intent(LoginActivity.this, LoggedActivity.class);
                                     startActivity(intent);
                                     finish();

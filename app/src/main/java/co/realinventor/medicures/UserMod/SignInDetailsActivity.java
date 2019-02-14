@@ -1,7 +1,6 @@
 package co.realinventor.medicures.UserMod;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,11 +8,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import androidx.appcompat.app.AppCompatActivity;
 import co.realinventor.medicures.Authentication.LoginActivity;
 import co.realinventor.medicures.R;
 
@@ -34,13 +33,18 @@ public class SignInDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in_details);
+
+        Log.d("Activity", "SignInDetailsActivity");
     }
 
     public void registerButtonClicked(View v){
+        Log.d("Button", "RegisterButtonClicked");
         if(!isInputsOk()){
+            Log.d("RegisterButton", "Inputs Not ok");
             Toast.makeText(this, "Make sure you have filled all the inputs!", Toast.LENGTH_SHORT).show();
         }
         else{
+            Log.d("RegisterButton", "inputs ok");
             FirebaseAuth auth = FirebaseAuth.getInstance();
             if(auth.getCurrentUser() == null){
                 //User not logged in
@@ -50,6 +54,7 @@ public class SignInDetailsActivity extends AppCompatActivity {
             }
             else{
                 // user logged in
+                Log.d("RegisterButton", "Save user data");
                 saveUserData(auth.getCurrentUser().getUid());
             }
         }
@@ -74,6 +79,7 @@ public class SignInDetailsActivity extends AppCompatActivity {
         UserDetails userDetails = new UserDetails(fname,lname, gender, age, locality, phone);
 
         myRef.child("User").child(uid).setValue(userDetails);
+        Log.d("saveUserData", "Saved data to firebase database");
 
         Toast.makeText(this, "Data saved!", Toast.LENGTH_SHORT).show();
 

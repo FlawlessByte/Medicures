@@ -1,12 +1,12 @@
 package co.realinventor.medicures.MedStore;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import androidx.appcompat.app.AppCompatActivity;
 import co.realinventor.medicures.Common.FeedbackActivity;
 import co.realinventor.medicures.R;
 

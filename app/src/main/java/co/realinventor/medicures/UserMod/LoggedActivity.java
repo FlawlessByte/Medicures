@@ -3,18 +3,17 @@ package co.realinventor.medicures.UserMod;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
+import androidx.drawerlayout.widget.DrawerLayout;
 import co.realinventor.medicures.R;
 
 public class LoggedActivity extends AppCompatActivity
@@ -28,6 +27,7 @@ public class LoggedActivity extends AppCompatActivity
         setContentView(R.layout.activity_logged);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
 
         auth = FirebaseAuth.getInstance();

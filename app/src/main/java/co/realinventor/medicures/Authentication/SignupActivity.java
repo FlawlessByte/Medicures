@@ -2,8 +2,6 @@ package co.realinventor.medicures.Authentication;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -19,6 +17,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import co.realinventor.medicures.AmbulanceService.ServiceDetailsActivity;
 import co.realinventor.medicures.MedStore.MedSignInActivity;
 import co.realinventor.medicures.R;
@@ -37,6 +37,8 @@ public class SignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
+        Log.d("Activity", "SignUpActivity");
+
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
 
@@ -50,6 +52,7 @@ public class SignupActivity extends AppCompatActivity {
         btnResetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("Button", "ResetButton pressed");
                 startActivity(new Intent(SignupActivity.this, ResetPasswordActivity.class));
             }
         });
@@ -57,6 +60,7 @@ public class SignupActivity extends AppCompatActivity {
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("Button", "Sign In button pressed");
                 finish();
             }
         });
@@ -64,6 +68,8 @@ public class SignupActivity extends AppCompatActivity {
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Log.d("Button", "SignUpButton pressed");
 
                 String email = inputEmail.getText().toString().trim();
                 String password = inputPassword.getText().toString().trim();
@@ -84,20 +90,26 @@ public class SignupActivity extends AppCompatActivity {
                 }
 
                 progressBar.setVisibility(View.VISIBLE);
+
+                Log.d("Sign Up", "Trying to create account");
                 //create user
                 auth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
+                                Log.d("Sign Up", "Task complete!");
+
                                 Toast.makeText(SignupActivity.this, "createUserWithEmail:onComplete:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
                                 progressBar.setVisibility(View.GONE);
                                 // If sign in fails, display a message to the user. If sign in succeeds
                                 // the auth state listener will be notified and logic to handle the
                                 // signed in user can be handled in the listener.
                                 if (!task.isSuccessful()) {
+                                    Log.d("Sign Up", "Failed");
                                     Toast.makeText(SignupActivity.this, "Authentication failed." + task.getException(),
                                             Toast.LENGTH_SHORT).show();
                                 } else {
+                                    Log.d("Sign Up", "Success");
                                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                                     intentMode = "none";
                                     try{
@@ -107,6 +119,7 @@ public class SignupActivity extends AppCompatActivity {
                                         intentMode = "none";
                                     }
 
+                                    Log.d("Sign Up", "Changing user display name to"+intentMode);
                                     UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                                             .setDisplayName(intentMode)
                                             .build();
@@ -116,6 +129,7 @@ public class SignupActivity extends AppCompatActivity {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
                                                     if (task.isSuccessful()) {
+                                                        Log.d("Sign Up", "Display Name updated");
                                                         Log.d("Update profile", "User profile updated.");
 
                                                         if(intentMode.equals("user"))
