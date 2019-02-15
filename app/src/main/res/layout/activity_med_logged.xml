@@ -6,151 +6,191 @@
     android:layout_height="match_parent"
     tools:context=".MedStore.MedLoggedActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarX"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:popupTheme="@style/AppTheme.PopupOverlay" />
+
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="20dp">
+        android:layout_height="654dp"
+        android:layout_margin="25dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:padding="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarX">
 
         <TableRow
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:weightSum="1"
-            android:layout_weight="0.5">
+            android:layout_weight="0.5"
+            android:weightSum="1">
+
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5">
+
                 <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
                     android:id="@+id/button1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:background="@drawable/right_button_btn_line"
-                    android:text="Account"
-                    android:textSize="18sp"
                     android:gravity="center|bottom"
-                    android:singleLine="false"
                     android:onClick="medAccountButtonPressed"
-                    android:paddingBottom="10dp"/>
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/account_large"
-                    android:layout_centerInParent="true"/>
-            </RelativeLayout>
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5">
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/button2"
-                    android:background="@drawable/right_button_btn_line"
-                    android:text="Notification"
-                    android:textSize="18sp"
-                    android:gravity="center|bottom"
+                    android:paddingBottom="10dp"
                     android:singleLine="false"
+                    android:text="Account"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/account_large" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5">
+
+                <Button
+                    android:id="@+id/button2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/right_button_btn_line"
+                    android:gravity="center|bottom"
                     android:onClick="medNotificationButtonPressed"
-                    android:paddingBottom="10dp"/>
+                    android:paddingBottom="10dp"
+                    android:singleLine="false"
+                    android:text="Notification"
+                    android:textSize="18sp" />
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/notification_large"
-                    android:layout_centerInParent="true"/>
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/notification_large" />
             </RelativeLayout>
         </TableRow>
 
         <TableRow
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:weightSum="1"
-            android:layout_weight="0.5">
+            android:layout_weight="0.5"
+            android:weightSum="1">
+
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5">
+
                 <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
                     android:id="@+id/button3"
-                    android:onClick="medSentMailButtonPressed"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:background="@drawable/right_button_btn_line"
-                    android:text="Sent Mail"
-                    android:textSize="18sp"
                     android:gravity="center|bottom"
-                    android:paddingBottom="10dp"/>
+                    android:onClick="medSentMailButtonPressed"
+                    android:paddingBottom="10dp"
+                    android:text="Sent Mail"
+                    android:textSize="18sp" />
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/sent_mail_large"
-                    android:layout_centerInParent="true"/>
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/sent_mail_large" />
             </RelativeLayout>
+
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5">
+
                 <Button
+                    android:id="@+id/button4"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/button4"
                     android:background="@drawable/right_button_btn_line"
-                    android:text="Feedback"
-                    android:onClick="medFeedbackButtonPressed"
-                    android:textSize="18sp"
                     android:gravity="center|bottom"
-                    android:paddingBottom="10dp"/>
+                    android:onClick="medFeedbackButtonPressed"
+                    android:paddingBottom="10dp"
+                    android:text="Feedback"
+                    android:textSize="18sp" />
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/love_large"
-                    android:layout_centerInParent="true"/>
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/love_large" />
             </RelativeLayout>
         </TableRow>
 
         <TableRow
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:weightSum="1"
-            android:layout_weight="0.5">
+            android:layout_weight="0.5"
+            android:weightSum="1">
+
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5">
+
                 <Button
+                    android:id="@+id/button5"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/button5"
                     android:background="@drawable/right_button_btn_line"
-                    android:text="User"
-                    android:textSize="18sp"
-                    android:onClick="medUserButtonPressed"
                     android:gravity="center|bottom"
-                    android:paddingBottom="10dp"/>
+                    android:onClick="medUserButtonPressed"
+                    android:paddingBottom="10dp"
+                    android:text="User"
+                    android:textSize="18sp" />
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/team"
-                    android:layout_centerInParent="true"/>
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/team" />
             </RelativeLayout>
+
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5">
+
                 <Button
+                    android:id="@+id/button6"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/button6"
                     android:background="@drawable/right_button_btn_line"
-                    android:text="Update"
-                    android:textSize="18sp"
                     android:gravity="center|bottom"
                     android:onClick="medUpdateButtonPressed"
-                    android:paddingBottom="10dp"/>
+                    android:paddingBottom="10dp"
+                    android:text="Update"
+                    android:textSize="18sp" />
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/update_large"
-                    android:layout_centerInParent="true"/>
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/update_large" />
 
             </RelativeLayout>
         </TableRow>

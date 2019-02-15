@@ -14,6 +14,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
 import androidx.drawerlayout.widget.DrawerLayout;
+import co.realinventor.medicures.MainActivity;
 import co.realinventor.medicures.R;
 
 public class LoggedActivity extends AppCompatActivity
@@ -78,7 +79,7 @@ public class LoggedActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_logout) {
             return true;
         }
 
@@ -103,7 +104,7 @@ public class LoggedActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_doc_visit) {
             Log.d("MenuDocVisitButton", "Pressed");
-            startActivity(new Intent(LoggedActivity.this, DocVisitAlarmedActivity.class));
+            startActivity(new Intent(LoggedActivity.this, DocReminderActivity.class));
 
         } else if (id == R.id.nav_notification) {
             Log.d("MenuNotificationButton", "Pressed");
@@ -114,6 +115,8 @@ public class LoggedActivity extends AppCompatActivity
         } else if (id == R.id.nav_logout) {
             Log.d("MenuSignOutButton", "Pressed");
             auth.signOut();
+            startActivity(new Intent(LoggedActivity.this, MainActivity.class));
+            this.finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -129,7 +132,7 @@ public class LoggedActivity extends AppCompatActivity
 
     public void loggedDocVisitButtonPressed(View view){
         Log.d("DocVisitButton", "Pressed");
-        startActivity(new Intent(LoggedActivity.this, DocVisitAlarmedActivity.class));
+        startActivity(new Intent(LoggedActivity.this, DocReminderActivity.class));
     }
 
 

@@ -9,24 +9,23 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
-
+import com.google.firebase.auth.FirebaseAuth;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.DexterError;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.PermissionRequestErrorListener;
-import com.karumi.dexter.listener.multi.DialogOnAnyDeniedMultiplePermissionsListener;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
-
 import java.util.List;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import co.realinventor.medicures.AmbulanceService.ServiceLoggedActivity;
 import co.realinventor.medicures.Authentication.LoginActivity;
+import co.realinventor.medicures.MedStore.MedLoggedActivity;
+import co.realinventor.medicures.UserMod.LoggedActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Log.d("Activity", "MainActivity");
+
 
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -52,6 +52,33 @@ public class MainActivity extends AppCompatActivity {
                 != PackageManager.PERMISSION_GRANTED) {
             // Permission is not granted
             requestPermissions();
+        }
+
+
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        if(auth.getCurrentUser() != null) {
+            Log.d("User", "Not null");
+            if (auth.getCurrentUser().getDisplayName().equals("user")) {
+                Log.d("DisplayName", "User");
+                startActivity(new Intent(this, LoggedActivity.class));
+                this.finish();
+            }
+            else if (auth.getCurrentUser().getDisplayName().equals("medical")) {
+                Log.d("DisplayName", "medical");
+                startActivity(new Intent(this, MedLoggedActivity.class));
+                this.finish();
+            }
+            else if (auth.getCurrentUser().getDisplayName().equals("ambulance")) {
+                Log.d("DisplayName", "ambulance");
+                startActivity(new Intent(this, ServiceLoggedActivity.class));
+                this.finish();
+            }
+            else if (auth.getCurrentUser().getDisplayName().equals("admin")) {
+                Log.d("DisplayName", "admin");
+                //startActivity(new Intent(this, MedLoggedActivity.class));
+                //this.finish();
+            }
+
         }
 
     }

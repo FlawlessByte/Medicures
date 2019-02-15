@@ -3,12 +3,14 @@ package co.realinventor.medicures.MedStore;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-
 import com.google.firebase.auth.FirebaseAuth;
-
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import co.realinventor.medicures.Common.FeedbackActivity;
+import co.realinventor.medicures.MainActivity;
 import co.realinventor.medicures.R;
 
 public class MedLoggedActivity extends AppCompatActivity {
@@ -19,10 +21,36 @@ public class MedLoggedActivity extends AppCompatActivity {
         setContentView(R.layout.activity_med_logged);
 
         Log.d("Activity", "MedLoggedActivity");
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarX);
+        setSupportActionBar(toolbar);
     }
 
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.logged, menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_logout) {
+            FirebaseAuth.getInstance().signOut();
+            startActivity(new Intent(this, MainActivity.class));
+            this.finish();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
 
 

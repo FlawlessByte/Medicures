@@ -31,6 +31,7 @@ import co.realinventor.medicures.MedStore.MedSignInActivity;
 import co.realinventor.medicures.R;
 import droidninja.filepicker.FilePickerBuilder;
 import droidninja.filepicker.FilePickerConst;
+import droidninja.filepicker.models.sort.SortingTypes;
 
 public class ServiceDetailsActivity extends AppCompatActivity {
     EditText inputDriverName,inputDriverLocality, inputDriverAge, textVehicleLicence, textAadhar, textRC, textDriverLicence;
@@ -67,17 +68,25 @@ public class ServiceDetailsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.d("VehicleLicence Button", "Pressed");
                 currentFile = "vehicle_licence";
-                FilePickerBuilder filePickerBuilder = new FilePickerBuilder();
-                filePickerBuilder.setMaxCount(1).setActivityTitle("Select Vehicle Licence").setActivityTheme(R.style.LibAppTheme).pickFile(getParent());
-            }
+                FilePickerBuilder.Companion.getInstance()
+                        .setMaxCount(1)
+                        .setActivityTitle("Select Vehicle Licence")
+                        .setActivityTheme(R.style.LibAppTheme)
+                        .sortDocumentsBy(SortingTypes.name)
+                        .pickPhoto(ServiceDetailsActivity.this);
+                    }
         });
         buttonAadhar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d("AdharButton", "Pressed");
                 currentFile = "aadhar";
-                FilePickerBuilder filePickerBuilder = new FilePickerBuilder();
-                filePickerBuilder.setMaxCount(1).setActivityTitle("Select Aadhar Card").setActivityTheme(R.style.LibAppTheme).pickFile(getParent());
+                FilePickerBuilder.Companion.getInstance()
+                        .setMaxCount(1)
+                        .setActivityTitle("Select Aadhar Card")
+                        .setActivityTheme(R.style.LibAppTheme)
+                        .sortDocumentsBy(SortingTypes.name)
+                        .pickPhoto(ServiceDetailsActivity.this);
             }
         });
         buttonRC.setOnClickListener(new View.OnClickListener() {
@@ -85,17 +94,24 @@ public class ServiceDetailsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.d("RCButton", "Pressed");
                 currentFile = "rc_book";
-                FilePickerBuilder filePickerBuilder = new FilePickerBuilder();
-                filePickerBuilder.setMaxCount(1).setActivityTitle("Select RC doc").setActivityTheme(R.style.LibAppTheme).pickFile(getParent());
-            }
+                FilePickerBuilder.Companion.getInstance()
+                        .setMaxCount(1)
+                        .setActivityTitle("Select RC doc")
+                        .setActivityTheme(R.style.LibAppTheme)
+                        .sortDocumentsBy(SortingTypes.name)
+                        .pickPhoto(ServiceDetailsActivity.this);}
         });
         buttonDriverLicence.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d("DriverLicenceButton", "Pressed");
                 currentFile = "driver_licence";
-                FilePickerBuilder filePickerBuilder = new FilePickerBuilder();
-                filePickerBuilder.setMaxCount(1).setActivityTitle("Select Driver Licence").setActivityTheme(R.style.LibAppTheme).pickFile(getParent());
+                FilePickerBuilder.Companion.getInstance()
+                        .setMaxCount(1)
+                        .setActivityTitle("Select Driver Licence")
+                        .setActivityTheme(R.style.LibAppTheme)
+                        .sortDocumentsBy(SortingTypes.name)
+                        .pickPhoto(ServiceDetailsActivity.this);
             }
         });
 
@@ -190,25 +206,30 @@ public class ServiceDetailsActivity extends AppCompatActivity {
 
         Log.d("ActivityResult", ""+resultCode);
 
-        if(requestCode == FilePickerConst.REQUEST_CODE_DOC){
+        if(requestCode == FilePickerConst.REQUEST_CODE_PHOTO){
             if(resultCode== Activity.RESULT_OK && data!=null)
             {
                 docPaths.clear();
-                docPaths.addAll(data.getStringArrayListExtra(FilePickerConst.KEY_SELECTED_DOCS));
+                docPaths.addAll(data.getStringArrayListExtra(FilePickerConst.KEY_SELECTED_MEDIA));
             }
         }
 
-        if(currentFile.equals("vehicle_licence")){
-            textVehicleLicence.setText(docPaths.get(0));
+        if(docPaths.size()==0){
+            Log.d("docPaths", "size 0");
         }
-        if(currentFile.equals("aadhar")){
-            textAadhar.setText(docPaths.get(0));
-        }
-        if(currentFile.equals("rc_book")){
-            textRC.setText(docPaths.get(0));
-        }
-        if(currentFile.equals("driver_licence")){
-            textDriverLicence.setText(docPaths.get(0));
+        else {
+            if (currentFile.equals("vehicle_licence")) {
+                textVehicleLicence.setText(docPaths.get(0));
+            }
+            if (currentFile.equals("aadhar")) {
+                textAadhar.setText(docPaths.get(0));
+            }
+            if (currentFile.equals("rc_book")) {
+                textRC.setText(docPaths.get(0));
+            }
+            if (currentFile.equals("driver_licence")) {
+                textDriverLicence.setText(docPaths.get(0));
+            }
         }
 
 

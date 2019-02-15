@@ -1,12 +1,15 @@
 package co.realinventor.medicures.UserMod;
 
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -79,27 +82,27 @@ public class MyAccountActivity extends AppCompatActivity {
 
     public void nameEditButtonPressed(View view){
         Log.d("NameEditButton", "Pressed");
-        showDialogs("Type new name", (TextView) view, InputType.TYPE_CLASS_TEXT);
+        showDialogs("Type new name", nameEditTextView, InputType.TYPE_CLASS_TEXT);
     }
 
     public void ageEditButtonPressed(View view){
         Log.d("AgeEditButton", "Pressed");
-        showDialogs("Type age",(TextView) view, InputType.TYPE_CLASS_NUMBER);
+        showDialogs("Type age", ageEditTextView, InputType.TYPE_CLASS_NUMBER);
     }
 
     public void localityEditButtonPressed(View view){
         Log.d("LocalityEditButton", "Pressed");
-        showDialogs("Type new locality", (TextView) view, InputType.TYPE_CLASS_TEXT);
+        showDialogs("Type new locality", localityEditTextView, InputType.TYPE_CLASS_TEXT);
     }
 
     public void phoneEditButtonPressed(View view){
         Log.d("PhoneEditButton", "Pressed");
-        showDialogs("Type new phone number", (TextView) view, InputType.TYPE_CLASS_PHONE);
+        showDialogs("Type new phone number", phoneEditTextView, InputType.TYPE_CLASS_PHONE);
     }
 
     public void mailEditButtonPressed(View view){
         Log.d("MailEditButton", "Pressed");
-        showDialogs("Type new mail ID", (TextView) view, InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+        showDialogs("Type new mail ID", mailEditTextView, InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
     }
 
     public void medicalEditButtonPressed(View view){
@@ -219,7 +222,12 @@ public class MyAccountActivity extends AppCompatActivity {
 
 
     private void showDialogs(String title, final TextView textview, int inputType){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
+        } else {
+            builder = new AlertDialog.Builder(this);
+        }
         builder.setTitle(title);
 
         // Set up the input
@@ -243,6 +251,19 @@ public class MyAccountActivity extends AppCompatActivity {
         });
 
         builder.show();
+    }
+
+
+    public void saveEditsButtonClicked(View view){
+        UserDetails updatedUserDetails = new UserDetails(nameEditTextView.getText().toString(), userDetails.last_name, userDetails.gender,
+                ageEditTextView.getText().toString(),localityEditTextView.getText().toString(), phoneEditTextView.getText().toString());
+
+
+        ref.child("User").child(uid).setValue(updatedUserDetails);
+
+        FirebaseAuth.getInstance().getCurrentUser().updateEmail(mailEditTextView.getText().toString());
+
+        Toast.makeText(this, "Account Details updated!", Toast.LENGTH_SHORT).show();
     }
 
 

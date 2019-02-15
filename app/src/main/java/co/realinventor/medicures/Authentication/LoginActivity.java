@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import co.realinventor.medicures.AdminMod.AdminLoggedActivity;
 import co.realinventor.medicures.AmbulanceService.ServiceLoggedActivity;
 import co.realinventor.medicures.MedStore.MedLoggedActivity;
 import co.realinventor.medicures.R;
@@ -145,7 +146,20 @@ public class LoginActivity extends AppCompatActivity {
                                     }
                                 } else {
                                     Log.d("Sign in", "Successful");
-                                    Intent intent = new Intent(LoginActivity.this, LoggedActivity.class);
+
+                                    Intent intent;
+                                    if(auth.getCurrentUser().getDisplayName().equals("user")){
+                                        intent = new Intent(LoginActivity.this, LoggedActivity.class);
+                                    }
+                                    else if(auth.getCurrentUser().getDisplayName().equals("medical")){
+                                        intent = new Intent(LoginActivity.this, MedLoggedActivity.class);
+                                    }
+                                    else if(auth.getCurrentUser().getDisplayName().equals("ambulance")){
+                                        intent = new Intent(LoginActivity.this, MedLoggedActivity.class);
+                                    }
+                                    else{
+                                        intent = new Intent(LoginActivity.this, AdminLoggedActivity.class);
+                                    }
                                     startActivity(intent);
                                     finish();
                                 }

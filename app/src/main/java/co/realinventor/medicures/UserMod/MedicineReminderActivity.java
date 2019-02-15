@@ -1,9 +1,11 @@
 package co.realinventor.medicures.UserMod;
 
+import android.Manifest;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Build;
@@ -15,16 +17,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
 import com.kevalpatel.ringtonepicker.RingtonePickerDialog;
 import com.kevalpatel.ringtonepicker.RingtonePickerListener;
-
-
 import java.util.Calendar;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import co.realinventor.medicures.Common.AlarmsOpenHelper;
 import co.realinventor.medicures.R;
 
@@ -55,6 +54,16 @@ public class MedicineReminderActivity extends AppCompatActivity {
         ringtoneSelectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+                if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    // Permission is not granted
+                    Log.d("Permission", "No WRITE_EXTERNAL_STORAGE permission");
+                }else
+                    Log.d("Permission", "WRITE_EXTERNAL_STORAGE permission");
+
+
                 RingtonePickerDialog.Builder ringtonePickerBuilder = new RingtonePickerDialog
                         .Builder(MedicineReminderActivity.this, getSupportFragmentManager())
                         .setTitle("Select ringtone")
@@ -66,13 +75,14 @@ public class MedicineReminderActivity extends AppCompatActivity {
                             @Override
                             public void OnRingtoneSelected(@NonNull String ringtoneName, Uri ringtoneUri) {
                                 //Do someting with selected uri...
+                                Log.d("SelectedRIngtone URI", ringtoneUri.getPath());
                                 selectedRingtoneUri = ringtoneUri;
-                                ringtoneText.setText(selectedRingtoneUri.getLastPathSegment());
+                                ringtoneText.setText(selectedRingtoneUri.getPath());
                             }
                         });
 
                 //Add the desirable ringtone types.
-                ringtonePickerBuilder.addRingtoneType(RingtonePickerDialog.Builder.TYPE_MUSIC);
+                //ringtonePickerBuilder.addRingtoneType(RingtonePickerDialog.Builder.TYPE_MUSIC);
                 ringtonePickerBuilder.addRingtoneType(RingtonePickerDialog.Builder.TYPE_RINGTONE);
                 ringtonePickerBuilder.addRingtoneType(RingtonePickerDialog.Builder.TYPE_ALARM);
 
@@ -90,12 +100,12 @@ public class MedicineReminderActivity extends AppCompatActivity {
 
         AlertDialog.Builder builder;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            builder = new AlertDialog.Builder(getApplicationContext(), android.R.style.Theme_Material_Dialog_Alert);
+            builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
         } else {
-            builder = new AlertDialog.Builder(getApplicationContext());
+            builder = new AlertDialog.Builder(this);
         }
-        builder.setTitle("Set Reminder")
-                .setMessage("Medicine Name : "+medicineName+"\nTime :"+time.getTime() + "\nSelected Ringtone : " +selectedRingtoneUri.getLastPathSegment())
+        builder.setTitle("Set Reminder?")
+                .setMessage("Medicine Name : "+medicineName+"\nTime : "+time.getTime())
                 .setPositiveButton("Set", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // set alarm
@@ -108,8 +118,12 @@ public class MedicineReminderActivity extends AppCompatActivity {
 
                     }
                 })
-                .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
+    }
+
+    public void cancelButtonClicked(View view){
+        startActivity(new Intent(this, LoggedActivity.class));
+        this.finish();
     }
 
 

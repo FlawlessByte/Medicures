@@ -53,10 +53,10 @@ public class MedicineAlarmedActivity extends AppCompatActivity {
                 try{
                     // Vibrate for 500 milliseconds
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+                        v.vibrate(VibrationEffect.createOneShot(1000, VibrationEffect.DEFAULT_AMPLITUDE));
                     } else {
                         //deprecated in API 26
-                        v.vibrate(500);
+                        v.vibrate(1000);
                     }
                 }
                 catch (Exception e) {
@@ -64,7 +64,7 @@ public class MedicineAlarmedActivity extends AppCompatActivity {
                 }
                 finally{
                     //also call the same runnable to call it at regular interval
-                    handler.postDelayed(this, 500);
+                    handler.postDelayed(this, 1500);
                 }
             }
         };
@@ -89,7 +89,7 @@ public class MedicineAlarmedActivity extends AppCompatActivity {
                 mMediaPlayer.start();
             }
         } catch(Exception e) {
-            Log.d("MediaPlayer", e.getLocalizedMessage());
+            Log.d("MediaPlayer Error", e.getLocalizedMessage());
         }
 
 

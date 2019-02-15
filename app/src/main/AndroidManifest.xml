@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="co.realinventor.medicures">
 
     <uses-permission android:name="android.permission.INTERNET" /> <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:node="replace" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
@@ -17,7 +20,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MedStore.MedRequestsActivity"></activity>
+        <activity android:name=".AdminMod.AdminLoggedActivity"></activity>
+        <activity android:name=".MedStore.MedRequestsActivity" />
         <activity android:name=".MedStore.MedAccountActivity" />
         <activity android:name=".Common.FeedbackActivity" />
         <activity android:name=".AmbulanceService.ServiceAvailabilityActivity" />
@@ -30,7 +34,7 @@
         <activity android:name=".UserMod.MedicineReminderActivity" />
         <activity android:name=".AmbulanceService.ServiceLoggedActivity" />
         <activity android:name=".AmbulanceService.ServiceDetailsActivity" />
-        <activity android:name=".MedStore.MedLoggedActivity" />
+        <activity android:name=".MedStore.MedLoggedActivity" android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"/>
         <activity android:name=".MedStore.MedSignInActivity" />
         <activity
             android:name=".UserMod.LoggedActivity"

@@ -10,126 +10,150 @@
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="20dp">
+        android:layout_margin="20dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TableRow
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:weightSum="1"
-            android:layout_weight="0.5">
+            android:layout_weight="0.5"
+            android:weightSum="1">
+
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5">
+
                 <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
                     android:id="@+id/button1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:background="@drawable/right_button_btn_line"
+                    android:gravity="center|bottom"
+                    android:paddingBottom="10dp"
+                    android:singleLine="false"
                     android:text="Medical Store"
-                    android:textSize="18sp"
-                    android:gravity="center|bottom"
-                    android:singleLine="false"
-                    android:paddingBottom="10dp"/>
+                    android:textSize="18sp" />
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/pill"
-                    android:layout_centerInParent="true"/>
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/pill" />
             </RelativeLayout>
+
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5">
+
                 <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
                     android:id="@+id/button2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:background="@drawable/right_button_btn_line"
-                    android:text="Ambulance"
-                    android:textSize="18sp"
                     android:gravity="center|bottom"
+                    android:paddingBottom="10dp"
                     android:singleLine="false"
-                    android:paddingBottom="10dp"/>
+                    android:text="Ambulance"
+                    android:textSize="18sp" />
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ambulance"
-                    android:layout_centerInParent="true"/>
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ambulance" />
             </RelativeLayout>
         </TableRow>
 
         <TableRow
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:weightSum="1"
-            android:layout_weight="0.5">
+            android:layout_weight="0.5"
+            android:weightSum="1">
+
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5">
+
                 <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
                     android:id="@+id/button3"
-                    android:onClick="loggedReminderButtonPressed"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:background="@drawable/right_button_btn_line"
-                    android:text="Reminder"
-                    android:textSize="18sp"
                     android:gravity="center|bottom"
-                    android:paddingBottom="10dp"/>
+                    android:onClick="loggedReminderButtonPressed"
+                    android:paddingBottom="10dp"
+                    android:text="Reminder"
+                    android:textSize="18sp" />
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/alarm"
-                    android:layout_centerInParent="true"/>
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/alarm" />
             </RelativeLayout>
+
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5">
+
                 <Button
+                    android:id="@+id/button4"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/button4"
                     android:background="@drawable/right_button_btn_line"
-                    android:text="Doctor Visit"
-                    android:onClick="loggedDocVisitButtonPressed"
-                    android:textSize="18sp"
                     android:gravity="center|bottom"
-                    android:paddingBottom="10dp"/>
+                    android:onClick="loggedDocVisitButtonPressed"
+                    android:paddingBottom="10dp"
+                    android:text="Doctor Visit"
+                    android:textSize="18sp" />
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/stethoscope"
-                    android:layout_centerInParent="true"/>
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/stethoscope" />
             </RelativeLayout>
         </TableRow>
 
         <TableRow
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:weightSum="1"
-            android:layout_weight="0.5">
+            android:layout_weight="0.5"
+            android:weightSum="1">
+
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5">
+
                 <Button
+                    android:id="@+id/button5"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/button5"
                     android:background="@drawable/right_button_btn_line"
-                    android:text="Alert"
-                    android:textSize="18sp"
                     android:gravity="center|bottom"
-                    android:paddingBottom="10dp"/>
+                    android:paddingBottom="10dp"
+                    android:text="Alert"
+                    android:textSize="18sp" />
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/exclamation"
-                    android:layout_centerInParent="true"/>
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/exclamation" />
             </RelativeLayout>
+
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"

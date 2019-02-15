@@ -27,9 +27,11 @@ import java.util.ArrayList;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import co.realinventor.medicures.AmbulanceService.ServiceDetailsActivity;
 import co.realinventor.medicures.R;
 import droidninja.filepicker.FilePickerBuilder;
 import droidninja.filepicker.FilePickerConst;
+import droidninja.filepicker.models.sort.SortingTypes;
 
 public class MedSignInActivity extends AppCompatActivity {
     ImageButton buttonBluePrint, buttonGST, buttonSanction, buttonPharmaceutical;
@@ -51,6 +53,13 @@ public class MedSignInActivity extends AppCompatActivity {
         buttonSanction = findViewById(R.id.buttonSanction);
         buttonPharmaceutical = findViewById(R.id.buttonPharmaceutical);
 
+        inputShopName = findViewById(R.id.inputShopName);
+        inputLocality = findViewById(R.id.inputLocality);
+        inputPinCode = findViewById(R.id.inputPinCode);
+        inputOwnerName = findViewById(R.id.inputOwnerName);
+        inputPharmacist = findViewById(R.id.inputPharmacist);
+        inputPhone = findViewById(R.id.inputPhone);
+
         textBluePrint = findViewById(R.id.textBluePrint);
         textGST = findViewById(R.id.textGST);
         textSanction = findViewById(R.id.textSanction);
@@ -64,9 +73,12 @@ public class MedSignInActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.d("bluePrintButton", "Pressed");
                 currentFile = "blue_print";
-                FilePickerBuilder filePickerBuilder = new FilePickerBuilder();
-                filePickerBuilder.setMaxCount(1).setActivityTitle("Select blue print").setActivityTheme(R.style.LibAppTheme).pickFile(getParent());
-
+                FilePickerBuilder.Companion.getInstance()
+                        .setMaxCount(1)
+                        .setActivityTitle("Select Blue print")
+                        .setActivityTheme(R.style.LibAppTheme)
+                        .sortDocumentsBy(SortingTypes.name)
+                        .pickPhoto(MedSignInActivity.this);
             }
         });
         buttonGST.setOnClickListener(new View.OnClickListener() {
@@ -74,9 +86,12 @@ public class MedSignInActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.d("GSTButton", "Pressed");
                 currentFile = "GST";
-                FilePickerBuilder filePickerBuilder = new FilePickerBuilder();
-                filePickerBuilder.setMaxCount(1).setActivityTitle("Select GST doc").setActivityTheme(R.style.LibAppTheme).pickFile(getParent());
-
+                FilePickerBuilder.Companion.getInstance()
+                        .setMaxCount(1)
+                        .setActivityTitle("Select GST doc")
+                        .setActivityTheme(R.style.LibAppTheme)
+                        .sortDocumentsBy(SortingTypes.name)
+                        .pickPhoto(MedSignInActivity.this);
             }
         });
         buttonSanction.setOnClickListener(new View.OnClickListener() {
@@ -84,9 +99,12 @@ public class MedSignInActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.d("SanctionButton", "Pressed");
                 currentFile = "sanction";
-                FilePickerBuilder filePickerBuilder = new FilePickerBuilder();
-                filePickerBuilder.setMaxCount(1).setActivityTitle("Select sanction doc").setActivityTheme(R.style.LibAppTheme).pickFile(getParent());
-
+                FilePickerBuilder.Companion.getInstance()
+                        .setMaxCount(1)
+                        .setActivityTitle("Select sanction doc")
+                        .setActivityTheme(R.style.LibAppTheme)
+                        .sortDocumentsBy(SortingTypes.name)
+                        .pickPhoto(MedSignInActivity.this);
             }
         });
         buttonPharmaceutical.setOnClickListener(new View.OnClickListener() {
@@ -94,9 +112,12 @@ public class MedSignInActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.d("PharmaceuticalButton", "Pressed");
                 currentFile = "pharmaceutical";
-                FilePickerBuilder filePickerBuilder = new FilePickerBuilder();
-                filePickerBuilder.setMaxCount(1).setActivityTitle("Select pharmaceutical doc").setActivityTheme(R.style.LibAppTheme).pickFile(getParent());
-
+                FilePickerBuilder.Companion.getInstance()
+                        .setMaxCount(1)
+                        .setActivityTitle("Select pharmaceutical doc")
+                        .setActivityTheme(R.style.LibAppTheme)
+                        .sortDocumentsBy(SortingTypes.name)
+                        .pickPhoto(MedSignInActivity.this);
             }
         });
 
@@ -152,7 +173,7 @@ public class MedSignInActivity extends AppCompatActivity {
     }
 
     public void uploadFile(Uri file,String uid, int no){
-        StorageReference riversRef = storageRef.child("docs/med_store/"+uid+file.getLastPathSegment());
+        StorageReference riversRef = storageRef.child("docs/med_store/"+uid+"/"+file.getLastPathSegment());
         UploadTask uploadTask = riversRef.putFile(file);
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
@@ -218,27 +239,28 @@ public class MedSignInActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         Log.d("ActivityResult", resultCode+"");
-        if(requestCode == FilePickerConst.REQUEST_CODE_DOC){
+        if(requestCode == FilePickerConst.REQUEST_CODE_PHOTO){
             if(resultCode== Activity.RESULT_OK && data!=null)
             {
                 docPaths.clear();
-                docPaths.addAll(data.getStringArrayListExtra(FilePickerConst.KEY_SELECTED_DOCS));
+                docPaths.addAll(data.getStringArrayListExtra(FilePickerConst.KEY_SELECTED_MEDIA));
             }
         }
 
-        if(currentFile.equals("blue_print")){
-            textBluePrint.setText(docPaths.get(0));
+        if(docPaths.size() != 0) {
+            if (currentFile.equals("blue_print")) {
+                textBluePrint.setText(docPaths.get(0));
+            }
+            if (currentFile.equals("GST")) {
+                textGST.setText(docPaths.get(0));
+            }
+            if (currentFile.equals("sanction")) {
+                textSanction.setText(docPaths.get(0));
+            }
+            if (currentFile.equals("pharmaceutical")) {
+                textPharmaceutical.setText(docPaths.get(0));
+            }
         }
-        if(currentFile.equals("GST")){
-            textGST.setText(docPaths.get(0));
-        }
-        if(currentFile.equals("sanction")){
-            textSanction.setText(docPaths.get(0));
-        }
-        if(currentFile.equals("pharmaceutical")){
-            textPharmaceutical.setText(docPaths.get(0));
-        }
-
 
         super.onActivityResult(requestCode, resultCode, data);
     }

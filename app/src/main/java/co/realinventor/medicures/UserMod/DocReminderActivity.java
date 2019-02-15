@@ -94,12 +94,12 @@ public class DocReminderActivity extends AppCompatActivity {
                     public void OnRingtoneSelected(@NonNull String ringtoneName, Uri ringtoneUri) {
                         //Do someting with selected uri...
                         selectedRingtoneUri = ringtoneUri;
-                        ringtoneText.setText(selectedRingtoneUri.getLastPathSegment());
+                        ringtoneText.setText(selectedRingtoneUri.getPath());
                     }
                 });
 
         //Add the desirable ringtone types.
-        ringtonePickerBuilder.addRingtoneType(RingtonePickerDialog.Builder.TYPE_MUSIC);
+        //ringtonePickerBuilder.addRingtoneType(RingtonePickerDialog.Builder.TYPE_MUSIC);
         ringtonePickerBuilder.addRingtoneType(RingtonePickerDialog.Builder.TYPE_RINGTONE);
         ringtonePickerBuilder.addRingtoneType(RingtonePickerDialog.Builder.TYPE_ALARM);
 
@@ -116,12 +116,12 @@ public class DocReminderActivity extends AppCompatActivity {
 
         AlertDialog.Builder builder;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            builder = new AlertDialog.Builder(getApplicationContext(), android.R.style.Theme_Material_Dialog_Alert);
+            builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
         } else {
-            builder = new AlertDialog.Builder(getApplicationContext());
+            builder = new AlertDialog.Builder(this);
         }
-        builder.setTitle("Set Reminder")
-                .setMessage("Doctor Name : "+doctorName+"\nDate :"+date.getDate()+"\nTime :"+time.getTime() + "\nSelected Ringtone : " +selectedRingtoneUri.getLastPathSegment())
+        builder.setTitle("Set Reminder?")
+                .setMessage("Doctor Name : "+doctorName+"\nDate : "+date.getDate()+"\nTime : "+time.getTime() )
                 .setPositiveButton("Set", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // set alarm
@@ -134,14 +134,13 @@ public class DocReminderActivity extends AppCompatActivity {
 
                     }
                 })
-                .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
     }
 
     private void createReminder(){
         Log.d("Reminder", "Creating reminder");
-        initDatabase();
-        addAlarmToDatabase(doctorName, date.getDate().toString(), ""+time.getHour(), ""+time.getMinute(), selectedRingtoneUri.toString());
+        //initDatabase();
+        //addAlarmToDatabase(doctorName, date.getDate().toString(), ""+time.getHour(), ""+time.getMinute(), selectedRingtoneUri.toString());
 
 
 
