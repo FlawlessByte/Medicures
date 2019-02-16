@@ -61,12 +61,12 @@ public class ServiceAccountActivity extends AppCompatActivity {
 
     public void nameEditButtonPressed(View view){
         Log.d("NameEditButton", "Pressed");
-        showDialogs("Type new name",(EditText) view, InputType.TYPE_CLASS_TEXT);
+        showDialogs("Type new name",(EditText) nameEditTextView, InputType.TYPE_CLASS_TEXT);
     }
 
     public void contactEditButtonPressed(View view){
         Log.d("ContactEditButton", "Pressed");
-        showDialogs("Type new contact number",(EditText) view, InputType.TYPE_CLASS_PHONE);
+        showDialogs("Type new contact number",(EditText) contactEditTextView, InputType.TYPE_CLASS_PHONE);
     }
 
     public void saveButtonPressed(View view){

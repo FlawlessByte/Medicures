@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#FFF">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarDialogMedAdmin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- YOUR CUSTOM VIEWS HERE -->
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="50dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:text="Shop name"
+                android:textStyle="bold"
+                android:textColor="#000"
+                android:padding="10dp"
+                android:layout_margin="5dp"
+                android:id="@+id/medXShopName"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:text="Locality"
+                android:id="@+id/medXLocality"
+                android:textStyle="bold"
+                android:padding="10dp"
+                android:textColor="#000"
+                android:layout_margin="5dp"
+                android:background="@drawable/right_button_btn_line"
+                android:layout_below="@+id/medXShopName"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:text="Owner Name"
+                android:id="@+id/medXOwnerName"
+                android:textStyle="bold"
+                android:padding="10dp"
+                android:textColor="#000"
+                android:layout_margin="5dp"
+                android:background="@drawable/right_button_btn_line"
+                android:layout_below="@+id/medXLocality"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:text="Pharmacist"
+                android:id="@+id/medXPharmacist"
+                android:textStyle="bold"
+                android:padding="10dp"
+                android:textColor="#000"
+                android:layout_margin="5dp"
+                android:background="@drawable/right_button_btn_line"
+                android:layout_below="@+id/medXOwnerName"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:text="Phone"
+                android:id="@+id/medXPhone"
+                android:textStyle="bold"
+                android:padding="10dp"
+                android:textColor="#000"
+                android:layout_margin="5dp"
+                android:background="@drawable/right_button_btn_line"
+                android:layout_below="@+id/medXPharmacist"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:text="Pin Code"
+                android:id="@+id/medXPinCode"
+                android:textStyle="bold"
+                android:padding="10dp"
+                android:textColor="#000"
+                android:layout_margin="5dp"
+                android:background="@drawable/right_button_btn_line"
+                android:layout_below="@+id/medXPhone"
+                android:gravity="center"/>
+
+
+
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/medicineXApproveButton"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_margin="20dp"
+                android:padding="20dp"
+                android:text="Approve"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/medicineXDenyButton"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_margin="20dp"
+                android:padding="20dp"
+                android:text="Reject"/>
+
+        </RelativeLayout>
+
+
+
+
+    </FrameLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

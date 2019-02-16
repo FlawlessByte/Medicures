@@ -1,25 +1,33 @@
 package co.realinventor.medicures.UserMod;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-
 import androidx.drawerlayout.widget.DrawerLayout;
+import co.realinventor.medicures.Common.MedStoreShowActivity;
+import co.realinventor.medicures.Common.Statics;
 import co.realinventor.medicures.MainActivity;
 import co.realinventor.medicures.R;
 
 public class LoggedActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private final int CALL_REQUEST = 100;
     FirebaseAuth auth;
 
     @Override
@@ -124,6 +132,52 @@ public class LoggedActivity extends AppCompatActivity
         return true;
     }
 
+    public void loggedAlertButtonPressed(View view){
+        callPhoneNumber();
+    }
+
+
+    public void callPhoneNumber()
+    {
+        try
+        {
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            {
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+
+                    ActivityCompat.requestPermissions(LoggedActivity.this, new String[]{Manifest.permission.CALL_PHONE}, CALL_REQUEST);
+
+                    return;
+                }
+            }
+
+            Intent callIntent = new Intent(Intent.ACTION_CALL);
+            callIntent.setData(Uri.parse("tel: +918281202115 "));
+            startActivity(callIntent);
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                           int[] grantResults)
+    {
+        if(requestCode == CALL_REQUEST)
+        {
+            if(grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            {
+                callPhoneNumber();
+            }
+            else
+            {
+                Toast.makeText(LoggedActivity.this, "Permission denied!", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 
     public void loggedReminderButtonPressed(View view){
         Log.d("ReminderButton", "Pressed");
@@ -134,6 +188,19 @@ public class LoggedActivity extends AppCompatActivity
         Log.d("DocVisitButton", "Pressed");
         startActivity(new Intent(LoggedActivity.this, DocReminderActivity.class));
     }
+
+    public void loggedMedicineButtonPressed(View view){
+        Log.d("MedicinetButton", "Pressed");
+        Statics.MED_REQ_ACTIVITY = "User";
+        startActivity(new Intent(LoggedActivity.this, MedStoreShowActivity.class));
+    }
+
+    public void loggedAmbulanceButtonPressed(View view){
+        Log.d("AmbulanceButton", "Pressed");
+        startActivity(new Intent(LoggedActivity.this, DocReminderActivity.class));
+    }
+
+
 
 
 }

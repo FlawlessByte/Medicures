@@ -10,6 +10,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import co.realinventor.medicures.Common.FeedbackActivity;
+import co.realinventor.medicures.Common.NotificationsActivity;
 import co.realinventor.medicures.MainActivity;
 import co.realinventor.medicures.R;
 
@@ -61,6 +62,7 @@ public class MedLoggedActivity extends AppCompatActivity {
 
     public void medNotificationButtonPressed(View view){
         Log.d("NotifivationButton", "Pressed");
+        startActivity(new Intent(this, NotificationsActivity.class));
     }
 
     public void medSentMailButtonPressed(View view){

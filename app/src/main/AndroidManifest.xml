@@ -12,6 +12,7 @@
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:node="replace" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:allowBackup="true"
@@ -20,21 +21,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AdminMod.AdminLoggedActivity"></activity>
+        <activity android:name=".Common.MedStoreShowActivity"></activity>
+        <activity android:name=".Common.NotificationsActivity" />
+        <activity android:name=".AdminMod.AdminLoggedActivity" />
         <activity android:name=".MedStore.MedRequestsActivity" />
         <activity android:name=".MedStore.MedAccountActivity" />
         <activity android:name=".Common.FeedbackActivity" />
         <activity android:name=".AmbulanceService.ServiceAvailabilityActivity" />
-        <activity android:name=".AmbulanceService.ServiceNotificationActivity" />
         <activity android:name=".AmbulanceService.ServiceAccountActivity" />
         <activity android:name=".UserMod.MyAccountActivity" />
         <activity android:name=".UserMod.DocVisitAlarmedActivity" />
         <activity android:name=".UserMod.DocReminderActivity" />
         <activity android:name=".UserMod.MedicineAlarmedActivity" />
         <activity android:name=".UserMod.MedicineReminderActivity" />
-        <activity android:name=".AmbulanceService.ServiceLoggedActivity" />
+        <activity
+            android:name=".AmbulanceService.ServiceLoggedActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity android:name=".AmbulanceService.ServiceDetailsActivity" />
-        <activity android:name=".MedStore.MedLoggedActivity" android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"/>
+        <activity
+            android:name=".MedStore.MedLoggedActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity android:name=".MedStore.MedSignInActivity" />
         <activity
             android:name=".UserMod.LoggedActivity"

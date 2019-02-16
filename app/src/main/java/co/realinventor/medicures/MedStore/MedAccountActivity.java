@@ -95,7 +95,7 @@ public class MedAccountActivity extends AppCompatActivity {
 
     public void saveMedEditsButtonClicked(View view){
         Log.d("SaveButton", "Pressed");
-        MedStoreDetails newMedStoreDetails = new MedStoreDetails(medNameEditText.getText().toString(), medLocalityEditText.getText().toString(),
+        MedStoreDetails newMedStoreDetails = new MedStoreDetails(medStoreDetails.mUid,medNameEditText.getText().toString(), medLocalityEditText.getText().toString(),
                 medOwnerEditText.getText().toString(),
                 medStoreDetails.pharmacist,
                 medContactEditText.getText().toString(), medStoreDetails.pinCode, medStoreDetails.verified);

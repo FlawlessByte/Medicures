@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#FFF">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarDialogMedUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- YOUR CUSTOM VIEWS HERE -->
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="50dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:text="Request Medicine"
+                android:textStyle="bold"
+                android:padding="10dp"
+                android:textColor="#000"
+                android:layout_margin="5dp"
+                android:id="@+id/medicineblah"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:text="Shop Name"
+                android:id="@+id/medYShopName"
+                android:textStyle="bold"
+                android:padding="10dp"
+                android:textColor="#000"
+                android:layout_margin="5dp"
+                android:background="@drawable/right_button_btn_line"
+                android:layout_below="@+id/medicineblah"
+                android:gravity="center"/>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_margin="5dp"
+                android:id="@+id/relLay1"
+                android:layout_below="@+id/medYShopName"
+                android:background="@drawable/right_button_btn_line"
+                android:padding="10dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/abc"
+                    android:layout_alignParentTop="true"
+                    android:textSize="16sp"
+                    android:textColor="#000"
+                    android:layout_alignParentLeft="true"
+                    android:text="Medicine Name"/>
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/medYMedicineName"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/abc"
+                    android:textSize="18sp"
+                    android:textColor="#000"
+                    android:textStyle="bold"
+                    android:layout_alignParentLeft="true"
+
+                    android:text=""/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_margin="5dp"
+                android:id="@+id/relLay2"
+                android:layout_below="@+id/relLay1"
+                android:background="@drawable/right_button_btn_line"
+                android:padding="10dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/abcd"
+                    android:layout_alignParentTop="true"
+                    android:textSize="16sp"
+                    android:textColor="#000"
+                    android:layout_alignParentLeft="true"
+                    android:text="Medicine Dosage"/>
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/medYMedicineDosage"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/abcd"
+                    android:textSize="18sp"
+                    android:textColor="#000"
+                    android:textStyle="bold"
+                    android:inputType="number"
+                    android:layout_alignParentLeft="true"
+
+                    android:text=""/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_margin="5dp"
+                android:id="@+id/relLay3"
+                android:layout_below="@+id/relLay2"
+                android:background="@drawable/right_button_btn_line"
+                android:padding="10dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/abcde"
+                    android:layout_alignParentTop="true"
+                    android:textSize="16sp"
+                    android:textColor="#000"
+                    android:layout_alignParentLeft="true"
+                    android:text="Medicine Quantity"/>
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/medYMedicineQty"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/abcde"
+                    android:textSize="18sp"
+                    android:textColor="#000"
+                    android:textStyle="bold"
+                    android:layout_alignParentLeft="true"
+
+                    android:text=""/>
+
+            </RelativeLayout>
+
+
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/medYOrder"
+                android:layout_below="@+id/relLay3"
+                android:layout_alignParentRight="true"
+                android:layout_margin="20dp"
+                android:padding="20dp"
+                android:text="Place order"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/medYCancel"
+                android:layout_below="@+id/relLay3"
+                android:layout_alignParentLeft="true"
+                android:layout_margin="20dp"
+                android:padding="20dp"
+                android:text="Cancel"/>
+
+        </RelativeLayout>
+
+
+
+
+    </FrameLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

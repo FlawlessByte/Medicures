@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#FFF">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarDialog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- YOUR CUSTOM VIEWS HERE -->
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="50dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:text="Trans id"
+                android:textColor="#000"
+                android:textStyle="bold"
+                android:padding="10dp"
+                android:layout_margin="5dp"
+                android:id="@+id/medicineReqTransID"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:text="Customer Name"
+                android:id="@+id/medicineReqCustomerName"
+                android:textStyle="bold"
+                android:padding="10dp"
+                android:textColor="#000"
+                android:layout_margin="5dp"
+                android:background="@drawable/right_button_btn_line"
+                android:layout_below="@+id/medicineReqTransID"
+                android:gravity="center"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_below="@id/medicineReqCustomerName">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="18dp"
+                        android:text="Medicine Name"
+                        android:id="@+id/medicineReqMedicineName"
+                        android:textStyle="bold"
+                        android:padding="10dp"
+                        android:layout_margin="5dp"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="18dp"
+                        android:text="Dosage "
+                        android:id="@+id/medicineReqMedicineDosage"
+                        android:textStyle="bold"
+                        android:padding="10dp"
+                        android:layout_margin="5dp"
+                        android:layout_below="@+id/medicineReqMedicineName"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="18dp"
+                        android:text="Quantity"
+                        android:id="@+id/medicineReqMedicineQuantity"
+                        android:textStyle="bold"
+                        android:padding="10dp"
+                        android:layout_margin="5dp"
+                        android:layout_below="@+id/medicineReqMedicineDosage"
+                        android:gravity="center"/>
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/editTextAmount"
+                        android:layout_below="@+id/medicineReqMedicineQuantity"
+                        android:textAlignment="center"
+                        android:inputType="number"
+                        android:padding="10dp"
+                        android:layout_margin="5dp"
+                        android:hint="Amount"/>
+
+                </RelativeLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/medicineReqApproveButton"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_margin="20dp"
+                android:padding="20dp"
+                android:text="Process Bill"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/medicineReqDenyButton"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_margin="20dp"
+                android:padding="20dp"
+                android:text="Reject"/>
+
+        </RelativeLayout>
+
+
+
+
+    </FrameLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -3,6 +3,8 @@ package co.realinventor.medicures.AmbulanceService;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -14,7 +16,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import co.realinventor.medicures.Common.FeedbackActivity;
+import co.realinventor.medicures.Common.Notifications;
+import co.realinventor.medicures.Common.NotificationsActivity;
+import co.realinventor.medicures.MainActivity;
 import co.realinventor.medicures.R;
 
 public class ServiceLoggedActivity extends AppCompatActivity {
@@ -28,6 +34,9 @@ public class ServiceLoggedActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_service_logged);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarY);
+        setSupportActionBar(toolbar);
 
         Log.d("Activity", "ServiceLoggedActivity");
 
@@ -59,6 +68,32 @@ public class ServiceLoggedActivity extends AppCompatActivity {
 
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.logged, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_logout) {
+            FirebaseAuth.getInstance().signOut();
+            startActivity(new Intent(this, MainActivity.class));
+            this.finish();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     public void accountButtonClicked(View view){
         Log.d("AccountButton", "Pressed");
         startActivity(new Intent(this, ServiceAccountActivity.class));
@@ -71,11 +106,13 @@ public class ServiceLoggedActivity extends AppCompatActivity {
 
     public void notificationButtonClicked(View view){
         Log.d("NotifivationButton", "Pressed");
-        startActivity(new Intent(this, ServiceNotificationActivity.class));
+        startActivity(new Intent(this, NotificationsActivity.class));
     }
 
     public void availabilityButtonClicked(View view){
         Log.d("AvailabilityButton", "Pressed");
-        startActivity(new Intent(this, ServiceAvailabilityActivity.class).putExtra("availability",serviceDetails.availability));
+        Intent i = new Intent(this, ServiceAvailabilityActivity.class);
+        i.putExtra("availability",serviceDetails.availability);
+        startActivity(i);
     }
 }

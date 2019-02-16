@@ -4,6 +4,8 @@ package co.realinventor.medicures.Common;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,10 +37,10 @@ public class FeedbackActivity extends AppCompatActivity {
         setContentView(R.layout.activity_feedback);
         Log.d("Activity", "FeedbackActiivity");
 
-        uid = getIntent().getStringExtra("uid");
+        uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         //RecyclerView things
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view_feedback);
 
         mAdapter = new FeedbackAdapter(feedbackList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());

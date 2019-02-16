@@ -107,7 +107,7 @@ public class MyAccountActivity extends AppCompatActivity {
 
     public void medicalEditButtonPressed(View view){
         Log.d("MedicalEditButton", "Pressed");
-        Query medQuery = ref.child("MedStore");
+        Query medQuery = ref.child("MedStores");
         medQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -116,7 +116,7 @@ public class MyAccountActivity extends AppCompatActivity {
                 String element = "";
                 for (DataSnapshot medSnapShot : dataSnapshot.getChildren()){
                     MedStoreDetails medStoreDetails = medSnapShot.getValue(MedStoreDetails.class);
-                    element = medStoreDetails.shopName + "| " + medStoreDetails.locality;
+                    element = medStoreDetails.shopName + " | " + medStoreDetails.locality;
                     medicalList.add(element);
                 }
 

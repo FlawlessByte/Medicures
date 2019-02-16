@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,14 +19,11 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-
 import java.io.File;
 import java.util.ArrayList;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import co.realinventor.medicures.AmbulanceService.ServiceDetailsActivity;
 import co.realinventor.medicures.R;
 import droidninja.filepicker.FilePickerBuilder;
 import droidninja.filepicker.FilePickerConst;
@@ -152,7 +148,7 @@ public class MedSignInActivity extends AppCompatActivity {
         phone = inputPhone.getText().toString();
         pinCode = inputPinCode.getText().toString();
 
-        MedStoreDetails medStoreDetails = new MedStoreDetails(shopName, locality, ownerName, pharmacist, phone, pinCode, verified);
+        MedStoreDetails medStoreDetails = new MedStoreDetails(uid ,shopName, locality, ownerName, pharmacist, phone, pinCode, verified);
 
         DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
         myRef.child("MedStores").child(uid).setValue(medStoreDetails);

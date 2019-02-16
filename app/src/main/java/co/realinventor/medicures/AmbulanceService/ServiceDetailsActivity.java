@@ -56,7 +56,7 @@ public class ServiceDetailsActivity extends AppCompatActivity {
         textVehicleLicence = findViewById(R.id.textVehicleLicence);
         textAadhar = findViewById(R.id.textAadhar);
         textRC = findViewById(R.id.textRC);
-        textVehicleLicence = findViewById(R.id.textVehicleLicence);
+        textDriverLicence = findViewById(R.id.textDriverLicence);
 
         buttonVehicleLicence = findViewById(R.id.buttonVehicleLicence);
         buttonAadhar = findViewById(R.id.buttonAadhar);
@@ -144,7 +144,7 @@ public class ServiceDetailsActivity extends AppCompatActivity {
         driverName = inputDriverName.getText().toString();
         driverLocality = inputDriverLocality.getText().toString();
         driverAge = inputDriverAge.getText().toString();
-        ServiceDetails serviceDetails = new ServiceDetails(driverName,driverLocality,driverAge,verified);
+        ServiceDetails serviceDetails = new ServiceDetails(driverName,driverLocality,driverAge,verified, "no"/*availablity*/);
 
         DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
         myRef.child("Ambulances").child(uid).setValue(serviceDetails);
@@ -166,7 +166,7 @@ public class ServiceDetailsActivity extends AppCompatActivity {
 
 
     public void uploadFile(Uri file,String uid, int no){
-        StorageReference riversRef = storageRef.child("docs/ambulance/"+uid+file.getLastPathSegment());
+        StorageReference riversRef = storageRef.child("docs/ambulance/"+uid+"/"+file.getLastPathSegment());
         UploadTask uploadTask = riversRef.putFile(file);
 
         final ProgressDialog progressDialog = new ProgressDialog(this);

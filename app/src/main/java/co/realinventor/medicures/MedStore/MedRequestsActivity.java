@@ -5,23 +5,21 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import co.realinventor.medicures.Common.Feedback;
 import co.realinventor.medicures.R;
 
 public class MedRequestsActivity extends AppCompatActivity {
@@ -38,6 +36,9 @@ public class MedRequestsActivity extends AppCompatActivity {
 
         Log.d("Activity", "MedRequestsActivity");
 
+
+        uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view_medicine);
 
         mAdapter = new MedicineAdapter(medicineList);
@@ -51,8 +52,13 @@ public class MedRequestsActivity extends AppCompatActivity {
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Medicine med = medicineList.get(position);
+                FullScreenDialog.currentMedicine = medicineList.get(position);
                 //Toast.makeText(getApplicationContext(), movie.getTitle() + " is selected!", Toast.LENGTH_SHORT).show();
+
+
+                FullScreenDialog dialog = new FullScreenDialog();
+                //FragmentTransaction ft = getFragmentManager().beginTransaction(); /* Error prone area*/
+                dialog.show(getSupportFragmentManager().beginTransaction(), FullScreenDialog.TAG);
             }
 
             @Override

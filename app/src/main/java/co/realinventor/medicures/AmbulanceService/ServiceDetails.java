@@ -5,10 +5,11 @@ public class ServiceDetails {
 
     public ServiceDetails(){}
 
-    public ServiceDetails(String driverName, String driverLocality, String driverAge, String verified) {
+    public ServiceDetails(String driverName, String driverLocality, String driverAge, String verified, String availability) {
         this.driverName = driverName;
         this.driverLocality = driverLocality;
         this.driverAge = driverAge;
         this.verified = verified;
+        this.availability = availability;
     }
 }
