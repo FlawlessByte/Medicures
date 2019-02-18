@@ -22,6 +22,7 @@ import java.util.List;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import co.realinventor.medicures.AdminMod.AdminLogin;
 import co.realinventor.medicures.AmbulanceService.ServiceLoggedActivity;
 import co.realinventor.medicures.Authentication.LoginActivity;
 import co.realinventor.medicures.MedStore.MedLoggedActivity;
@@ -78,11 +79,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(this, ServiceLoggedActivity.class));
                 this.finish();
             }
-            else if (auth.getCurrentUser().getDisplayName().equals("admin")) {
-                Log.d("DisplayName", "admin");
-                //startActivity(new Intent(this, MedLoggedActivity.class));
-                //this.finish();
-            }
+
 
         }
 
@@ -154,5 +151,9 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("mode", view.getTag().toString());
         startActivity(intent);
         this.finish();
+    }
+
+    public void modeSelectedAdmin(View view){
+        startActivity(new Intent(this, AdminLogin.class));
     }
 }

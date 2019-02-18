@@ -19,7 +19,10 @@ import android.widget.Toast;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import androidx.drawerlayout.widget.DrawerLayout;
+import co.realinventor.medicures.Common.AmbulanceServiceShowActivity;
+import co.realinventor.medicures.Common.FeedbackActivity;
 import co.realinventor.medicures.Common.MedStoreShowActivity;
+import co.realinventor.medicures.Common.NotificationsActivity;
 import co.realinventor.medicures.Common.Statics;
 import co.realinventor.medicures.MainActivity;
 import co.realinventor.medicures.R;
@@ -68,6 +71,10 @@ public class LoggedActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
+            Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+            homeIntent.addCategory( Intent.CATEGORY_HOME );
+            homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(homeIntent);
             super.onBackPressed();
         }
     }
@@ -105,6 +112,7 @@ public class LoggedActivity extends AppCompatActivity
             startActivity(new Intent(this, MyAccountActivity.class));
         } else if (id == R.id.nav_feedback) {
             Log.d("Menu FeedbackButton", "Pressed");
+            startActivity(new Intent(this, FeedbackActivity.class).putExtra("uid", FirebaseAuth.getInstance().getCurrentUser().getUid()));
 
         } else if (id == R.id.nav_reminder) {
             Log.d("MenuReminderButton", "Pressed");
@@ -116,6 +124,7 @@ public class LoggedActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_notification) {
             Log.d("MenuNotificationButton", "Pressed");
+            startActivity(new Intent(LoggedActivity.this, NotificationsActivity.class));
 
         } else if (id == R.id.nav_sent) {
             Log.d("MenuNavButton", "Pressed");
@@ -153,7 +162,7 @@ public class LoggedActivity extends AppCompatActivity
             }
 
             Intent callIntent = new Intent(Intent.ACTION_CALL);
-            callIntent.setData(Uri.parse("tel: +918281202115 "));
+            callIntent.setData(Uri.parse("tel: "+Statics.ALERT_CALL_NUMBER));
             startActivity(callIntent);
         }
         catch (Exception ex)
@@ -197,8 +206,10 @@ public class LoggedActivity extends AppCompatActivity
 
     public void loggedAmbulanceButtonPressed(View view){
         Log.d("AmbulanceButton", "Pressed");
-        startActivity(new Intent(LoggedActivity.this, DocReminderActivity.class));
+        Statics.SERVICE_REQ_ACTIVITY = "User";
+        startActivity(new Intent(LoggedActivity.this, AmbulanceServiceShowActivity.class));
     }
+
 
 
 

@@ -106,6 +106,7 @@ public class MedicineAlarmedActivity extends AppCompatActivity {
     public void onBackPressed() {
         handler.removeCallbacks(runnable);
         mMediaPlayer.stop();
+        finish();
         super.onBackPressed();
     }
 }

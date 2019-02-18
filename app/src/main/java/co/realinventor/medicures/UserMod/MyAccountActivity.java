@@ -142,7 +142,7 @@ public class MyAccountActivity extends AppCompatActivity {
                 for (DataSnapshot ambSnapShot : dataSnapshot.getChildren()){
                     Log.d("FirebaseDatabase", "Got ambulance details");
                     ServiceDetails serviceDetails = ambSnapShot.getValue(ServiceDetails.class);
-                    element = serviceDetails.driverName+ "| " + serviceDetails.driverLocality;
+                    element = serviceDetails.driverName+ " | " + serviceDetails.driverLocality;
                     ambulanceList.add(element);
                 }
 
@@ -267,4 +267,8 @@ public class MyAccountActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }

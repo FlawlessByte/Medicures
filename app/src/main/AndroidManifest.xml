@@ -21,9 +21,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Common.MedStoreShowActivity"></activity>
+        <activity android:name=".Common.AmbulanceServiceShowActivity"></activity>
+        <activity android:name=".Common.MedStoreShowActivity" />
         <activity android:name=".Common.NotificationsActivity" />
         <activity android:name=".AdminMod.AdminLoggedActivity" />
+        <activity android:name=".AdminMod.AdminLogin" />
         <activity android:name=".MedStore.MedRequestsActivity" />
         <activity android:name=".MedStore.MedAccountActivity" />
         <activity android:name=".Common.FeedbackActivity" />

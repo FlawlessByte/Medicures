@@ -136,7 +136,7 @@
                     android:background="@drawable/right_button_btn_line"
                     android:text="Admin"
                     android:tag="admin"
-                    android:onClick="modeSelected"
+                    android:onClick="modeSelectedAdmin"
                     android:textSize="18sp"
                     android:gravity="center|bottom"
                     android:paddingBottom="10dp"/>

@@ -3,6 +3,8 @@ package co.realinventor.medicures.Common;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,6 +32,7 @@ public class FeedbackActivity extends AppCompatActivity {
     private List<Feedback> feedbackList = new ArrayList<>();
     private RecyclerView recyclerView;
     private FeedbackAdapter mAdapter;
+    private TextView textViewMsgFeedback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,7 @@ public class FeedbackActivity extends AppCompatActivity {
         Log.d("Activity", "FeedbackActiivity");
 
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        textViewMsgFeedback = findViewById(R.id.textViewMsgFeedback);
 
         //RecyclerView things
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view_feedback);
@@ -65,6 +69,8 @@ public class FeedbackActivity extends AppCompatActivity {
 
                 }
 
+                if(feedbackList.size() == 0)
+                    textViewMsgFeedback.setVisibility(View.VISIBLE);
                 mAdapter.notifyDataSetChanged();
             }
 
@@ -74,5 +80,11 @@ public class FeedbackActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Sorry, some error occured!", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        this.finish();
+        super.onBackPressed();
     }
 }

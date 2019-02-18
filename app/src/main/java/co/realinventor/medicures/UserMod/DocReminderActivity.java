@@ -199,5 +199,8 @@ public class DocReminderActivity extends AppCompatActivity {
         db = doctorReminderHelper.getWritableDatabase();
     }
 
-
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }

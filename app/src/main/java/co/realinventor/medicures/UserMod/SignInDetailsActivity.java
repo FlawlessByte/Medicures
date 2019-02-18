@@ -1,6 +1,8 @@
 package co.realinventor.medicures.UserMod;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,6 +14,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import co.realinventor.medicures.Authentication.LoginActivity;
 import co.realinventor.medicures.R;
@@ -60,6 +63,7 @@ public class SignInDetailsActivity extends AppCompatActivity {
                 // user logged in
                 Log.d("RegisterButton", "Save user data");
                 saveUserData(auth.getCurrentUser().getUid());
+                finish();
             }
         }
     }
@@ -116,6 +120,32 @@ public class SignInDetailsActivity extends AppCompatActivity {
             return true;
         else
             return false;
+    }
+
+
+    @Override
+    public void onBackPressed() {
+
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
+        } else {
+            builder = new AlertDialog.Builder(this);
+        }
+        builder.setTitle("Complete the process")
+                .setMessage("You haven't completed the registration. Please complete and save your details!")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // continue with delete
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                    }
+                })
+                .show();
+
     }
 
 }

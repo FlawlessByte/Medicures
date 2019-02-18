@@ -107,6 +107,7 @@ public class DocVisitAlarmedActivity extends AppCompatActivity {
     public void onBackPressed() {
         handler.removeCallbacks(runnable);
         mMediaPlayer.stop();
+        finish();
         super.onBackPressed();
     }
 }

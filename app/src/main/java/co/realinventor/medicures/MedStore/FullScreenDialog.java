@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,6 +26,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
+import co.realinventor.medicures.Common.NotificationManager;
 import co.realinventor.medicures.MedStore.MedStoreDetails;
 import co.realinventor.medicures.MedStore.Medicine;
 import co.realinventor.medicures.R;
@@ -119,6 +122,9 @@ public class FullScreenDialog extends DialogFragment {
                         .setPositiveButton("Set", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 sendApprovalMail();
+                                deleteMedRequest();
+                                Toast.makeText(getContext(), "The approval notification has been sent to user!", Toast.LENGTH_SHORT).show();
+                                dismiss();
 
                             }
                         })
@@ -147,6 +153,9 @@ public class FullScreenDialog extends DialogFragment {
                         .setPositiveButton("Set", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 sendRejectionMail();
+                                deleteMedRequest();
+                                Toast.makeText(getContext(), "The rejection notification has been sent to user!", Toast.LENGTH_SHORT).show();
+                                dismiss();
 
                             }
                         })
@@ -164,6 +173,12 @@ public class FullScreenDialog extends DialogFragment {
         return view;
     }
 
+
+    private void deleteMedRequest(){
+        ref.child("MedRequests").child(currentMedicine.trans_id).removeValue();
+    }
+
+
     private void sendApprovalMail(){
         mMsg = "Dear user, \n" +
                 "Your medicine request with transaction id "+ currentMedicine.getTrans_id() +", has been approved by, "+
@@ -177,6 +192,8 @@ public class FullScreenDialog extends DialogFragment {
         newMed.reviewed = "yes";
 
         ref.child("MedRequests").child(mMedUid).setValue(newMed);
+
+        new NotificationManager().makeNotification(mMsg, currentMedicine.from, medStoreDetails.mUid, medStoreDetails.shopName);
 
         sendEmail(mMailTo, mMailFrom, mSub, mMsg);
     }
@@ -192,6 +209,8 @@ public class FullScreenDialog extends DialogFragment {
         newMed.reviewed = "yes";
 
         ref.child("MedRequests").child(mMedUid).setValue(newMed);
+
+        new NotificationManager().makeNotification(mMsg, currentMedicine.from, medStoreDetails.mUid, medStoreDetails.shopName);
 
         sendEmail(mMailTo, mMailFrom, mSub, mMsg);
 

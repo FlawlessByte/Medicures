@@ -90,6 +90,7 @@ public class ServiceAccountActivity extends AppCompatActivity {
 
         // Set up the input
         input = new EditText(this);
+        input.setPadding(10,10,10,10);
         // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
         input.setInputType(inputType);
         builder.setView(input);
@@ -109,5 +110,12 @@ public class ServiceAccountActivity extends AppCompatActivity {
         });
 
         builder.show();
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        this.finish();
+        super.onBackPressed();
     }
 }

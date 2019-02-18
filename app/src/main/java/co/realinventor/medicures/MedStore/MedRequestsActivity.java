@@ -4,6 +4,7 @@ package co.realinventor.medicures.MedStore;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -28,6 +29,7 @@ public class MedRequestsActivity extends AppCompatActivity {
     private MedicineAdapter mAdapter;
     private String uid ;
     private DatabaseReference mDatabase;
+    private TextView textViewMsgMedRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,8 @@ public class MedRequestsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_med_requests);
 
         Log.d("Activity", "MedRequestsActivity");
+
+        textViewMsgMedRequest = findViewById(R.id.textViewMsgMedRequest);
 
 
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -85,6 +89,9 @@ public class MedRequestsActivity extends AppCompatActivity {
 
                 }
 
+                if(medicineList.size() == 0)
+                    textViewMsgMedRequest.setVisibility(View.VISIBLE);
+
                 mAdapter.notifyDataSetChanged();
             }
 
@@ -94,5 +101,10 @@ public class MedRequestsActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Sorry, some error occured!", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 }

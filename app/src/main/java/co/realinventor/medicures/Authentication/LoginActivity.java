@@ -147,7 +147,7 @@ public class LoginActivity extends AppCompatActivity {
                                 } else {
                                     Log.d("Sign in", "Successful");
 
-                                    Intent intent;
+                                    Intent intent = null;
                                     if(auth.getCurrentUser().getDisplayName().equals("user")){
                                         intent = new Intent(LoginActivity.this, LoggedActivity.class);
                                     }
@@ -157,9 +157,6 @@ public class LoginActivity extends AppCompatActivity {
                                     else if(auth.getCurrentUser().getDisplayName().equals("ambulance")){
                                         intent = new Intent(LoginActivity.this, MedLoggedActivity.class);
                                     }
-                                    else{
-                                        intent = new Intent(LoginActivity.this, AdminLoggedActivity.class);
-                                    }
                                     startActivity(intent);
                                     finish();
                                 }
@@ -167,5 +164,11 @@ public class LoginActivity extends AppCompatActivity {
                         });
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        super.onBackPressed();
     }
 }

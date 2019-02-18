@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#FFF">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarDialogServiceAdmin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- YOUR CUSTOM VIEWS HERE -->
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="50dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:text="Driver Name"
+                android:textStyle="bold"
+                android:textColor="#000"
+                android:padding="10dp"
+                android:layout_margin="5dp"
+                android:id="@+id/serviceXDriverName"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:text="Locality"
+                android:id="@+id/serviceXLocality"
+                android:textStyle="bold"
+                android:padding="10dp"
+                android:textColor="#000"
+                android:layout_margin="5dp"
+                android:background="@drawable/right_button_btn_line"
+                android:layout_below="@+id/serviceXDriverName"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:text="Age"
+                android:id="@+id/serviceXAge"
+                android:textStyle="bold"
+                android:padding="10dp"
+                android:textColor="#000"
+                android:layout_margin="5dp"
+                android:background="@drawable/right_button_btn_line"
+                android:layout_below="@+id/serviceXLocality"
+                android:gravity="center"/>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:text="Phone"
+                android:id="@+id/serviceXPhone"
+                android:textStyle="bold"
+                android:padding="10dp"
+                android:textColor="#000"
+                android:layout_margin="5dp"
+                android:background="@drawable/right_button_btn_line"
+                android:layout_below="@+id/serviceXAge"
+                android:gravity="center"/>
+
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/serviceXApproveButton"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_margin="20dp"
+                android:padding="20dp"
+                android:text="Approve"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/serviceXDenyButton"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_margin="20dp"
+                android:padding="20dp"
+                android:text="Reject"/>
+
+        </RelativeLayout>
+
+
+
+
+    </FrameLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

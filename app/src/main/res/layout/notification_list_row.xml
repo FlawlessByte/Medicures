@@ -64,6 +64,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="10dp"
                     android:text="Time : "
+                    android:layout_marginBottom="8dp"
                     android:textAppearance="?android:attr/textAppearanceSmall"/>
 
             </LinearLayout>

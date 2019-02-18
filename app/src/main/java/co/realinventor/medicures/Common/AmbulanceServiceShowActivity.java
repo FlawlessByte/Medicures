@@ -6,11 +6,9 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import co.realinventor.medicures.AdminMod.MedReviewDialog;
-import co.realinventor.medicures.MedStore.MedStoreDetails;
+import co.realinventor.medicures.AmbulanceService.ServiceDetails;
 import co.realinventor.medicures.MedStore.RecyclerTouchListener;
 import co.realinventor.medicures.R;
-import co.realinventor.medicures.UserMod.MedShowDialog;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -28,24 +26,24 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MedStoreShowActivity extends AppCompatActivity {
+public class AmbulanceServiceShowActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
-    private MedStoreAdapter mAdapter;
+    private ServiceShowAdapter mAdapter;
     private DatabaseReference mDatabase;
-    private List<MedStoreDetails> medStoreList = new ArrayList<>();
-    private TextView textViewMsgMedStore;
+    private List<ServiceDetails> serviceDetailsList = new ArrayList<>();
+    private TextView textViewMsg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_med_store_show);
+        setContentView(R.layout.activity_ambulance_service_show);
 
-        textViewMsgMedStore = findViewById(R.id.textViewMsgMedStore);
+        textViewMsg = findViewById(R.id.textViewMMessageServiceShow);
 
         //RecyclerView things
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view_MedShow);
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view_ServiceShow);
 
-        mAdapter = new MedStoreAdapter(medStoreList);
+        mAdapter = new ServiceShowAdapter(serviceDetailsList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -57,16 +55,9 @@ public class MedStoreShowActivity extends AppCompatActivity {
             @Override
             public void onClick(View view, int position) {
 
-                if(Statics.MED_REQ_ACTIVITY.equals("User")){
-                    MedShowDialog.currentMedDetails = medStoreList.get(position);
-                    MedShowDialog dialog = new MedShowDialog();
-                    dialog.show(getSupportFragmentManager().beginTransaction(), MedShowDialog.TAG);
-                }
-                else{
-                    MedReviewDialog.currentMedDetails = medStoreList.get(position);
-                    MedReviewDialog dialog = new MedReviewDialog();
-                    dialog.show(getSupportFragmentManager().beginTransaction(), MedReviewDialog.TAG);
-                }
+                ServiceReviewDialog.currentServiceDetails = serviceDetailsList.get(position);
+                ServiceReviewDialog dialog = new ServiceReviewDialog();
+                dialog.show(getSupportFragmentManager().beginTransaction(), ServiceReviewDialog.TAG);
             }
 
             @Override
@@ -75,31 +66,29 @@ public class MedStoreShowActivity extends AppCompatActivity {
             }
         }));
 
+
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        Query myFeedbackQuery = mDatabase.child("MedStores");
+        Query myFeedbackQuery = mDatabase.child("Ambulances");
         myFeedbackQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                     // TODO: handle the post
 
-                    Log.d("FirebaseDatabase", "Got Med Stores");
-                    Log.d("Med store count ", ""+dataSnapshot.getChildrenCount());
-                    MedStoreDetails mdetails = postSnapshot.getValue(MedStoreDetails.class);
-                    if(Statics.MED_REQ_ACTIVITY.equals("User")){
+                    Log.d("FirebaseDatabase", "Got ambulances");
+                    ServiceDetails mdetails = postSnapshot.getValue(ServiceDetails.class);
+                    if(Statics.SERVICE_REQ_ACTIVITY.equals("User")){
                         if(mdetails.verified.equals("yes")){
-                            Log.d("FirebaseDatabase", "verified ");
-                            medStoreList.add(mdetails);
+                            serviceDetailsList.add(mdetails);
                         }
                     }else {
-                        medStoreList.add(mdetails);
+                        serviceDetailsList.add(mdetails);
                     }
 
                 }
-
-                if(medStoreList.size() == 0)
-                    textViewMsgMedStore.setVisibility(View.VISIBLE);
-
+                if(serviceDetailsList.size() == 0){
+                    textViewMsg.setVisibility(View.VISIBLE);
+                }
                 mAdapter.notifyDataSetChanged();
             }
 
@@ -109,6 +98,7 @@ public class MedStoreShowActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Sorry, some error occured!", Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 
     @Override

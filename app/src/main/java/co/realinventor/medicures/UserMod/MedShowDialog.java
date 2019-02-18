@@ -11,8 +11,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.UUID;
 
@@ -29,12 +32,30 @@ public class MedShowDialog extends DialogFragment {
     private EditText medYMedicineName, medYMedicineDosage, medYMedicineQty;
     private Button medYOrder, medYCancel;
     private DatabaseReference ref;
-
+    String uid;
+    private UserDetails userDetails;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStyle(DialogFragment.STYLE_NORMAL, R.style.FullScreenDialogStyle);
+
+        ref = FirebaseDatabase.getInstance().getReference();
+        uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        ref.child("User").child(uid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d("FirebaseDatabase", "Got user data");
+                userDetails = dataSnapshot.getValue(UserDetails.class);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d("FirebaseDatabase", "Error retrieving data");
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
 
     }
 
@@ -78,7 +99,7 @@ public class MedShowDialog extends DialogFragment {
                 to = currentMedDetails.mUid;
                 from = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 customerEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-                customerName = "";
+                customerName = userDetails.first_name;
                 reviewed = "no";
                 status = "";
 

@@ -12,6 +12,8 @@ import co.realinventor.medicures.R;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,11 +33,15 @@ public class NotificationsActivity extends AppCompatActivity {
     private NotificationsAdapter notificationsAdapter;
     private String uid ;
     private DatabaseReference mDatabase;
+    private TextView textViewMsgNotifications;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notifications);
+
+        textViewMsgNotifications = findViewById(R.id.textViewMsgNotifications);
+
 
 
         Log.d("Activity", "NotificationsActivity");
@@ -69,6 +75,9 @@ public class NotificationsActivity extends AppCompatActivity {
 
                 }
 
+                if(notificationsList.size() == 0)
+                    textViewMsgNotifications.setVisibility(View.VISIBLE);
+
                 notificationsAdapter.notifyDataSetChanged();
             }
 
@@ -78,5 +87,11 @@ public class NotificationsActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Sorry, some error occured!", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        this.finish();
+        super.onBackPressed();
     }
 }

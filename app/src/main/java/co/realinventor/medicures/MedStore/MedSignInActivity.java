@@ -2,9 +2,12 @@ package co.realinventor.medicures.MedStore;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -23,6 +26,7 @@ import java.io.File;
 import java.util.ArrayList;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import co.realinventor.medicures.R;
 import droidninja.filepicker.FilePickerBuilder;
@@ -36,6 +40,8 @@ public class MedSignInActivity extends AppCompatActivity {
     String currentFile  = "";
     FirebaseStorage storage;
     StorageReference storageRef;
+    private boolean finished;
+    private Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,6 +138,7 @@ public class MedSignInActivity extends AppCompatActivity {
                 saveUserData(auth.getCurrentUser().getUid());
 
                 startActivity(new Intent(MedSignInActivity.this, MedLoggedActivity.class));
+                finish();
             }
 
         }
@@ -169,6 +176,7 @@ public class MedSignInActivity extends AppCompatActivity {
     }
 
     public void uploadFile(Uri file,String uid, int no){
+        finished =  false;
         StorageReference riversRef = storageRef.child("docs/med_store/"+uid+"/"+file.getLastPathSegment());
         UploadTask uploadTask = riversRef.putFile(file);
 
@@ -182,6 +190,7 @@ public class MedSignInActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception exception) {
                 // Handle unsuccessful uploads
+                finished = true;
                 progressDialog.dismiss();
                 Toast.makeText(MedSignInActivity.this, "Failed "+exception.getMessage(), Toast.LENGTH_SHORT).show();
             }
@@ -190,6 +199,7 @@ public class MedSignInActivity extends AppCompatActivity {
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
                 // ...
+                finished = true;
                 progressDialog.dismiss();
                 Toast.makeText(MedSignInActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
             }
@@ -201,6 +211,21 @@ public class MedSignInActivity extends AppCompatActivity {
                 progressDialog.setMessage("Uploaded "+(int)progress+"%");
             }
         });
+
+        handler = new Handler();
+
+        final Runnable r = new Runnable() {
+            public void run() {
+                if(finished){
+                    handler.removeCallbacks(this);
+                }
+                handler.postDelayed(this, 200);
+            }
+        };
+
+        handler.postDelayed(r, 100);
+
+
     }
 
 
@@ -259,5 +284,32 @@ public class MedSignInActivity extends AppCompatActivity {
         }
 
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+
+
+    @Override
+    public void onBackPressed() {
+
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
+        } else {
+            builder = new AlertDialog.Builder(this);
+        }
+        builder.setTitle("Complete the process")
+                .setMessage("You haven't completed the registration. Please complete and save your details!")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // continue with delete
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                    }
+                })
+                .show();
+
     }
 }

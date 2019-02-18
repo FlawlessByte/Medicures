@@ -2,8 +2,10 @@ package co.realinventor.medicures.AmbulanceService;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -26,6 +28,7 @@ import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import co.realinventor.medicures.MedStore.MedSignInActivity;
 import co.realinventor.medicures.R;
@@ -134,6 +137,7 @@ public class ServiceDetailsActivity extends AppCompatActivity {
                 saveUserData(auth.getCurrentUser().getUid());
 
                 startActivity(new Intent(ServiceDetailsActivity.this, ServiceLoggedActivity.class));
+                this.finish();
             }
 
         }
@@ -144,7 +148,7 @@ public class ServiceDetailsActivity extends AppCompatActivity {
         driverName = inputDriverName.getText().toString();
         driverLocality = inputDriverLocality.getText().toString();
         driverAge = inputDriverAge.getText().toString();
-        ServiceDetails serviceDetails = new ServiceDetails(driverName,driverLocality,driverAge,verified, "no"/*availablity*/);
+        ServiceDetails serviceDetails = new ServiceDetails(uid,driverName,driverLocality,driverAge,"not defined",verified, "no"/*availablity*/);
 
         DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
         myRef.child("Ambulances").child(uid).setValue(serviceDetails);
@@ -261,6 +265,28 @@ public class ServiceDetailsActivity extends AppCompatActivity {
         return status;
     }
 
+    @Override
+    public void onBackPressed() {
 
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
+        } else {
+            builder = new AlertDialog.Builder(this);
+        }
+        builder.setTitle("Complete the process")
+                .setMessage("You haven't completed the registration. Please complete and save your details!")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // continue with delete
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                    }
+                })
+                .show();
 
+    }
 }

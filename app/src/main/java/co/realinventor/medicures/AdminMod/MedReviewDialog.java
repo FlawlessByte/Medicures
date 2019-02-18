@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -61,14 +62,35 @@ public class MedReviewDialog extends DialogFragment {
         medXApproveButton = view.findViewById(R.id.medicineXApproveButton);
         medXDenyButton = view.findViewById(R.id.medicineXDenyButton);
 
+
+
+        medXShopName.setText("Shop Name : " + currentMedDetails.shopName);
+        medXLocality.setText("Locality : " + currentMedDetails.locality);
+        medXOwnerName.setText("Owner Name : " + currentMedDetails.ownerName);
+        medXPharmacist.setText("Pharmacist : " + currentMedDetails.pharmacist);
+        medXPhone.setText("Phone : " + currentMedDetails.phone);
+        medXPinCode.setText("Pin Code : " + currentMedDetails.pinCode);
+
         medXApproveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MedStoreDetails newMStoreDet = currentMedDetails;
-                newMStoreDet.verified = "yes";
+                currentMedDetails.verified = "yes";
 
-                ref.child("MedStores").child(newMStoreDet.mUid).setValue(newMStoreDet);
+                ref.child("MedStores").child(currentMedDetails.mUid).setValue(currentMedDetails);
                 Log.d("Medical Store Data", "Stored");
+                Toast.makeText(getContext(), "The Medical store request has been approved!", Toast.LENGTH_SHORT) .show();
+            }
+        });
+
+        medXDenyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentMedDetails.verified = "no";
+
+                ref.child("MedStores").child(currentMedDetails.mUid).setValue(currentMedDetails);
+                Log.d("Medical Store Data", "Stored");
+                Toast.makeText(getContext(), "The Medical store request has been rejected!", Toast.LENGTH_SHORT) .show();
+                closeDialog();
             }
         });
 

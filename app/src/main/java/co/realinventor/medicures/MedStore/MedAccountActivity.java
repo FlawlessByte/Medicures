@@ -138,4 +138,10 @@ public class MedAccountActivity extends AppCompatActivity {
 
         builder.show();
     }
+
+    @Override
+    public void onBackPressed() {
+        this.finish();
+        super.onBackPressed();
+    }
 }
