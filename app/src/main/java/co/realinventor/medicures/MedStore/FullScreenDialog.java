@@ -36,7 +36,7 @@ public class FullScreenDialog extends DialogFragment {
     public static String TAG = "FullScreenDialog";
     public static Medicine currentMedicine;
     private Medicine newMed;
-    private String SENDGRID_API_KEY = "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";
+    private String SENDGRID_API_KEY = "";
     private TextView medicineReqTransID, medicineReqCustomerName, medicineReqMedicineName, medicineReqMedicineDosage, medicineReqMedicineQuantity;
     private Button medicineReqApproveButton, medicineReqDenyButton;
     private EditText editTextAmount;
