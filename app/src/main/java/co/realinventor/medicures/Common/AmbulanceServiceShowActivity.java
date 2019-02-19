@@ -13,6 +13,8 @@ import co.realinventor.medicures.R;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,7 +33,10 @@ public class AmbulanceServiceShowActivity extends AppCompatActivity {
     private ServiceShowAdapter mAdapter;
     private DatabaseReference mDatabase;
     private List<ServiceDetails> serviceDetailsList = new ArrayList<>();
+    private List<ServiceDetails> allServiceDetailsList = new ArrayList<ServiceDetails>();;
     private TextView textViewMsg;
+    private EditText searchEditText;
+    private Button searchButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +44,8 @@ public class AmbulanceServiceShowActivity extends AppCompatActivity {
         setContentView(R.layout.activity_ambulance_service_show);
 
         textViewMsg = findViewById(R.id.textViewMMessageServiceShow);
+        searchEditText = findViewById(R.id.searchEditText);
+        searchButton = findViewById(R.id.searchButton);
 
         //RecyclerView things
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view_ServiceShow);
@@ -49,6 +56,49 @@ public class AmbulanceServiceShowActivity extends AppCompatActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(mAdapter);
+
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("Search Button", "Pressed");
+                String query = searchEditText.getText().toString();
+                Log.d("Search Query", query);
+                //Toast.makeText(getApplicationContext(), "Query : " + query, Toast.LENGTH_SHORT).show();
+
+                if(query.equals("")){
+                    //Show all elements
+                    serviceDetailsList.clear();
+                    serviceDetailsList.addAll(allServiceDetailsList);
+                }
+                else{
+//                    Toast.makeText(getApplicationContext(), "AllServiceList count : " + allServiceDetailsList.size(), Toast.LENGTH_SHORT).show();
+                    List<ServiceDetails> filteredList = new ArrayList<>();
+                    for (ServiceDetails row : allServiceDetailsList) {
+
+                        // name match condition. this might differ depending on your requirement
+                        // here we are looking for name or phone number match
+                        if (row.driverLocality.toLowerCase().contains(query.toLowerCase())) {
+                            filteredList.add(row);
+                        }
+                    }
+                    serviceDetailsList.clear();
+
+                    serviceDetailsList.addAll(filteredList);
+                }
+                if(serviceDetailsList.size() == 0){
+                    textViewMsg.setVisibility(View.VISIBLE);
+                }
+                else{
+                    textViewMsg.setVisibility(View.GONE);
+                }
+
+                mAdapter = new ServiceShowAdapter(serviceDetailsList);
+                recyclerView.setAdapter(mAdapter);
+                mAdapter.notifyDataSetChanged();
+
+            }
+        });
+
 
 
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
@@ -89,6 +139,11 @@ public class AmbulanceServiceShowActivity extends AppCompatActivity {
                 if(serviceDetailsList.size() == 0){
                     textViewMsg.setVisibility(View.VISIBLE);
                 }
+                else{
+                    textViewMsg.setVisibility(View.GONE);
+                }
+
+                allServiceDetailsList.addAll(serviceDetailsList); // copied the all list
                 mAdapter.notifyDataSetChanged();
             }
 

@@ -19,4 +19,12 @@
     <color name="btn_logut_bg">#ff6861</color>
     <color name="year">#999999</color>
     <color name="title">#222222</color>
+
+
+
+    <color name="colorPrimaryed">#111</color>
+    <color name="colorPrimaryDarked">#FFF</color>
+    <color name="colorAccented">#ea3732</color>
+    <color name="contact_name">#333333</color>
+    <color name="contact_number">#8c8c8c</color>
 </resources>

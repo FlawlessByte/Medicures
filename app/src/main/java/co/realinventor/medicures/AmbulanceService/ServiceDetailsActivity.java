@@ -25,6 +25,8 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -158,14 +160,16 @@ public class ServiceDetailsActivity extends AppCompatActivity {
         saveFiles(uid);
     }
 
-    public void saveFiles(String uid){
+    public void saveFiles(final String uid){
         storage = FirebaseStorage.getInstance();
         storageRef = storage.getReference();
 
-        uploadFile(Uri.fromFile(new File(textVehicleLicence.getText().toString())), uid, 1);
-        uploadFile(Uri.fromFile(new File(textAadhar.getText().toString())), uid, 2);
-        uploadFile(Uri.fromFile(new File(textRC.getText().toString())), uid, 3);
-        uploadFile(Uri.fromFile(new File(textDriverLicence.getText().toString())), uid, 4);
+                uploadFile(Uri.fromFile(new File(textVehicleLicence.getText().toString())), uid, 1);
+                uploadFile(Uri.fromFile(new File(textAadhar.getText().toString())), uid, 2);
+                uploadFile(Uri.fromFile(new File(textRC.getText().toString())), uid, 3);
+                uploadFile(Uri.fromFile(new File(textDriverLicence.getText().toString())), uid, 4);
+
+
     }
 
 

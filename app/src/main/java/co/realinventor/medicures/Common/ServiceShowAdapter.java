@@ -3,6 +3,7 @@ package co.realinventor.medicures.Common;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.List;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,11 +20,13 @@ public class ServiceShowAdapter extends RecyclerView.Adapter<ServiceShowAdapter.
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView mDriverName, mServiceLocality;
+        public ImageView availabilityCheck;
 
         public MyViewHolder(View view) {
             super(view);
             mDriverName = (TextView) view.findViewById(R.id.sDriverName);
             mServiceLocality = (TextView) view.findViewById(R.id.sServiceLocality);
+            availabilityCheck = (ImageView) view.findViewById(R.id.availabilityMark);
         }
     }
 
@@ -40,6 +43,10 @@ public class ServiceShowAdapter extends RecyclerView.Adapter<ServiceShowAdapter.
         ServiceDetails serviceDetails = serviceDetailsList.get(position);
         holder.mDriverName.setText(serviceDetails.driverName);
         holder.mServiceLocality.setText(serviceDetails.driverLocality);
+        if(serviceDetails.availability.equals("yes"))
+            holder.availabilityCheck.setImageResource(R.drawable.tick_green);
+        else
+            holder.availabilityCheck.setImageResource(R.drawable.tick_greyed);
 
     }
 
