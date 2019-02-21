@@ -25,6 +25,8 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -45,6 +47,8 @@ public class ServiceDetailsActivity extends AppCompatActivity {
     FirebaseStorage storage;
     StorageReference storageRef;
     ArrayList<String> docPaths = new ArrayList<>();
+    private int count = 0;
+    private Timer t1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,8 +142,27 @@ public class ServiceDetailsActivity extends AppCompatActivity {
             if(auth.getCurrentUser() != null){
                 saveUserData(auth.getCurrentUser().getUid());
 
-                startActivity(new Intent(ServiceDetailsActivity.this, ServiceLoggedActivity.class));
-                this.finish();
+                //Declare the timer
+                t1 = new Timer();
+                //Set the schedule function and rate
+                t1.scheduleAtFixedRate(new TimerTask() {
+                                           @Override
+                                           public void run() {
+                                               //Called each time when 1000 milliseconds (1 second) (the period parameter)
+                                               Log.d("Count", ""+count);
+                                               if(count==4){
+                                                   startActivity(new Intent(ServiceDetailsActivity.this, ServiceLoggedActivity.class));
+                                                   finish();
+                                                   t1.cancel();
+                                               }
+                                           }
+                                       },
+                        //Set how long before to start calling the TimerTask (in milliseconds)
+                        2000,
+                        //Set the amount of time between each execution (in milliseconds)
+                        500);
+
+
             }
 
         }
@@ -164,11 +187,10 @@ public class ServiceDetailsActivity extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();
         storageRef = storage.getReference();
 
-                uploadFile(Uri.fromFile(new File(textVehicleLicence.getText().toString())), uid, 1);
-                uploadFile(Uri.fromFile(new File(textAadhar.getText().toString())), uid, 2);
-                uploadFile(Uri.fromFile(new File(textRC.getText().toString())), uid, 3);
-                uploadFile(Uri.fromFile(new File(textDriverLicence.getText().toString())), uid, 4);
-
+        uploadFile(Uri.fromFile(new File(textVehicleLicence.getText().toString())), uid, 1);
+        uploadFile(Uri.fromFile(new File(textAadhar.getText().toString())), uid, 2);
+        uploadFile(Uri.fromFile(new File(textRC.getText().toString())), uid, 3);
+        uploadFile(Uri.fromFile(new File(textDriverLicence.getText().toString())), uid, 4);
 
     }
 
@@ -187,6 +209,7 @@ public class ServiceDetailsActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception exception) {
                 // Handle unsuccessful uploads
+                count++;
                 progressDialog.dismiss();
                 Toast.makeText(ServiceDetailsActivity.this, "Failed "+exception.getMessage(), Toast.LENGTH_SHORT).show();
             }
@@ -195,6 +218,7 @@ public class ServiceDetailsActivity extends AppCompatActivity {
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
                 // ...
+                count++;
                 progressDialog.dismiss();
                 Toast.makeText(ServiceDetailsActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
             }

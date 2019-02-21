@@ -49,4 +49,15 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
     }
 
 
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+
 }

@@ -1,6 +1,7 @@
 package co.realinventor.medicures.UserMod;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
@@ -23,6 +24,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import co.realinventor.medicures.AmbulanceService.ServiceDetails;
+import co.realinventor.medicures.Common.AmbulanceServiceShowActivity;
+import co.realinventor.medicures.Common.MedStoreShowActivity;
+import co.realinventor.medicures.Common.Statics;
 import co.realinventor.medicures.MedStore.MedStoreDetails;
 import co.realinventor.medicures.R;
 
@@ -107,119 +111,17 @@ public class MyAccountActivity extends AppCompatActivity {
 
     public void medicalEditButtonPressed(View view){
         Log.d("MedicalEditButton", "Pressed");
-        Query medQuery = ref.child("MedStores");
-        medQuery.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.d("FirebaseDatabase", "Got medstore data");
-                medicalList.clear();
-                String element = "";
-                for (DataSnapshot medSnapShot : dataSnapshot.getChildren()){
-                    MedStoreDetails medStoreDetails = medSnapShot.getValue(MedStoreDetails.class);
-                    element = medStoreDetails.shopName + " | " + medStoreDetails.locality;
-                    medicalList.add(element);
-                }
 
-                showMedStoreList(medicalList);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.d("FirebaseDatabase", databaseError.getMessage());
-            }
-        });
+        Statics.SERVICE_REQ_ACTIVITY = "User";
+        startActivity(new Intent(this, AmbulanceServiceShowActivity.class));
     }
 
     public void ambulanceEditButtonPressed(View view){
         Log.d("AmbulanceEditButton", "Pressed");
 
-        Query ambQuery = ref.child("Ambulances");
-        ambQuery.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ambulanceList.clear();
-                String element = "";
-                for (DataSnapshot ambSnapShot : dataSnapshot.getChildren()){
-                    Log.d("FirebaseDatabase", "Got ambulance details");
-                    ServiceDetails serviceDetails = ambSnapShot.getValue(ServiceDetails.class);
-                    element = serviceDetails.driverName+ " | " + serviceDetails.driverLocality;
-                    ambulanceList.add(element);
-                }
-
-                showAmbulanceList(ambulanceList);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.d("FirebaseDatabase", databaseError.getMessage());
-            }
-        });
+        Statics.MED_REQ_ACTIVITY = "User";
+        startActivity(new Intent(this, MedStoreShowActivity.class));
     }
-
-
-    private void showAmbulanceList(ArrayList<String> list){
-        Log.d("Alert", "Showing ambulance list");
-        // setup the alert builder
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Choose some ambulance service");
-
-        // add a checkbox list
-        String[] ambs = list.toArray(new String[0]);
-        boolean[] checkedItems = new boolean[list.size()];
-        builder.setMultiChoiceItems(ambs, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                // user checked or unchecked a box
-            }
-        });
-
-        // add OK and Cancel buttons
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // user clicked OK
-            }
-        });
-        builder.setNegativeButton("Cancel", null);
-
-        // create and show the alert dialog
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
-
-
-
-    private void showMedStoreList(ArrayList<String> list){
-        Log.d("Alert", "Showing med store list");
-        // setup the alert builder
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Choose some medical stores");
-
-        // add a checkbox list
-        String[] meds = list.toArray(new String[0]);
-        boolean[] checkedItems = new boolean[list.size()];
-        builder.setMultiChoiceItems(meds, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                // user checked or unchecked a box
-            }
-        });
-
-        // add OK and Cancel buttons
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // user clicked OK
-            }
-        });
-        builder.setNegativeButton("Cancel", null);
-
-        // create and show the alert dialog
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
-
-
 
     private void showDialogs(String title, final TextView textview, int inputType){
         AlertDialog.Builder builder;

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageSentMail"
+            android:layout_margin="10dp"
+            android:layout_centerInParent="true"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/sent_mail_large"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/inputSentMailTo"
+            android:text="To : "
+            android:layout_toRightOf="@+id/imageSentMail"
+            android:layout_margin="10dp"
+            android:textStyle="bold"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/inputSentMailDate"
+            android:text="Date : "
+            android:layout_toRightOf="@+id/imageSentMail"
+            android:layout_below="@+id/inputSentMailTo"
+            android:layout_margin="10dp"
+            android:textStyle="bold"
+            android:textSize="18sp"/>
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/inputSentMailMsg"
+        android:text="Msg : "
+        android:layout_margin="10dp"
+        android:textStyle="bold"
+        android:textSize="18sp"/>
+
+
+
+</LinearLayout>

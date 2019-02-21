@@ -24,6 +24,9 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -40,8 +43,9 @@ public class MedSignInActivity extends AppCompatActivity {
     String currentFile  = "";
     FirebaseStorage storage;
     StorageReference storageRef;
-    private boolean finished;
-    private Handler handler;
+    private Timer t1;
+    private int count = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,8 +141,25 @@ public class MedSignInActivity extends AppCompatActivity {
             if(auth.getCurrentUser() != null){
                 saveUserData(auth.getCurrentUser().getUid());
 
-                startActivity(new Intent(MedSignInActivity.this, MedLoggedActivity.class));
-                finish();
+                //Declare the timer
+                t1 = new Timer();
+                //Set the schedule function and rate
+                t1.scheduleAtFixedRate(new TimerTask() {
+                                           @Override
+                                           public void run() {
+                                               //Called each time when 1000 milliseconds (1 second) (the period parameter)
+                                               Log.d("Count", ""+count);
+                                               if(count==4){
+                                                   startActivity(new Intent(MedSignInActivity.this, MedLoggedActivity.class));
+                                                   finish();
+                                                   t1.cancel();
+                                               }
+                                           }
+                                       },
+                        //Set how long before to start calling the TimerTask (in milliseconds)
+                        2000,
+                        //Set the amount of time between each execution (in milliseconds)
+                        500);
             }
 
         }
@@ -176,8 +197,29 @@ public class MedSignInActivity extends AppCompatActivity {
     }
 
     public void uploadFile(Uri file,String uid, int no){
-        finished =  false;
-        StorageReference riversRef = storageRef.child("docs/med_store/"+uid+"/"+file.getLastPathSegment());
+        String fileNameToBe = "";
+        String extension = file.getLastPathSegment().substring(file.getLastPathSegment().lastIndexOf("."));
+        switch (no){
+            case 1:{
+                fileNameToBe = "blue_print"+extension;
+                break;
+            }
+            case 2:{
+                fileNameToBe = "gst"+extension;
+                break;
+            }
+            case 3:{
+                fileNameToBe = "sanction"+extension;
+                break;
+            }
+            case 4:{
+                fileNameToBe = "pharmaceutical"+extension;
+                break;
+            }
+            default:
+                break;
+        }
+        StorageReference riversRef = storageRef.child("docs/med_store/"+uid+"/"+fileNameToBe);
         UploadTask uploadTask = riversRef.putFile(file);
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
@@ -190,7 +232,7 @@ public class MedSignInActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception exception) {
                 // Handle unsuccessful uploads
-                finished = true;
+                count++;
                 progressDialog.dismiss();
                 Toast.makeText(MedSignInActivity.this, "Failed "+exception.getMessage(), Toast.LENGTH_SHORT).show();
             }
@@ -199,7 +241,7 @@ public class MedSignInActivity extends AppCompatActivity {
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
                 // ...
-                finished = true;
+                count++;
                 progressDialog.dismiss();
                 Toast.makeText(MedSignInActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
             }
@@ -211,19 +253,6 @@ public class MedSignInActivity extends AppCompatActivity {
                 progressDialog.setMessage("Uploaded "+(int)progress+"%");
             }
         });
-
-        handler = new Handler();
-
-        final Runnable r = new Runnable() {
-            public void run() {
-                if(finished){
-                    handler.removeCallbacks(this);
-                }
-                handler.postDelayed(this, 200);
-            }
-        };
-
-        handler.postDelayed(r, 100);
 
 
     }

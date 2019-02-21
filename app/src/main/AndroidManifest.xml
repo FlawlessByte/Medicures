@@ -21,7 +21,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Common.AmbulanceServiceShowActivity"></activity>
+        <activity android:name=".SplashScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".AdminMod.AdminReplyActivity" />
+        <activity android:name=".Common.SentMailActivity" />
+        <activity android:name=".UserMod.ComposeFeedbackActivity" />
+        <activity android:name=".UserMod.UserLocalityActivity" />
+        <activity android:name=".Common.AmbulanceServiceShowActivity" />
         <activity android:name=".Common.MedStoreShowActivity" />
         <activity android:name=".Common.NotificationsActivity" />
         <activity android:name=".AdminMod.AdminLoggedActivity" />
@@ -53,11 +64,6 @@
         <activity android:name=".Authentication.LoginActivity" />
         <activity android:name=".Authentication.SignupActivity" />
         <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <receiver android:name=".UserMod.MedicineReminderReceiver" />

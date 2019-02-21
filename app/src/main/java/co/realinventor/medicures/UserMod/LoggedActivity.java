@@ -23,6 +23,7 @@ import co.realinventor.medicures.Common.AmbulanceServiceShowActivity;
 import co.realinventor.medicures.Common.FeedbackActivity;
 import co.realinventor.medicures.Common.MedStoreShowActivity;
 import co.realinventor.medicures.Common.NotificationsActivity;
+import co.realinventor.medicures.Common.SentMailActivity;
 import co.realinventor.medicures.Common.Statics;
 import co.realinventor.medicures.MainActivity;
 import co.realinventor.medicures.R;
@@ -95,6 +96,12 @@ public class LoggedActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_logout) {
+
+            Log.d("MenuSignOutButton", "Pressed");
+            auth.signOut();
+            startActivity(new Intent(LoggedActivity.this, MainActivity.class));
+            this.finish();
+
             return true;
         }
 
@@ -110,26 +117,35 @@ public class LoggedActivity extends AppCompatActivity
         if (id == R.id.nav_account) {
             Log.d("Menu Account Button", "Pressed");
             startActivity(new Intent(this, MyAccountActivity.class));
-        } else if (id == R.id.nav_feedback) {
+        }
+        else if (id == R.id.nav_locality) {
+            Log.d("Locality Edit", "Pressed");
+            startActivity(new Intent(LoggedActivity.this, UserLocalityActivity.class));
+        }
+        else if (id == R.id.nav_feedback) {
             Log.d("Menu FeedbackButton", "Pressed");
-            startActivity(new Intent(this, FeedbackActivity.class).putExtra("uid", FirebaseAuth.getInstance().getCurrentUser().getUid()));
-
-        } else if (id == R.id.nav_reminder) {
+            Intent i = new Intent(this, ComposeFeedbackActivity.class);
+            i.putExtra("to" , "admin@medicure");
+            i.putExtra("role", "Admin");
+            startActivity(i);
+        }
+        else if (id == R.id.nav_reminder) {
             Log.d("MenuReminderButton", "Pressed");
             startActivity(new Intent(LoggedActivity.this, MedicineReminderActivity.class));
-
-        } else if (id == R.id.nav_doc_visit) {
+        }
+        else if (id == R.id.nav_doc_visit) {
             Log.d("MenuDocVisitButton", "Pressed");
             startActivity(new Intent(LoggedActivity.this, DocReminderActivity.class));
-
-        } else if (id == R.id.nav_notification) {
+        }
+        else if (id == R.id.nav_notification) {
             Log.d("MenuNotificationButton", "Pressed");
             startActivity(new Intent(LoggedActivity.this, NotificationsActivity.class));
-
-        } else if (id == R.id.nav_sent) {
-            Log.d("MenuNavButton", "Pressed");
-
-        } else if (id == R.id.nav_logout) {
+        }
+        else if (id == R.id.nav_sent) {
+            Log.d("MenuSentButton", "Pressed");
+            startActivity(new Intent(LoggedActivity.this, SentMailActivity.class));
+        }
+        else if (id == R.id.nav_logout) {
             Log.d("MenuSignOutButton", "Pressed");
             auth.signOut();
             startActivity(new Intent(LoggedActivity.this, MainActivity.class));

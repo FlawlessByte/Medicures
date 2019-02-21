@@ -32,7 +32,7 @@ public class FeedbackActivity extends AppCompatActivity {
     private List<Feedback> feedbackList = new ArrayList<>();
     private RecyclerView recyclerView;
     private FeedbackAdapter mAdapter;
-    private TextView textViewMsgFeedback;
+    private TextView textViewMsgFeedback, headingTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +40,26 @@ public class FeedbackActivity extends AppCompatActivity {
         setContentView(R.layout.activity_feedback);
         Log.d("Activity", "FeedbackActiivity");
 
-        uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         textViewMsgFeedback = findViewById(R.id.textViewMsgFeedback);
+        headingTextView = findViewById(R.id.abcde);
+
 
         //RecyclerView things
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view_feedback);
 
         mAdapter = new FeedbackAdapter(feedbackList);
+
+        try {
+            uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        }
+        catch (Exception e){
+            //Hopefully, its admin
+            uid = "admin@medicure";
+            headingTextView.setText("Chats");
+            mAdapter.context = getApplicationContext();
+        }
+
+
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());

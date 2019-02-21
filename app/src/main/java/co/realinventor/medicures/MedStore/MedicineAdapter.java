@@ -48,4 +48,14 @@ public class MedicineAdapter extends RecyclerView.Adapter<MedicineAdapter.MyView
     public int getItemCount() {
         return medicineList.size();
     }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
 }

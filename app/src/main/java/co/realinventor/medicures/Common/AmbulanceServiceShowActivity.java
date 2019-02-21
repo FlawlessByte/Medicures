@@ -2,6 +2,7 @@ package co.realinventor.medicures.Common;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -10,6 +11,11 @@ import co.realinventor.medicures.AmbulanceService.ServiceDetails;
 import co.realinventor.medicures.MedStore.RecyclerTouchListener;
 import co.realinventor.medicures.R;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -37,6 +43,8 @@ public class AmbulanceServiceShowActivity extends AppCompatActivity {
     private TextView textViewMsg;
     private EditText searchEditText;
     private Button searchButton;
+    private final int CALL_REQUEST = 100;
+    private String CALL_NUMBER;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +120,9 @@ public class AmbulanceServiceShowActivity extends AppCompatActivity {
 
             @Override
             public void onLongClick(View view, int position) {
-
+                //Call the contact
+                CALL_NUMBER = serviceDetailsList.get(position).phone;
+                callPhoneNumber();
             }
         }));
 
@@ -160,5 +170,48 @@ public class AmbulanceServiceShowActivity extends AppCompatActivity {
     public void onBackPressed() {
         finish();
         super.onBackPressed();
+    }
+
+
+    public void callPhoneNumber()
+    {
+        try
+        {
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            {
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, CALL_REQUEST);
+
+                    return;
+                }
+            }
+
+            Intent callIntent = new Intent(Intent.ACTION_CALL);
+            callIntent.setData(Uri.parse("tel: "+CALL_NUMBER));
+            startActivity(callIntent);
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                           int[] grantResults)
+    {
+        if(requestCode == CALL_REQUEST)
+        {
+            if(grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            {
+                callPhoneNumber();
+            }
+            else
+            {
+                Toast.makeText(this, "Permission denied!", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }

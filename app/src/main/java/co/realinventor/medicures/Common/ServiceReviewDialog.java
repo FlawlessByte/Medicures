@@ -1,5 +1,6 @@
 package co.realinventor.medicures.Common;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import androidx.fragment.app.DialogFragment;
 import co.realinventor.medicures.AmbulanceService.ServiceDetails;
 import co.realinventor.medicures.Common.Statics;
 import co.realinventor.medicures.R;
+import co.realinventor.medicures.UserMod.ComposeFeedbackActivity;
 
 public class ServiceReviewDialog extends DialogFragment{
 
@@ -62,7 +64,7 @@ public class ServiceReviewDialog extends DialogFragment{
 
 
         if(Statics.SERVICE_REQ_ACTIVITY.equals("User")){
-            serviceXApproveButton.setText("Add to favourites");
+            serviceXApproveButton.setText("Write a feedback");
             serviceXDenyButton.setText("Cancel");
         }
 
@@ -75,10 +77,12 @@ public class ServiceReviewDialog extends DialogFragment{
             @Override
             public void onClick(View v) {
                 if(Statics.SERVICE_REQ_ACTIVITY.equals("User")){ //user access
-                    //add to favourites
-                    ref.child("User").child(FirebaseAuth.getInstance().getUid()).child("fav_services").child(currentServiceDetails.serviceID)
-                            .setValue("fav");
-                    Toast.makeText(getContext(), "The Ambulance service has been added to favourites!", Toast.LENGTH_SHORT).show();
+                    //send feedback
+                    Intent i = new Intent(getContext(), ComposeFeedbackActivity.class);
+                    i.putExtra("to" , currentServiceDetails.serviceID);
+                    i.putExtra("role", currentServiceDetails.driverName);
+                    startActivity(i);
+
                 }
                 else { //admin access
                     currentServiceDetails.verified = "yes";

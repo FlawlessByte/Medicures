@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AdminMod.AdminReplyActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textviewRole"
+        android:text="Send a reply to user"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:textAlignment="center"
+        android:layout_marginTop="?android:actionBarSize"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textview2"
+        android:text="Type your reply here!"
+        android:textStyle="bold"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="40dp"
+        android:layout_below="@+id/textviewRole"
+        android:textSize="18sp"
+        android:padding="10dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextReply"
+        android:hint="Type the reply here!"
+        android:background="@drawable/right_button_btn_line"
+        android:layout_below="@+id/textview2"
+        android:textSize="16sp"
+        android:layout_margin="10dp"
+        android:padding="10dp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Send"
+        android:layout_centerInParent="true"
+        android:layout_alignParentBottom="true"
+        android:onClick="replySendButtonPressed"
+        android:layout_marginBottom="60dp"/>
+
+</RelativeLayout>

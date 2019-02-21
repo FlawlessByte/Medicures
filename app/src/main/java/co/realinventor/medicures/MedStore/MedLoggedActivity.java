@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import co.realinventor.medicures.Common.FeedbackActivity;
 import co.realinventor.medicures.Common.NotificationsActivity;
+import co.realinventor.medicures.Common.SentMailActivity;
 import co.realinventor.medicures.MainActivity;
 import co.realinventor.medicures.R;
 
@@ -67,6 +68,7 @@ public class MedLoggedActivity extends AppCompatActivity {
 
     public void medSentMailButtonPressed(View view){
         Log.d("SentButton", "Pressed");
+        startActivity(new Intent(this, SentMailActivity.class));
     }
 
     public void medFeedbackButtonPressed(View view){

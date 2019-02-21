@@ -15,6 +15,8 @@ import co.realinventor.medicures.UserMod.MedShowDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,7 +35,10 @@ public class MedStoreShowActivity extends AppCompatActivity {
     private MedStoreAdapter mAdapter;
     private DatabaseReference mDatabase;
     private List<MedStoreDetails> medStoreList = new ArrayList<>();
+    private List<MedStoreDetails> allMedStoreList = new ArrayList<>();
     private TextView textViewMsgMedStore;
+    private EditText searchEditText;
+    private Button searchButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +46,9 @@ public class MedStoreShowActivity extends AppCompatActivity {
         setContentView(R.layout.activity_med_store_show);
 
         textViewMsgMedStore = findViewById(R.id.textViewMsgMedStore);
+        searchEditText = findViewById(R.id.searchEditTextMed);
+        searchButton = findViewById(R.id.searchButtonMed);
+
 
         //RecyclerView things
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view_MedShow);
@@ -51,6 +59,50 @@ public class MedStoreShowActivity extends AppCompatActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(mAdapter);
+
+
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("Search Button", "Pressed");
+                String query = searchEditText.getText().toString();
+                Log.d("Search Query", query);
+                //Toast.makeText(getApplicationContext(), "Query : " + query, Toast.LENGTH_SHORT).show();
+
+                if(query.equals("")){
+                    //Show all elements
+                    medStoreList.clear();
+                    medStoreList.addAll(allMedStoreList);
+                }
+                else{
+//                    Toast.makeText(getApplicationContext(), "AllServiceList count : " + allMedStoreList.size(), Toast.LENGTH_SHORT).show();
+                    List<MedStoreDetails> filteredList = new ArrayList<>();
+                    for (MedStoreDetails row : allMedStoreList) {
+
+                        // name match condition. this might differ depending on your requirement
+                        // here we are looking for name or phone number match
+                        if (row.locality.toLowerCase().contains(query.toLowerCase())) {
+                            filteredList.add(row);
+                        }
+                    }
+                    medStoreList.clear();
+
+                    medStoreList.addAll(filteredList);
+                }
+                if(medStoreList.size() == 0){
+                    textViewMsgMedStore.setVisibility(View.VISIBLE);
+                }
+                else{
+                    textViewMsgMedStore.setVisibility(View.GONE);
+                }
+
+                mAdapter = new MedStoreAdapter(medStoreList);
+                recyclerView.setAdapter(mAdapter);
+                mAdapter.notifyDataSetChanged();
+
+            }
+        });
+
 
 
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
@@ -97,8 +149,14 @@ public class MedStoreShowActivity extends AppCompatActivity {
 
                 }
 
-                if(medStoreList.size() == 0)
+                if(medStoreList.size() == 0){
                     textViewMsgMedStore.setVisibility(View.VISIBLE);
+                }
+                else{
+                    textViewMsgMedStore.setVisibility(View.GONE);
+                }
+
+                allMedStoreList.addAll(medStoreList); // copied the all list
 
                 mAdapter.notifyDataSetChanged();
             }

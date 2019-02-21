@@ -56,4 +56,15 @@ public class ServiceShowAdapter extends RecyclerView.Adapter<ServiceShowAdapter.
     }
 
 
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+
 }

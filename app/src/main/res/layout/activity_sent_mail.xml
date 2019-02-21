@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Common.NotificationsActivity">
+    tools:context=".Common.SentMailActivity">
 
     <TextView
         android:id="@+id/abcde"
@@ -14,13 +14,13 @@
         android:layout_marginTop="?android:attr/actionBarSize"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:text="Notifications"
+        android:text="Sent Mail"
         android:textSize="20sp"
         android:textStyle="bold"
         android:textAlignment="center" />
 
     <TextView
-        android:id="@+id/textViewMsgNotifications"
+        android:id="@+id/textViewMsgFeedback"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -30,17 +30,18 @@
         android:text="No items to display!"
         android:textAlignment="center"
         android:visibility="gone"
-        android:layout_below="@+id/abcde" />
+        android:layout_below="@id/abcde"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_notifications"
+        android:id="@+id/recycler_view_sent_mail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="5dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        android:padding="10dp"
         android:scrollbars="vertical"
-        android:layout_below="@+id/textViewMsgNotifications" />
+        android:padding="10dp"
+        android:layout_margin="5dp"
+        android:background="@drawable/right_button_btn_line"
+        android:layout_below="@id/textViewMsgFeedback" />
 
 </RelativeLayout>

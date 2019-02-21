@@ -109,6 +109,45 @@
                 android:layout_below="@+id/medXPhone"
                 android:gravity="center"/>
 
+            <androidx.gridlayout.widget.GridLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:visibility="gone"
+                android:layout_centerInParent="true"
+                android:layout_below="@id/medXPinCode"
+                app:columnCount="2">
+                <Button
+                    style="@style/Base.TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
+                    android:layout_width="160dp"
+                    android:layout_height="80dp"
+                    android:id="@+id/bluePrintButton"
+                    android:text="Blue print"
+                    android:tag="blue_print"/>
+                <Button
+                    style="@style/Base.TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
+                    android:layout_width="160dp"
+                    android:layout_height="80dp"
+                    android:id="@+id/gstButton"
+                    android:text="GST Doc"
+                    android:tag="gst"/>
+                <Button
+                    style="@style/Base.TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
+                    android:layout_width="160dp"
+                    android:layout_height="80dp"
+                    android:id="@+id/sanctionButton"
+                    android:text="Sanction Document"
+                    android:tag="sanction"/>
+                <Button
+                    style="@style/Base.TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
+                    android:layout_width="160dp"
+                    android:layout_height="80dp"
+                    android:id="@+id/pharmaceuticalButton"
+                    android:text="Pharmaceutical Licence"
+                    android:tag="pharmaceutical"/>
+
+            </androidx.gridlayout.widget.GridLayout>
+
 
 
 

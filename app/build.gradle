@@ -44,7 +44,6 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.6.1'
     //implementation 'com.github.danysantiago:sendgrid-android:1'
 
-
     implementation "com.google.firebase:firebase-auth:16.1.0"
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'

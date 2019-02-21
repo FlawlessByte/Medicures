@@ -35,5 +35,13 @@
         android:padding="5dp"
         android:layout_below="@+id/from"
         android:textColor="@color/year" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/replyButton"
+        android:text="Reply"
+        android:visibility="gone"
+        style="@style/Base.TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
+        android:layout_below="@+id/date"/>
 
 </RelativeLayout>

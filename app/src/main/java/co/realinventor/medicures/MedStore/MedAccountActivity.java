@@ -2,6 +2,7 @@ package co.realinventor.medicures.MedStore;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -70,27 +71,27 @@ public class MedAccountActivity extends AppCompatActivity {
 
     public void medNameEditButtonPressed(View view){
         Log.d("MedNameButton", "Pressed");
-        showDialogs("Type new name", (TextView) view, InputType.TYPE_CLASS_TEXT);
+        showDialogs("Type new name", medNameEditText, InputType.TYPE_CLASS_TEXT);
     }
 
     public void medOwnerEditButtonPressed(View view){
         Log.d("OwnerButton", "Pressed");
-        showDialogs("Type new owner name", (TextView) view, InputType.TYPE_CLASS_TEXT);
+        showDialogs("Type new owner name", medOwnerEditText, InputType.TYPE_CLASS_TEXT);
     }
 
     public void medLocalityEditButtonPressed(View view){
         Log.d("LocalityButton", "Pressed");
-        showDialogs("Type new locality", (TextView) view, InputType.TYPE_CLASS_TEXT);
+        showDialogs("Type new locality", medLocalityEditText, InputType.TYPE_CLASS_TEXT);
     }
 
     public void medContactEditButtonPressed(View view){
         Log.d("ContactButton", "Pressed");
-        showDialogs("Type new contact no.", (TextView) view, InputType.TYPE_CLASS_PHONE);
+        showDialogs("Type new contact no.", medContactEditText, InputType.TYPE_CLASS_PHONE);
     }
 
     public void medMailEditButtonPressed(View view){
         Log.d("MailButton", "Pressed");
-        showDialogs("Type new mail ID", (TextView) view, InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+        showDialogs("Type new mail ID", medMailEditText, InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
     }
 
     public void saveMedEditsButtonClicked(View view){
@@ -113,7 +114,12 @@ public class MedAccountActivity extends AppCompatActivity {
 
 
     private void showDialogs(String title, final TextView textview, int inputType){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
+        } else {
+            builder = new AlertDialog.Builder(this);
+        }
         builder.setTitle(title);
 
         // Set up the input
