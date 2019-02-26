@@ -80,6 +80,11 @@ public class ServiceReviewDialog extends DialogFragment{
         serviceXAge.setText("Age : " + currentServiceDetails.driverAge);
         serviceXPhone.setText("Phone : " + currentServiceDetails.phone);
 
+        final String to = currentServiceDetails.serviceID;
+        final String from = "admin@medcure";
+        final String senderName = "Admin";
+        final String senderEmail = "admin@medcure.com";
+
         serviceXApproveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,6 +103,9 @@ public class ServiceReviewDialog extends DialogFragment{
                 else { //admin access
                     currentServiceDetails.verified = "yes";
                     ref.child("Ambulances").child(currentServiceDetails.serviceID).setValue(currentServiceDetails);
+                    String msg = "Your request for Ambulance account has been approved!";
+
+                    new NotificationManager().makeNotification(msg, to, from, senderName, senderEmail);
                     Log.d("Ambulance Data", "Stored");
                     Toast.makeText(getContext(), "The Ambulance Service request has been approved!", Toast.LENGTH_SHORT).show();
                 }
@@ -111,6 +119,10 @@ public class ServiceReviewDialog extends DialogFragment{
                 currentServiceDetails.verified = "no";
                 if(!Statics.SERVICE_REQ_ACTIVITY.equals("User")) {
                     ref.child("Ambulances").child(currentServiceDetails.serviceID).setValue(currentServiceDetails);
+                    String msg = "Your request for Ambulance account has been rejected!";
+
+                    new NotificationManager().makeNotification(msg, to, from, senderName, senderEmail);
+
                     Log.d("Ambulance Data", "Stored");
                     Toast.makeText(getContext(), "The Ambulance Service request has been rejected!", Toast.LENGTH_SHORT).show();
                 }

@@ -30,6 +30,8 @@ public class MedRequestsActivity extends AppCompatActivity {
     private String uid ;
     private DatabaseReference mDatabase;
     private TextView textViewMsgMedRequest;
+    private DatabaseReference ref;
+    private MedStoreDetails medStoreDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,20 @@ public class MedRequestsActivity extends AppCompatActivity {
         Log.d("Activity", "MedRequestsActivity");
 
         textViewMsgMedRequest = findViewById(R.id.textViewMsgMedRequest);
+
+        ref = FirebaseDatabase.getInstance().getReference();
+
+        ref.child("MedStores").child(FirebaseAuth.getInstance().getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d("FirebaseDatabase", "Medstore details retrieved");
+                medStoreDetails = dataSnapshot.getValue(MedStoreDetails.class);
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
 
 
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -59,9 +75,8 @@ public class MedRequestsActivity extends AppCompatActivity {
                 FullScreenDialog.currentMedicine = medicineList.get(position);
                 //Toast.makeText(getApplicationContext(), movie.getTitle() + " is selected!", Toast.LENGTH_SHORT).show();
 
-
+                FullScreenDialog.medStoreDetails = medStoreDetails;
                 FullScreenDialog dialog = new FullScreenDialog();
-                //FragmentTransaction ft = getFragmentManager().beginTransaction(); /* Error prone area*/
                 dialog.show(getSupportFragmentManager().beginTransaction(), FullScreenDialog.TAG);
             }
 

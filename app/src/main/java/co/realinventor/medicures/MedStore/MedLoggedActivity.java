@@ -81,10 +81,6 @@ public class MedLoggedActivity extends AppCompatActivity {
         startActivity(new Intent(this, MedRequestsActivity.class));
     }
 
-    public void medUpdateButtonPressed(View view){
-        Log.d("UpdateButton", "Pressed");
-        startActivity(new Intent(this, MedAccountActivity.class));
-    }
 
     @Override
     public void onBackPressed() {

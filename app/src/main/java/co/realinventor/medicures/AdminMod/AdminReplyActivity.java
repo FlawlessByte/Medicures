@@ -25,7 +25,7 @@ public class AdminReplyActivity extends AppCompatActivity {
         editTextReply = findViewById(R.id.editTextReply);
 
         to = getIntent().getStringExtra("to");
-        uid = "admin@medicure";
+        uid = "admin@medcure";
         senderName = "Admin";
 
 

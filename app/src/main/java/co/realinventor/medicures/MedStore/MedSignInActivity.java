@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -22,8 +24,15 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+
+import org.angmarch.views.NiceSpinner;
+
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -38,13 +47,16 @@ import droidninja.filepicker.models.sort.SortingTypes;
 
 public class MedSignInActivity extends AppCompatActivity {
     ImageButton buttonBluePrint, buttonGST, buttonSanction, buttonPharmaceutical;
-    EditText textBluePrint, textGST, textSanction, textPharmaceutical, inputShopName, inputLocality,inputPinCode, inputOwnerName, inputPhone, inputPharmacist;
+    EditText input,textBluePrint, textGST, textSanction, textPharmaceutical, inputShopName, inputLocality,inputPinCode, inputOwnerName, inputPhone;
     ArrayList<String> docPaths = new ArrayList<>();
     String currentFile  = "";
     FirebaseStorage storage;
     StorageReference storageRef;
     private Timer t1;
     private int count = 0;
+    private NiceSpinner pharmSpinner;
+    private List<String> dataset = new ArrayList<>();
+    private String data;
 
 
     @Override
@@ -63,8 +75,10 @@ public class MedSignInActivity extends AppCompatActivity {
         inputLocality = findViewById(R.id.inputLocality);
         inputPinCode = findViewById(R.id.inputPinCode);
         inputOwnerName = findViewById(R.id.inputOwnerName);
-        inputPharmacist = findViewById(R.id.inputPharmacist);
         inputPhone = findViewById(R.id.inputPhone);
+        pharmSpinner = (NiceSpinner) findViewById(R.id.pharm_spinner);
+        dataset.add("Pharmacists");
+        pharmSpinner.attachDataSource(dataset);
 
         textBluePrint = findViewById(R.id.textBluePrint);
         textGST = findViewById(R.id.textGST);
@@ -166,20 +180,78 @@ public class MedSignInActivity extends AppCompatActivity {
 
     }
 
+    public void plusButtonClicked(View view){
+        //Input a pharmacist name and update dataset
+        String pharmacist = showDialogs("Enter a pharmacist Name", InputType.TYPE_CLASS_TEXT);
+        dataset.add(pharmacist);
+        pharmSpinner.attachDataSource(dataset);
+
+    }
+
+
+    private String showDialogs(String title, int inputType){
+        data = "";
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
+        } else {
+            builder = new AlertDialog.Builder(this);
+        }
+        builder.setTitle(title);
+
+        // Set up the input
+        input = new EditText(this);
+        // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+        input.setInputType(inputType);
+        input.setPadding(16,30,16,16);
+        input.setTextColor(Color.WHITE);
+        builder.setView(input);
+
+        // Set up the buttons
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                data = input.getText().toString();
+                dataset.removeAll(Arrays.asList("", null));
+                dataset.add(data);
+                pharmSpinner.attachDataSource(dataset);
+                pharmSpinner.setSelectedIndex(0);
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+
+        return data;
+    }
+
 
     public void saveUserData(String uid){
-        String shopName,locality,ownerName,pharmacist,phone,pinCode,verified = "no";
+        String shopName,locality,ownerName,phone,pinCode,verified = "no";
+        Map<String ,Object> pharmacists = new HashMap<>();
+        int count = 0;
+        for(String pharms: dataset){
+            if(!pharms.equals("Pharmacists")) {
+                pharmacists.put("ID" + count, pharms);
+                count++;
+            }
+        }
         shopName = inputShopName.getText().toString();
         locality = inputLocality.getText().toString();
         ownerName = inputOwnerName.getText().toString();
-        pharmacist = inputPharmacist.getText().toString();
         phone = inputPhone.getText().toString();
         pinCode = inputPinCode.getText().toString();
 
-        MedStoreDetails medStoreDetails = new MedStoreDetails(uid ,shopName, locality, ownerName, pharmacist, phone, pinCode, verified);
+        MedStoreDetails medStoreDetails = new MedStoreDetails(uid ,shopName, locality, ownerName, phone, pinCode, verified);
 
         DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
         myRef.child("MedStores").child(uid).setValue(medStoreDetails);
+        myRef.child("MedStoresPharm").child(uid+"Pharm").setValue(pharmacists);
 
         Toast.makeText(this, "Data is being saved!", Toast.LENGTH_SHORT).show();
 
@@ -219,8 +291,19 @@ public class MedSignInActivity extends AppCompatActivity {
             default:
                 break;
         }
-        StorageReference riversRef = storageRef.child("docs/med_store/"+uid+"/"+fileNameToBe);
+        final StorageReference riversRef = storageRef.child("docs/med_store/"+uid+"/"+fileNameToBe);
         UploadTask uploadTask = riversRef.putFile(file);
+//                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//            @Override
+//            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//                    @Override
+//                    public void onSuccess(Uri uri) {
+//                        Log.d("","");
+//                    }
+//                })
+//            }
+//        });
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Uploading file "+no);
@@ -268,8 +351,6 @@ public class MedSignInActivity extends AppCompatActivity {
             status = false;
         if(inputOwnerName.getText().toString().equals(""))
             status = false;
-        if(inputPharmacist.getText().toString().equals(""))
-            status = false;
         if(inputPhone.getText().toString().equals(""))
             status = false;
         if(inputPinCode.getText().toString().equals(""))
@@ -281,6 +362,8 @@ public class MedSignInActivity extends AppCompatActivity {
         if(textSanction.getText().toString().equals("Upload Sanction Certificate"))
             status = false;
         if(textPharmaceutical.getText().toString().equals("Upload Pharmaceutical Certificate"))
+            status = false;
+        if(dataset.size()==1)
             status = false;
 
         return status;

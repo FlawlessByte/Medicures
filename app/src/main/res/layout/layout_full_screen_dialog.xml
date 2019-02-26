@@ -108,6 +108,22 @@
                         android:layout_margin="5dp"
                         android:hint="Amount"/>
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:id="@+id/pharmTextView"
+                        android:layout_below="@id/editTextAmount"
+                        android:text="Select Pharmacist"/>
+
+                    <org.angmarch.views.NiceSpinner
+                        android:id="@+id/pharmSpinner"
+                        android:layout_below="@id/pharmTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:textTint="@android:color/black"
+                        android:layout_margin="16dp"/>
+
                 </RelativeLayout>
 
 

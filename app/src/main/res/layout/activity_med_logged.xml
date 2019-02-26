@@ -174,22 +174,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.5">
 
-                <Button
-                    android:id="@+id/button6"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/right_button_btn_line"
-                    android:gravity="center|bottom"
-                    android:onClick="medUpdateButtonPressed"
-                    android:paddingBottom="10dp"
-                    android:text="Update"
-                    android:textSize="18sp" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/update_large" />
 
             </RelativeLayout>
         </TableRow>

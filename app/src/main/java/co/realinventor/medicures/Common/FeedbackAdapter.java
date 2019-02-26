@@ -48,7 +48,7 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.MyView
     public void onBindViewHolder(MyViewHolder holder, int position) {
         final Feedback feedback = feedbackList.get(position);
         holder.msg.setText(feedback.getMsg());
-        holder.date.setText(feedback.getDateTime());
+        holder.date.setText(feedback.getDateNTime());
         holder.from.setText(feedback.getFrom());
         if(feedback.getTo().equals("admin@medicure")){
             holder.replyButton.setVisibility(View.VISIBLE);

@@ -54,7 +54,7 @@ public class FeedbackActivity extends AppCompatActivity {
         }
         catch (Exception e){
             //Hopefully, its admin
-            uid = "admin@medicure";
+            uid = "admin@medcure";
             headingTextView.setText("Chats");
             mAdapter.context = getApplicationContext();
         }

@@ -12,23 +12,24 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 //import com.sendgrid.SendGrid;
 //import com.sendgrid.SendGridException;
+import org.angmarch.views.NiceSpinner;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
 import co.realinventor.medicures.Common.NotificationManager;
-import co.realinventor.medicures.MedStore.MedStoreDetails;
-import co.realinventor.medicures.MedStore.Medicine;
 import co.realinventor.medicures.R;
 
 public class FullScreenDialog extends DialogFragment {
@@ -42,34 +43,29 @@ public class FullScreenDialog extends DialogFragment {
     private EditText editTextAmount;
     String mMailTo, mMailFrom, mUserUid, mMedUid, mMsg, mSub, senderMail;
     private DatabaseReference ref;
-    MedStoreDetails medStoreDetails;
+    public static MedStoreDetails medStoreDetails ;
+    private NiceSpinner spinner;
+    private Map<String, Object> pharmacists = new HashMap<>();
+    private List<String> pharms = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStyle(DialogFragment.STYLE_NORMAL, R.style.FullScreenDialogStyle);
 
+        Log.d("FullScreenDialog", "Entered");
+
         mMailFrom = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         mUserUid = currentMedicine.getFrom();
         mMailTo = currentMedicine.getCustomerEmail();
         mMedUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        Log.d("FullScreenDialog MedUid", mMedUid);
 
         senderMail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         ref = FirebaseDatabase.getInstance().getReference();
 
-        ref.child("MedStores").child(mMedUid).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d("FirebaseDatabase", "Medstore details retrieved");
-                medStoreDetails = dataSnapshot.getValue(MedStoreDetails.class);
 
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed: " + databaseError.getCode());
-            }
-        });
 
     }
 
@@ -95,6 +91,7 @@ public class FullScreenDialog extends DialogFragment {
         medicineReqMedicineDosage = view.findViewById(R.id.medicineReqMedicineDosage);
         medicineReqMedicineQuantity = view.findViewById(R.id.medicineReqMedicineQuantity);
         editTextAmount = view.findViewById(R.id.editTextAmount);
+        spinner = (NiceSpinner) view.findViewById(R.id.pharmSpinner);
 
         medicineReqApproveButton = view.findViewById(R.id.medicineReqApproveButton);
         medicineReqDenyButton = view.findViewById(R.id.medicineReqDenyButton);
@@ -105,6 +102,26 @@ public class FullScreenDialog extends DialogFragment {
         medicineReqMedicineName.setText("Medicine Name : " +currentMedicine.getMedicine_name());
         medicineReqMedicineDosage.setText("Dosage : " +currentMedicine.getDosage());
         medicineReqMedicineQuantity.setText("Quantity : " +currentMedicine.getQuantity());
+
+
+        ref.child("MedStoresPharm").child(mMedUid+"Pharm").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d("FirebaseDatabase", "Medstore details retrieved");
+
+                for(DataSnapshot data: dataSnapshot.getChildren()){
+                    pharms.add(data.getValue().toString());
+                }
+                spinner.attachDataSource(pharms);
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
+
+
+
 
 
 
@@ -184,7 +201,7 @@ public class FullScreenDialog extends DialogFragment {
                 "Your medicine request with transaction id "+ currentMedicine.getTrans_id() +", has been approved by, "+
                 medStoreDetails.shopName +". \nMedicine Name : " + currentMedicine.getMedicine_name() + "\nMedicine dosage : "
                 +currentMedicine.getDosage() + "\nQuantity : " + currentMedicine.getQuantity()+
-                "\nTotal amount : "+ editTextAmount.getText().toString();
+                "\nTotal amount : "+ editTextAmount.getText().toString() + "\nPharmacist : "+pharms.get(spinner.getSelectedIndex());
         mSub = "Approval of order";
 
         newMed = currentMedicine;

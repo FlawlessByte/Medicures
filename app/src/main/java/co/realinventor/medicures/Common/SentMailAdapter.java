@@ -43,7 +43,7 @@ public class SentMailAdapter extends RecyclerView.Adapter<SentMailAdapter.MyView
         Object object = allItemList.get(position);
         if(object instanceof Feedback){
             holder.sentMailTo.setText("To : "+((Feedback) object).getSenderEmail());
-            holder.sentMailDate.setText("Date : "+((Feedback) object).getDateTime());
+            holder.sentMailDate.setText("Date : "+((Feedback) object).getDateNTime());
             holder.sentMailMsg.setText("Message : "+((Feedback) object).getMsg());
         }
         else if(object instanceof Notifications){

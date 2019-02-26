@@ -138,13 +138,15 @@ public class MedStoreShowActivity extends AppCompatActivity {
                     Log.d("FirebaseDatabase", "Got Med Stores");
                     Log.d("Med store count ", ""+dataSnapshot.getChildrenCount());
                     MedStoreDetails mdetails = postSnapshot.getValue(MedStoreDetails.class);
-                    if(Statics.MED_REQ_ACTIVITY.equals("User")){
-                        if(mdetails.verified.equals("yes")){
-                            Log.d("FirebaseDatabase", "verified ");
+                    if(mdetails!=null) {
+                        if (Statics.MED_REQ_ACTIVITY.equals("User")) {
+                            if (mdetails.verified.equals("yes")) {
+                                Log.d("FirebaseDatabase", "verified ");
+                                medStoreList.add(mdetails);
+                            }
+                        } else {
                             medStoreList.add(mdetails);
                         }
-                    }else {
-                        medStoreList.add(mdetails);
                     }
 
                 }

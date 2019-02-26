@@ -36,7 +36,7 @@ public class Feedback {
         return time;
     }
 
-    public String getDateTime() {
+    public String getDateNTime() {
         return getDate() + " | " + getTime();
     }
 

@@ -98,7 +98,6 @@ public class MedAccountActivity extends AppCompatActivity {
         Log.d("SaveButton", "Pressed");
         MedStoreDetails newMedStoreDetails = new MedStoreDetails(medStoreDetails.mUid,medNameEditText.getText().toString(), medLocalityEditText.getText().toString(),
                 medOwnerEditText.getText().toString(),
-                medStoreDetails.pharmacist,
                 medContactEditText.getText().toString(), medStoreDetails.pinCode, medStoreDetails.verified);
 
         ref.child("MedStores").child(uid).setValue(newMedStoreDetails);
