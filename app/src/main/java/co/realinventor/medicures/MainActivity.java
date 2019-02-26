@@ -59,6 +59,16 @@ public class MainActivity extends AppCompatActivity {
             // Permission is not granted
             requestPermissions();
         }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)
+                != PackageManager.PERMISSION_GRANTED) {
+            // Permission is not granted
+            requestPermissions();
+        }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            // Permission is not granted
+            requestPermissions();
+        }
 
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -91,7 +101,9 @@ public class MainActivity extends AppCompatActivity {
                         Manifest.permission.WRITE_EXTERNAL_STORAGE,
                         Manifest.permission.READ_EXTERNAL_STORAGE,
                         Manifest.permission.CALL_PHONE,
-                        Manifest.permission.READ_CONTACTS
+                        Manifest.permission.READ_CONTACTS,
+                        Manifest.permission.SEND_SMS,
+                        Manifest.permission.ACCESS_FINE_LOCATION
                 ).withListener(new MultiplePermissionsListener() {
             @Override public void onPermissionsChecked(MultiplePermissionsReport report) {
                 if(report.areAllPermissionsGranted()){

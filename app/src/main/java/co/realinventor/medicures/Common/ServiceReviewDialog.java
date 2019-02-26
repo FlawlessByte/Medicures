@@ -1,6 +1,10 @@
 package co.realinventor.medicures.Common;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.DialogFragment;
 import co.realinventor.medicures.AmbulanceService.ServiceDetails;
 import co.realinventor.medicures.Common.Statics;
@@ -28,6 +33,8 @@ public class ServiceReviewDialog extends DialogFragment{
     private TextView serviceXDriverName, serviceXLocality, serviceXAge, serviceXPhone;
     private Button serviceXApproveButton, serviceXDenyButton;
     private DatabaseReference ref;
+    private String CALL_NUMBER;
+    private final int CALL_REQUEST = 100;
 
 
     @Override
@@ -64,7 +71,7 @@ public class ServiceReviewDialog extends DialogFragment{
 
 
         if(Statics.SERVICE_REQ_ACTIVITY.equals("User")){
-            serviceXApproveButton.setText("Write a feedback");
+            serviceXApproveButton.setText("Call");
             serviceXDenyButton.setText("Cancel");
         }
 
@@ -78,10 +85,14 @@ public class ServiceReviewDialog extends DialogFragment{
             public void onClick(View v) {
                 if(Statics.SERVICE_REQ_ACTIVITY.equals("User")){ //user access
                     //send feedback
-                    Intent i = new Intent(getContext(), ComposeFeedbackActivity.class);
-                    i.putExtra("to" , currentServiceDetails.serviceID);
-                    i.putExtra("role", currentServiceDetails.driverName);
-                    startActivity(i);
+//                    Intent i = new Intent(getContext(), ComposeFeedbackActivity.class);
+//                    i.putExtra("to" , currentServiceDetails.serviceID);
+//                    i.putExtra("role", currentServiceDetails.driverName);
+//                    startActivity(i);
+                    //call the service
+                    CALL_NUMBER = currentServiceDetails.phone;
+                    callPhoneNumber();
+
 
                 }
                 else { //admin access
@@ -117,6 +128,48 @@ public class ServiceReviewDialog extends DialogFragment{
         this.dismiss();
     }
 
+
+    public void callPhoneNumber()
+    {
+        try
+        {
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            {
+                if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CALL_PHONE}, CALL_REQUEST);
+
+                    return;
+                }
+            }
+
+            Intent callIntent = new Intent(Intent.ACTION_CALL);
+            callIntent.setData(Uri.parse("tel: "+CALL_NUMBER));
+            startActivity(callIntent);
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                           int[] grantResults)
+    {
+        if(requestCode == CALL_REQUEST)
+        {
+            if(grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            {
+                callPhoneNumber();
+            }
+            else
+            {
+                Toast.makeText(getContext(), "Permission denied!", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 
 
 

@@ -13,6 +13,9 @@
         tools:node="replace" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -21,6 +24,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".UserMod.ViewPrescActivity"></activity>
+        <activity android:name=".UserMod.AddressActivity"
+            android:theme="@style/Theme.MaterialComponents.Light.DarkActionBar"/>
+        <activity android:name=".UserMod.ViewMedListActivity" />
         <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -46,7 +53,9 @@
         <activity android:name=".UserMod.DocVisitAlarmedActivity" />
         <activity android:name=".UserMod.DocReminderActivity" />
         <activity android:name=".UserMod.MedicineAlarmedActivity" />
-        <activity android:name=".UserMod.MedicineReminderActivity" />
+        <activity
+            android:name=".UserMod.MedicineReminderActivity"
+            android:theme="@style/Theme.MaterialComponents.Light.DarkActionBar" />
         <activity
             android:name=".AmbulanceService.ServiceLoggedActivity"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
@@ -63,8 +72,7 @@
         <activity android:name=".Authentication.ResetPasswordActivity" />
         <activity android:name=".Authentication.LoginActivity" />
         <activity android:name=".Authentication.SignupActivity" />
-        <activity android:name=".MainActivity">
-        </activity>
+        <activity android:name=".MainActivity" />
 
         <receiver android:name=".UserMod.MedicineReminderReceiver" />
         <receiver android:name=".UserMod.DocVisitReminderReceiver" />

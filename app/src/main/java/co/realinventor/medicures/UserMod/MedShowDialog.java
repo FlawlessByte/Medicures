@@ -1,6 +1,9 @@
 package co.realinventor.medicures.UserMod;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,28 +20,39 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
+import co.realinventor.medicures.Common.PrescDetails;
 import co.realinventor.medicures.MedStore.MedStoreDetails;
 import co.realinventor.medicures.MedStore.Medicine;
 import co.realinventor.medicures.R;
+import droidninja.filepicker.FilePickerBuilder;
+import droidninja.filepicker.FilePickerConst;
+import droidninja.filepicker.models.sort.SortingTypes;
 
 public class MedShowDialog extends DialogFragment {
     public static String TAG = "MedShowDialog";
     public static MedStoreDetails currentMedDetails;
     private TextView medYShopName;
     private EditText medYMedicineName, medYMedicineDosage, medYMedicineQty;
-    private Button medYOrder, medYCancel;
+    private Button medYOrder, medYCancel, medYUploadPresc;
     private DatabaseReference ref;
     String uid;
     private UserDetails userDetails;
+    private ArrayList<Medicine> medList ;
+    private ArrayList<String> docPath;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStyle(DialogFragment.STYLE_NORMAL, R.style.FullScreenDialogStyle);
+
+        medList = new ArrayList<Medicine>();
 
         ref = FirebaseDatabase.getInstance().getReference();
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -82,10 +96,37 @@ public class MedShowDialog extends DialogFragment {
 
         medYOrder = view.findViewById(R.id.medYOrder);
         medYCancel= view.findViewById(R.id.medYCancel);
+        medYUploadPresc = view.findViewById(R.id.medYUploadPresc);
 
         medYShopName.setText(currentMedDetails.shopName);
 
         ref = FirebaseDatabase.getInstance().getReference();
+
+
+        medYUploadPresc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //upload prescription
+
+                String trans_id, to, from, customerEmail, customerName, reviewed /*yes or no*/, status /*approved or denied*/, filename;
+                trans_id = UUID.randomUUID().toString();
+                to = currentMedDetails.mUid;
+                from = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                customerEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+                customerName = userDetails.first_name;
+                reviewed = "no";
+                status = "";
+                filename = "";
+
+                PrescDetails presc = new PrescDetails(trans_id, to, from, customerEmail, customerName, reviewed, status, "", "", filename);
+                Intent i = new Intent(getContext(), ViewPrescActivity.class);
+                i.putExtra("presc", presc);
+                startActivity(i);
+
+
+
+            }
+        });
 
         medYOrder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,12 +144,28 @@ public class MedShowDialog extends DialogFragment {
                 reviewed = "no";
                 status = "";
 
-                Medicine newMedicine = new Medicine(trans_id, medicine_name, dosage, quantity, to, from, customerEmail, customerName, reviewed, status);
+                Medicine newMedicine = new Medicine(trans_id, medicine_name, dosage, quantity, to, from, customerEmail, customerName, reviewed, status, "","");
 
-                ref.child("MedRequests").child(trans_id).setValue(newMedicine);
-                Log.d("Medicine Reuqest", "Placed");
-                Toast.makeText(getContext(), "Your order has been placed!", Toast.LENGTH_SHORT).show();
-                closeDialog();
+
+                if(TextUtils.isEmpty(medicine_name) || TextUtils.isEmpty(dosage) || TextUtils.isEmpty(quantity)){
+                    Toast.makeText(getContext(), "Some of the fields are empty!", Toast.LENGTH_SHORT).show();
+                }else{
+                    medList.add(newMedicine);
+                }
+
+                if(medList.size() != 0){
+                    //Proceed to next acitivty
+                    Intent i = new Intent(getContext(), ViewMedListActivity.class);
+                    i.putExtra("list", medList);
+                    getActivity().startActivity(i);
+                    closeDialog();
+
+                }
+
+
+//                Log.d("Medicine Reuqest", "Placed");
+                //Toast.makeText(getContext(), "Your order has been placed!", Toast.LENGTH_SHORT).show();
+
             }
         });
 
@@ -116,12 +173,37 @@ public class MedShowDialog extends DialogFragment {
         medYCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                closeDialog();
+                //clear all the fields and add the details to List
+
+
+                String trans_id, medicine_name, dosage ,quantity, to, from, customerEmail, customerName, reviewed /*yes or no*/, status /*approved or denied*/;
+                trans_id = UUID.randomUUID().toString();
+                medicine_name = medYMedicineName.getText().toString();
+                dosage = medYMedicineDosage.getText().toString();
+                quantity = medYMedicineQty.getText().toString();
+                to = currentMedDetails.mUid;
+                from = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                customerEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+                customerName = userDetails.first_name;
+                reviewed = "no";
+                status = "";
+
+                Medicine newMedicine = new Medicine(trans_id, medicine_name, dosage, quantity, to, from, customerEmail, customerName, reviewed, status,  "", "");
+
+                medList.add(newMedicine);
+
+                medYMedicineName.setText("");
+                medYMedicineDosage.setText("");
+                medYMedicineQty.setText("");
+
+                Toast.makeText(getContext(), "Add another medicine!", Toast.LENGTH_SHORT).show();
+
             }
         });
 
         return view;
     }
+
 
 
     private void closeDialog(){

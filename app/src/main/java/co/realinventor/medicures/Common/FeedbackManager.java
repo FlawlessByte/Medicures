@@ -10,11 +10,11 @@ import java.util.UUID;
 
 public class FeedbackManager {
 
-    public String fid, date, time, msg, to, from, senderName;
+    public String fid, date, time, msg, to, from, senderName, senderEmail;
 
     public FeedbackManager(){}
 
-    public FeedbackManager(String fid, String date, String time, String msg, String to, String from, String senderName) {
+    public FeedbackManager(String fid, String date, String time, String msg, String to, String from, String senderName, String senderEmail) {
         this.fid = fid;
         this.date = date;
         this.time = time;
@@ -22,14 +22,16 @@ public class FeedbackManager {
         this.to = to;
         this.from = from;
         this.senderName = senderName;
+        this.senderEmail = senderEmail;
     }
 
 
-    public void writeFeedback(String msg, String to, String from, String senderName){
+    public void writeFeedback(String msg, String to, String from, String senderName, String senderEmail){
         this.msg = msg;
         this.to = to;
         this.from = from;
         this.senderName = senderName;
+        this.senderEmail = senderEmail;
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         this.date = df.format(Calendar.getInstance().getTime());
         df = new SimpleDateFormat("HH:mm:ss");
@@ -40,7 +42,13 @@ public class FeedbackManager {
         ref.child("feedbacks").child(fid).setValue(this);
     }
 
+    public void setSenderEmail(String senderEmail) {
+        this.senderEmail = senderEmail;
+    }
 
+    public String getSenderEmail() {
+        return senderEmail;
+    }
 
     public String getFid() {
         return fid;

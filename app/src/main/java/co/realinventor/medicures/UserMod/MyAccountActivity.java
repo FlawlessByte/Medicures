@@ -33,7 +33,7 @@ import co.realinventor.medicures.R;
 public class MyAccountActivity extends AppCompatActivity {
     private String uid;
     UserDetails userDetails;
-    TextView nameEditTextView, ageEditTextView, localityEditTextView, phoneEditTextView, mailEditTextView, medicalEditTextView, ambulanceEditTextView;
+    TextView nameEditTextView, ageEditTextView, localityEditTextView, phoneEditTextView, mailEditTextView;
     private EditText input;
     private DatabaseReference ref;
     private ArrayList<String> medicalList, ambulanceList;
@@ -50,8 +50,6 @@ public class MyAccountActivity extends AppCompatActivity {
         localityEditTextView = findViewById(R.id.localityEditTextView);
         phoneEditTextView = findViewById(R.id.phoneEditTextView);
         mailEditTextView = findViewById(R.id.mailEditTextView);
-        medicalEditTextView = findViewById(R.id.medicalEditTextView);
-        ambulanceEditTextView = findViewById(R.id.ambulanceEditTextView);
 
         medicalList = new ArrayList<String>();
         ambulanceList = new ArrayList<String>();
@@ -109,19 +107,19 @@ public class MyAccountActivity extends AppCompatActivity {
         showDialogs("Type new mail ID", mailEditTextView, InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
     }
 
-    public void medicalEditButtonPressed(View view){
-        Log.d("MedicalEditButton", "Pressed");
-
-        Statics.SERVICE_REQ_ACTIVITY = "User";
-        startActivity(new Intent(this, AmbulanceServiceShowActivity.class));
-    }
-
-    public void ambulanceEditButtonPressed(View view){
-        Log.d("AmbulanceEditButton", "Pressed");
-
-        Statics.MED_REQ_ACTIVITY = "User";
-        startActivity(new Intent(this, MedStoreShowActivity.class));
-    }
+//    public void medicalEditButtonPressed(View view){
+//        Log.d("MedicalEditButton", "Pressed");
+//
+//        Statics.SERVICE_REQ_ACTIVITY = "User";
+//        startActivity(new Intent(this, AmbulanceServiceShowActivity.class));
+//    }
+//
+//    public void ambulanceEditButtonPressed(View view){
+//        Log.d("AmbulanceEditButton", "Pressed");
+//
+//        Statics.MED_REQ_ACTIVITY = "User";
+//        startActivity(new Intent(this, MedStoreShowActivity.class));
+//    }
 
     private void showDialogs(String title, final TextView textview, int inputType){
         AlertDialog.Builder builder;

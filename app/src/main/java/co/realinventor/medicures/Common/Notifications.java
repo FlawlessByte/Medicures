@@ -1,15 +1,16 @@
 package co.realinventor.medicures.Common;
 
 public class Notifications {
-    public String msg, to, from, sender_name, date, time;
+    public String msg, to, from, sender_name, senderEmail, date, time;
 
-    public Notifications(String msg, String to, String from, String sender_name, String date, String time) {
+    public Notifications(String msg, String to, String from, String sender_name, String senderEmail, String date, String time) {
         this.msg = msg;
         this.to = to;
         this.from = from;
         this.sender_name = sender_name;
         this.date = date;
         this.time = time;
+        this.senderEmail = senderEmail;
     }
 
     public Notifications() {
@@ -61,5 +62,13 @@ public class Notifications {
 
     public String getTime() {
         return time;
+    }
+
+    public void setSenderEmail(String senderEmail) {
+        this.senderEmail = senderEmail;
+    }
+
+    public String getSenderEmail() {
+        return senderEmail;
     }
 }

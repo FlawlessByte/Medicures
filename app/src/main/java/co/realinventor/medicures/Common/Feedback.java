@@ -1,17 +1,19 @@
 package co.realinventor.medicures.Common;
 
 public class Feedback {
-    public String fid, date, time, msg, to, from;
+    public String fid, date, time, msg, to, from, senderEmail, datetime;
 
     public Feedback(){}
 
-    public Feedback(String fid, String date, String time, String msg, String to, String from) {
+
+    public Feedback(String fid, String date, String time, String msg, String to, String from, String senderEmail) {
         this.fid = fid;
         this.date = date;
         this.time = time;
         this.msg = msg;
         this.to = to;
         this.from = from;
+        this.senderEmail = senderEmail;
     }
 
     public String getFid() {
@@ -64,5 +66,13 @@ public class Feedback {
 
     public void setFrom(String from) {
         this.from = from;
+    }
+
+    public void setSenderEmail(String senderEmail) {
+        this.senderEmail = senderEmail;
+    }
+
+    public String getSenderEmail() {
+        return senderEmail;
     }
 }

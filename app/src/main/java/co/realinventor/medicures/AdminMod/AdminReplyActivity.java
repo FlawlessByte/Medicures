@@ -39,7 +39,7 @@ public class AdminReplyActivity extends AppCompatActivity {
         }
         else{
 
-            new NotificationManager().makeNotification(msg,to,uid,senderName);
+            new NotificationManager().makeNotification(msg,to,uid,senderName, "admin@medcure.com");
             Toast.makeText(this, "Your reply has been sent to user!", Toast.LENGTH_LONG).show();
             finish();
 

@@ -197,55 +197,6 @@
                     android:layout_centerInParent="true"/>
             </RelativeLayout>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:background="@drawable/right_button_btn_line"
-                android:padding="10dp">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/medicalEditTextView"
-                    android:layout_centerInParent="true"
-                    android:textSize="18sp"
-                    android:layout_alignParentLeft="true"
-                    android:text="Medical Store"/>
-
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/medicalEditButton"
-                    android:layout_alignParentRight="true"
-                    android:background="@drawable/edit"
-                    android:onClick="medicalEditButtonPressed"
-                    android:layout_centerInParent="true"/>
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:background="@drawable/right_button_btn_line"
-                android:padding="10dp">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/ambulanceEditTextView"
-                    android:layout_centerInParent="true"
-                    android:textSize="18sp"
-                    android:layout_alignParentLeft="true"
-                    android:text="Ambulance Service"/>
-
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/ambulanceEditButton"
-                    android:layout_alignParentRight="true"
-                    android:background="@drawable/edit"
-                    android:onClick="ambulanceEditButtonPressed"
-                    android:layout_centerInParent="true"/>
-            </RelativeLayout>
 
             <Button
                 android:layout_width="wrap_content"

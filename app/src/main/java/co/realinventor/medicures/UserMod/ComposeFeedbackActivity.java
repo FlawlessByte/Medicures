@@ -22,7 +22,7 @@ public class ComposeFeedbackActivity extends AppCompatActivity {
 
     private EditText editTextFeedback;
     private DatabaseReference ref;
-    private String senderName, uid, to, role;
+    private String senderName, uid, to, role, senderEmail;
     private UserDetails userDetails;
     private TextView textViewRole;
 
@@ -34,6 +34,14 @@ public class ComposeFeedbackActivity extends AppCompatActivity {
 
         editTextFeedback = findViewById(R.id.editTextFeedback);
         textViewRole = findViewById(R.id.textviewRole);
+
+        try {
+            senderEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        }
+        catch (Exception e){
+            Log.d("ComposeFeedbackActivity", "Not a user, but admin");
+            senderEmail = "admin@medcure";
+        }
 
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         ref = FirebaseDatabase.getInstance().getReference();
@@ -68,7 +76,7 @@ public class ComposeFeedbackActivity extends AppCompatActivity {
         }
         else{
 
-            new FeedbackManager().writeFeedback(msg,to,uid,senderName);
+            new FeedbackManager().writeFeedback(msg,to,uid,senderName,senderEmail);
             Toast.makeText(this, "Your feedback has been sent to admin!", Toast.LENGTH_LONG).show();
             finish();
 

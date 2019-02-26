@@ -3,9 +3,11 @@ package co.realinventor.medicures.UserMod;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.util.Log;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,9 +17,17 @@ import androidx.core.view.GravityCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.yayandroid.locationmanager.LocationManager;
+import com.yayandroid.locationmanager.configuration.Configurations;
+import com.yayandroid.locationmanager.configuration.DefaultProviderConfiguration;
+import com.yayandroid.locationmanager.configuration.LocationConfiguration;
+import com.yayandroid.locationmanager.constants.ProviderType;
+import com.yayandroid.locationmanager.listener.LocationListener;
+
 import androidx.drawerlayout.widget.DrawerLayout;
 import co.realinventor.medicures.Common.AmbulanceServiceShowActivity;
 import co.realinventor.medicures.Common.FeedbackActivity;
@@ -29,21 +39,22 @@ import co.realinventor.medicures.MainActivity;
 import co.realinventor.medicures.R;
 
 public class LoggedActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, LocationListener {
 
     private final int CALL_REQUEST = 100;
     FirebaseAuth auth;
+    private TextView textViewUserNameNav;
+    private LocationManager awesomeLocationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logged);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("MedCure");
         setSupportActionBar(toolbar);
 
         Log.d("Activity", "LoggedActivity");
-
-
 
         auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() != null) {
@@ -62,6 +73,11 @@ public class LoggedActivity extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+        View headerView = navigationView.getHeaderView(0);
+        textViewUserNameNav = (TextView) headerView.findViewById(R.id.textViewUsernameNav);
+        textViewUserNameNav.setText(auth.getCurrentUser().getEmail());
+
         navigationView.setNavigationItemSelectedListener(this);
     }
 
@@ -158,7 +174,23 @@ public class LoggedActivity extends AppCompatActivity
     }
 
     public void loggedAlertButtonPressed(View view){
+        setupGPSConfig();
         callPhoneNumber();
+    }
+
+    private void setupGPSConfig(){
+
+
+        // LocationManager MUST be initialized with Application context in order to prevent MemoryLeaks
+        awesomeLocationManager = new LocationManager.Builder(getApplicationContext())
+                .activity(this) // Only required to ask permission and/or GoogleApi - SettingsApi
+                .configuration(Configurations.defaultConfiguration("The GPS permission is required!", "GPS coordinates obtained"))
+                .notify(this)
+                .build();
+
+        LocationManager.enableLog(true);
+
+        awesomeLocationManager.get();
     }
 
 
@@ -227,6 +259,66 @@ public class LoggedActivity extends AppCompatActivity
     }
 
 
+    private void sendAlertSMS(final double latitude, final double longitude){
+        new Thread(new Runnable() {
+            public void run() {
+                // a potentially time consuming task
+                String phoneNo = Statics.ALERT_CALL_NUMBER;
+                String link = "http://maps.google.com/maps?q=loc:" + String.format("%f,%f", latitude , longitude );
+                String sms = "Here is a medical emergency! Please contact! \nLocation details: \n"+link;
+
+                try {
+                    SmsManager smsManager = SmsManager.getDefault();
+                    smsManager.sendTextMessage(phoneNo, null, sms, null, null);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+
+
+
+    /*LocationListener Stuff*/
+
+    @Override
+    public void onProcessTypeChanged(int processType) {
+
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        Log.d("Longitude", ""+location.getLongitude());
+        Log.d("Latitude", ""+location.getLatitude());
+        sendAlertSMS(location.getLongitude(), location.getLatitude());
+
+    }
+
+    @Override
+    public void onLocationFailed(int type) {
+
+    }
+
+    @Override
+    public void onPermissionGranted(boolean alreadyHadPermission) {
+
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
 
 
 

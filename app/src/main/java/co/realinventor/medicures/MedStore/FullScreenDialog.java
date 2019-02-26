@@ -40,7 +40,7 @@ public class FullScreenDialog extends DialogFragment {
     private TextView medicineReqTransID, medicineReqCustomerName, medicineReqMedicineName, medicineReqMedicineDosage, medicineReqMedicineQuantity;
     private Button medicineReqApproveButton, medicineReqDenyButton;
     private EditText editTextAmount;
-    String mMailTo, mMailFrom, mUserUid, mMedUid, mMsg, mSub;
+    String mMailTo, mMailFrom, mUserUid, mMedUid, mMsg, mSub, senderMail;
     private DatabaseReference ref;
     MedStoreDetails medStoreDetails;
 
@@ -54,7 +54,7 @@ public class FullScreenDialog extends DialogFragment {
         mMailTo = currentMedicine.getCustomerEmail();
         mMedUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-
+        senderMail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         ref = FirebaseDatabase.getInstance().getReference();
 
         ref.child("MedStores").child(mMedUid).addValueEventListener(new ValueEventListener() {
@@ -193,7 +193,7 @@ public class FullScreenDialog extends DialogFragment {
 
         ref.child("MedRequests").child(mMedUid).setValue(newMed);
 
-        new NotificationManager().makeNotification(mMsg, currentMedicine.from, medStoreDetails.mUid, medStoreDetails.shopName);
+        new NotificationManager().makeNotification(mMsg, currentMedicine.from, medStoreDetails.mUid, medStoreDetails.shopName, senderMail);
 
         sendEmail(mMailTo, mMailFrom, mSub, mMsg);
     }
@@ -210,7 +210,7 @@ public class FullScreenDialog extends DialogFragment {
 
         ref.child("MedRequests").child(mMedUid).setValue(newMed);
 
-        new NotificationManager().makeNotification(mMsg, currentMedicine.from, medStoreDetails.mUid, medStoreDetails.shopName);
+        new NotificationManager().makeNotification(mMsg, currentMedicine.from, medStoreDetails.mUid, medStoreDetails.shopName, senderMail);
 
         sendEmail(mMailTo, mMailFrom, mSub, mMsg);
 

@@ -1,9 +1,12 @@
 package co.realinventor.medicures.MedStore;
 
-public class Medicine {
-    public String trans_id, medicine_name, dosage ,quantity, to, from, customerEmail, customerName, reviewed /*yes or no*/, status /*approved or denied*/;
+import java.io.Serializable;
 
-    public Medicine(String trans_id,String medicine_name, String dosage, String quantity, String to, String from, String customerEmail, String customerName, String reviewed, String  status) {
+public class Medicine implements Serializable {
+    public String trans_id, medicine_name, dosage ,quantity, to, from, customerEmail, customerName, reviewed /*yes or no*/, status /*approved or denied*/, address, contact;
+
+    public Medicine(String trans_id,String medicine_name, String dosage, String quantity, String to, String from, String customerEmail,
+                    String customerName, String reviewed, String  status, String address, String contact) {
         this.medicine_name = medicine_name;
         this.dosage = dosage;
         this.quantity = quantity;
@@ -14,10 +17,21 @@ public class Medicine {
         this.status = status;
         this.customerEmail = customerEmail;
         this.trans_id = trans_id;
+        this.address = address;
+        this.contact = contact;
     }
 
     public Medicine() {
     }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
 
     public String getMedicine_name() {
         return medicine_name;

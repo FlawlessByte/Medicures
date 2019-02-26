@@ -66,6 +66,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/inputPharmacist"
                 android:hint="Pharmacist name"/>
+            
 
 
             <RelativeLayout

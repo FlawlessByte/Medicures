@@ -9,16 +9,17 @@ import java.util.Calendar;
 import java.util.UUID;
 
 public class NotificationManager {
-    public String msg, to, from, sender_name, date, time;
+    public String msg, to, from, sender_name, senderEmail, date, time;
 
     public NotificationManager() {
     }
 
-    public void makeNotification(String msg, String to, String from, String sender_name){
+    public void makeNotification(String msg, String to, String from, String sender_name, String senderEmail){
         this.msg = msg;
         this.to = to;
         this.from = from;
         this.sender_name = sender_name;
+        this.senderEmail = senderEmail;
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         this.date = df.format(Calendar.getInstance().getTime());
         df = new SimpleDateFormat("HH:mm:ss");
@@ -75,5 +76,13 @@ public class NotificationManager {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public void setSenderEmail(String senderEmail) {
+        this.senderEmail = senderEmail;
+    }
+
+    public String getSenderEmail() {
+        return senderEmail;
     }
 }
