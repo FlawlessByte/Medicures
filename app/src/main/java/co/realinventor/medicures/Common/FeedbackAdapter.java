@@ -49,8 +49,8 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.MyView
         final Feedback feedback = feedbackList.get(position);
         holder.msg.setText(feedback.getMsg());
         holder.date.setText(feedback.getDateNTime());
-        holder.from.setText(feedback.getFrom());
-        if(feedback.getTo().equals("admin@medicure")){
+        holder.from.setText(feedback.senderName);
+        if(feedback.getTo().equals("admin@medcure")){
             holder.replyButton.setVisibility(View.VISIBLE);
             holder.replyButton.setOnClickListener(new View.OnClickListener() {
                 @Override

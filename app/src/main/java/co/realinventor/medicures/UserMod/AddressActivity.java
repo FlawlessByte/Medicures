@@ -84,6 +84,7 @@ public class AddressActivity extends AppCompatActivity {
                 ref.child("MedRequests").child(m.trans_id).setValue(m);
             }
             Toast.makeText(this, "Request is being sent to Medical Store", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, LoggedActivity.class));
             finish();
         }
         else if(!uri.equals("")){
@@ -112,8 +113,8 @@ public class AddressActivity extends AppCompatActivity {
                     Log.d("Upload File", "failure");
                     progressDialog.dismiss();
                     startActivity(new Intent(AddressActivity.this, LoggedActivity.class));
-                    finish();
                     Toast.makeText(AddressActivity.this, "Failed "+exception.getMessage(), Toast.LENGTH_SHORT).show();
+                    finish();
                 }
             }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -123,8 +124,8 @@ public class AddressActivity extends AppCompatActivity {
                     Log.d("Upload File", "success");
                     progressDialog.dismiss();
                     startActivity(new Intent(AddressActivity.this, LoggedActivity.class));
-                    finish();
                     Toast.makeText(AddressActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
+                    finish();
                 }
             }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                 @Override

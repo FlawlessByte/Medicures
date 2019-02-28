@@ -22,7 +22,7 @@ public class ComposeFeedbackActivity extends AppCompatActivity {
 
     private EditText editTextFeedback;
     private DatabaseReference ref;
-    private String senderName, uid, to, role, senderEmail;
+    private String senderName, uid, to, senderEmail;
     private UserDetails userDetails;
     private TextView textViewRole;
 
@@ -35,36 +35,13 @@ public class ComposeFeedbackActivity extends AppCompatActivity {
         editTextFeedback = findViewById(R.id.editTextFeedback);
         textViewRole = findViewById(R.id.textviewRole);
 
-        try {
-            senderEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-        }
-        catch (Exception e){
-            Log.d("ComposeFeedbackActivity", "Not a user, but admin");
-            senderEmail = "admin@medcure";
-        }
+        senderName = getIntent().getStringExtra("senderName");
 
+        senderEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         ref = FirebaseDatabase.getInstance().getReference();
 
-        to = getIntent().getStringExtra("to");
-        role = getIntent().getStringExtra("role");
-
-        textViewRole.setText("Send a Feedback to "+role);
-
-        ref.child("User").child(uid).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d("FirebaseDatabase", "Got user data");
-                userDetails = dataSnapshot.getValue(UserDetails.class);
-                senderName = userDetails.first_name;
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.d("FirebaseDatabase", "Error retrieving data");
-                System.out.println("The read failed: " + databaseError.getCode());
-            }
-        });
+        to = "admin@medcure";
 
     }
 

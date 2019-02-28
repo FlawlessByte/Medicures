@@ -20,7 +20,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
 
@@ -132,7 +135,7 @@ public class MedShowDialog extends DialogFragment {
             @Override
             public void onClick(View v) {
 
-                String trans_id, medicine_name, dosage ,quantity, to, from, customerEmail, customerName, reviewed /*yes or no*/, status /*approved or denied*/;
+                String trans_id, medicine_name, dosage ,quantity, to, from, customerEmail,date, time, customerName, reviewed /*yes or no*/, status /*approved or denied*/;
                 trans_id = UUID.randomUUID().toString();
                 medicine_name = medYMedicineName.getText().toString();
                 dosage = medYMedicineDosage.getText().toString();
@@ -143,8 +146,13 @@ public class MedShowDialog extends DialogFragment {
                 customerName = userDetails.first_name;
                 reviewed = "no";
                 status = "";
+                DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                date = df.format(Calendar.getInstance().getTime());
+                df = new SimpleDateFormat("HH:mm:ss");
+                time = df.format(Calendar.getInstance().getTime());
 
                 Medicine newMedicine = new Medicine(trans_id, medicine_name, dosage, quantity, to, from, customerEmail, customerName, reviewed, status, "","");
+                newMedicine.date = date + " | " +time;
 
 
                 if(TextUtils.isEmpty(medicine_name) || TextUtils.isEmpty(dosage) || TextUtils.isEmpty(quantity)){

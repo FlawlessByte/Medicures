@@ -42,19 +42,19 @@ public class SentMailAdapter extends RecyclerView.Adapter<SentMailAdapter.MyView
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Object object = allItemList.get(position);
         if(object instanceof Feedback){
-            holder.sentMailTo.setText("To : "+((Feedback) object).getSenderEmail());
+            holder.sentMailTo.setText("From : "+((Feedback) object).getTo());
             holder.sentMailDate.setText("Date : "+((Feedback) object).getDateNTime());
             holder.sentMailMsg.setText("Message : "+((Feedback) object).getMsg());
         }
         else if(object instanceof Notifications){
-            holder.sentMailTo.setText("To : "+((Notifications) object).getSenderEmail());
+            holder.sentMailTo.setText("From : "+((Notifications) object).getSenderEmail());
             holder.sentMailDate.setText("Date : "+((Notifications) object).getDate()+" | "+((Notifications) object).getTime());
             holder.sentMailMsg.setText("Message : "+((Notifications) object).getMsg());
 
         }
         else if(object instanceof Medicine){
-            holder.sentMailTo.setText("To : "+((Medicine) object).getCustomerEmail());
-            holder.sentMailDate.setText("Date : Not defined");
+            holder.sentMailTo.setText("From : "+((Medicine) object).getCustomerEmail());
+            holder.sentMailDate.setText("Date : "+((Medicine) object).date);
             Medicine med = (Medicine) object;
             holder.sentMailMsg.setText("Message : "+"Medicine Name : "+med.getMedicine_name()+"\nDosage : "+med.getDosage()+"\nQuantity : "+med.getQuantity());
         }

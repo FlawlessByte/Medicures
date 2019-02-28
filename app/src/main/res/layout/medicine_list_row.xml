@@ -26,5 +26,13 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/customerNameText" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/dateIDText"
+        android:textStyle="bold"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/transIDText"/>
+
 
 </RelativeLayout>

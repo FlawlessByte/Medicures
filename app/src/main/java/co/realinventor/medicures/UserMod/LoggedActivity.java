@@ -21,6 +21,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.yayandroid.locationmanager.LocationManager;
 import com.yayandroid.locationmanager.configuration.Configurations;
 import com.yayandroid.locationmanager.configuration.DefaultProviderConfiguration;
@@ -45,6 +50,10 @@ public class LoggedActivity extends AppCompatActivity
     FirebaseAuth auth;
     private TextView textViewUserNameNav;
     private LocationManager awesomeLocationManager;
+    private String senderName;
+    private DatabaseReference ref;
+    private String uid;
+    private UserDetails userDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +73,25 @@ public class LoggedActivity extends AppCompatActivity
         else{
             Log.d("Logged activity", "User not logged in");
         }
+
+        ref = FirebaseDatabase.getInstance().getReference();
+        uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        ref.child("User").child(uid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d("FirebaseDatabase", "Got user data");
+                userDetails = dataSnapshot.getValue(UserDetails.class);
+                senderName = userDetails.first_name;
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d("FirebaseDatabase", "Error retrieving data");
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
+
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -141,8 +169,7 @@ public class LoggedActivity extends AppCompatActivity
         else if (id == R.id.nav_feedback) {
             Log.d("Menu FeedbackButton", "Pressed");
             Intent i = new Intent(this, ComposeFeedbackActivity.class);
-            i.putExtra("to" , "admin@medicure");
-            i.putExtra("role", "Admin");
+            i.putExtra("senderName", senderName);
             startActivity(i);
         }
         else if (id == R.id.nav_reminder) {

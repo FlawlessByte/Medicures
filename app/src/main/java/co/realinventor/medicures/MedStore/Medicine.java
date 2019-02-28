@@ -3,7 +3,7 @@ package co.realinventor.medicures.MedStore;
 import java.io.Serializable;
 
 public class Medicine implements Serializable {
-    public String trans_id, medicine_name, dosage ,quantity, to, from, customerEmail, customerName, reviewed /*yes or no*/, status /*approved or denied*/, address, contact;
+    public String trans_id, medicine_name, date, dosage ,quantity, to, from, customerEmail, customerName, reviewed /*yes or no*/, status /*approved or denied*/, address, contact;
 
     public Medicine(String trans_id,String medicine_name, String dosage, String quantity, String to, String from, String customerEmail,
                     String customerName, String reviewed, String  status, String address, String contact) {

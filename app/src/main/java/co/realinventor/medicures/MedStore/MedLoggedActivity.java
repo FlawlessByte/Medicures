@@ -7,6 +7,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import co.realinventor.medicures.Common.FeedbackActivity;
@@ -14,8 +20,12 @@ import co.realinventor.medicures.Common.NotificationsActivity;
 import co.realinventor.medicures.Common.SentMailActivity;
 import co.realinventor.medicures.MainActivity;
 import co.realinventor.medicures.R;
+import co.realinventor.medicures.UserMod.ComposeFeedbackActivity;
 
 public class MedLoggedActivity extends AppCompatActivity {
+    private String senderName, uid;
+    private DatabaseReference ref;
+    private MedStoreDetails medStoreDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +36,24 @@ public class MedLoggedActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarX);
         setSupportActionBar(toolbar);
+
+        ref = FirebaseDatabase.getInstance().getReference();
+        uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        ref.child("MedStores").child(uid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d("FirebaseDatabase", "Got ambulance data");
+                medStoreDetails = dataSnapshot.getValue(MedStoreDetails.class);
+                senderName = medStoreDetails.shopName;
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
+
     }
 
 
@@ -73,7 +101,9 @@ public class MedLoggedActivity extends AppCompatActivity {
 
     public void medFeedbackButtonPressed(View view){
         Log.d("FeedbackButton", "Pressed");
-        startActivity(new Intent(this, FeedbackActivity.class).putExtra("uid", FirebaseAuth.getInstance().getCurrentUser().getUid()));
+        Intent i = new Intent(this, ComposeFeedbackActivity.class);
+        i.putExtra("senderName", senderName);
+        startActivity(i);
     }
 
     public void medUserButtonPressed(View view){

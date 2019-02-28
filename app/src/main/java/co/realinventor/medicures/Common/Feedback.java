@@ -1,7 +1,7 @@
 package co.realinventor.medicures.Common;
 
 public class Feedback {
-    public String fid, date, time, msg, to, from, senderEmail, datetime;
+    public String fid, date, time, msg, to, from, senderEmail, datetime, senderName;
 
     public Feedback(){}
 

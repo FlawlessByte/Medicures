@@ -22,6 +22,7 @@ import co.realinventor.medicures.Common.Notifications;
 import co.realinventor.medicures.Common.NotificationsActivity;
 import co.realinventor.medicures.MainActivity;
 import co.realinventor.medicures.R;
+import co.realinventor.medicures.UserMod.ComposeFeedbackActivity;
 
 public class ServiceLoggedActivity extends AppCompatActivity {
     private DatabaseReference ref;
@@ -29,6 +30,7 @@ public class ServiceLoggedActivity extends AppCompatActivity {
     ServiceDetails serviceDetails;
     Button buttonWelcome;
     ImageView availabilityImage;
+    private String senderName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,7 @@ public class ServiceLoggedActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.d("FirebaseDatabase", "Got ambulance data");
                 serviceDetails = dataSnapshot.getValue(ServiceDetails.class);
+                senderName = serviceDetails.driverName;
                 buttonWelcome.setText("Welcome, "+ serviceDetails.driverName);
                 if(serviceDetails.availability.equals("no"))
                     availabilityImage.setImageResource(R.drawable.cross_large);
@@ -101,7 +104,9 @@ public class ServiceLoggedActivity extends AppCompatActivity {
 
     public void feedbackButtonClicked(View view){
         Log.d("FeedbackButton", "Pressed");
-        startActivity(new Intent(this, FeedbackActivity.class).putExtra("uid", FirebaseAuth.getInstance().getCurrentUser().getUid()));
+        Intent i = new Intent(this, ComposeFeedbackActivity.class);
+        i.putExtra("senderName", senderName);
+        startActivity(i);
     }
 
     public void notificationButtonClicked(View view){

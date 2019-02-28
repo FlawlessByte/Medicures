@@ -15,12 +15,13 @@ public class MedicineAdapter extends RecyclerView.Adapter<MedicineAdapter.MyView
     private List<Medicine> medicineList;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView customerNameText, transIDText;
+        public TextView customerNameText, transIDText, dateIDText;
 
         public MyViewHolder(View view) {
             super(view);
             customerNameText = (TextView) view.findViewById(R.id.customerNameText);
             transIDText = (TextView) view.findViewById(R.id.transIDText);
+            dateIDText = (TextView) view.findViewById(R.id.dateIDText);
         }
     }
 
@@ -40,8 +41,9 @@ public class MedicineAdapter extends RecyclerView.Adapter<MedicineAdapter.MyView
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Medicine medicine = medicineList.get(position);
-        holder.customerNameText.setText(medicine.getCustomerName());
-        holder.transIDText.setText(medicine.getTrans_id());
+        holder.customerNameText.setText("Customer : "+medicine.getCustomerName());
+        holder.transIDText.setText("Trans ID : "+medicine.getTrans_id());
+        holder.transIDText.setText("Date : "+medicine.date);
     }
 
     @Override
