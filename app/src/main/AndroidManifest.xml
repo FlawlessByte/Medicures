@@ -24,9 +24,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UserMod.ViewPrescActivity"></activity>
-        <activity android:name=".UserMod.AddressActivity"
+        <activity android:name=".BloodBank.ViewBloodBankActivity"
+            android:theme="@style/Theme.MaterialComponents.Light.DarkActionBar"></activity>
+        <activity android:name=".BloodBank.RegisterBloodBankActivity"
             android:theme="@style/Theme.MaterialComponents.Light.DarkActionBar"/>
+        <activity
+            android:name=".BloodBank.BloodHomeActivity"
+            android:theme="@style/Theme.MaterialComponents.Light.DarkActionBar" />
+        <activity android:name=".UserMod.ViewPrescActivity" />
+        <activity
+            android:name=".UserMod.AddressActivity"
+            android:theme="@style/Theme.MaterialComponents.Light.DarkActionBar" />
         <activity android:name=".UserMod.ViewMedListActivity" />
         <activity android:name=".SplashScreen">
             <intent-filter>

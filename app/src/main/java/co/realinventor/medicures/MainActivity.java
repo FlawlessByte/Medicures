@@ -25,6 +25,7 @@ import androidx.core.content.ContextCompat;
 import co.realinventor.medicures.AdminMod.AdminLogin;
 import co.realinventor.medicures.AmbulanceService.ServiceLoggedActivity;
 import co.realinventor.medicures.Authentication.LoginActivity;
+import co.realinventor.medicures.BloodBank.BloodHomeActivity;
 import co.realinventor.medicures.MedStore.MedLoggedActivity;
 import co.realinventor.medicures.UserMod.LoggedActivity;
 
@@ -167,5 +168,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void modeSelectedAdmin(View view){
         startActivity(new Intent(this, AdminLogin.class));
+    }
+
+    public void bloodBankButtonPressed(View view){
+        startActivity(new Intent(this, BloodHomeActivity.class));
     }
 }
