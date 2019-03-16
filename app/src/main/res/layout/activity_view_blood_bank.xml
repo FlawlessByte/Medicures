@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F5F5F5"
+    android:padding="8dp"
+    tools:context=".BloodBank.ViewBloodBankActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="Blood Bank List"
+        android:textAlignment="center"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginTop="60dp"
+        android:textStyle="bold"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/right_button_btn_line"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="Choose a blood group"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="12dp"
+            android:layout_marginTop="8dp" />
+
+
+        <com.google.android.material.chip.ChipGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:singleSelection="true">
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:onClick="chipSelected"
+                android:tag="All"
+                android:padding="8dp"
+                android:layout_margin="5dp"
+                android:text="All"/>
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:onClick="chipSelected"
+                android:tag="A+ve"
+                android:padding="8dp"
+                android:layout_margin="5dp"
+                android:text="A+ve"/>
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:onClick="chipSelected"
+                android:tag="A-ve"
+                android:padding="8dp"
+                android:layout_margin="5dp"
+                android:text="A-ve"/>
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:onClick="chipSelected"
+                android:tag="B+ve"
+                android:padding="8dp"
+                android:layout_margin="5dp"
+                android:text="B+ve"/>
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:onClick="chipSelected"
+                android:tag="B-ve"
+                android:padding="8dp"
+                android:layout_margin="5dp"
+                android:text="B-ve"/>
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:onClick="chipSelected"
+                android:tag="AB+ve"
+                android:padding="8dp"
+                android:layout_margin="5dp"
+                android:text="AB+ve"/>
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:onClick="chipSelected"
+                android:tag="AB-ve"
+                android:padding="8dp"
+                android:layout_margin="5dp"
+                android:text="AB-ve"/>
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:onClick="chipSelected"
+                android:tag="O+ve"
+                android:padding="8dp"
+                android:layout_margin="5dp"
+                android:text="O+ve"/>
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:onClick="chipSelected"
+                android:tag="O-ve"
+                android:padding="8dp"
+                android:layout_margin="5dp"
+                android:text="O-ve"/>
+        </com.google.android.material.chip.ChipGroup>
+
+    </LinearLayout>
+
+
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="#AAA"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/bloodRecyclerView">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+</LinearLayout>
